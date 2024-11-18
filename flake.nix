@@ -30,7 +30,7 @@
       homeConfigurations = {
 	lucasfa = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-	  modules = [./home.nix];
+	  modules = [ ./home.nix ];
 	};
       };
   };
