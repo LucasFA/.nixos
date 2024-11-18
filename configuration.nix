@@ -67,7 +67,7 @@
 
   # Enable the X11 windowing system.
   services.xserver = {
-	enable = true;
+	enable = false;
 
   # Enable the GNOME Desktop Environment.
   	displayManager = {
