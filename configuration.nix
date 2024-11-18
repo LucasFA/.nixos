@@ -67,29 +67,23 @@
 
   # Enable the X11 windowing system.
   services.xserver = {
-	enable = false;
+	enable = true; # Yeah, no. Even using Wayland I need this. Just goes to TTY not an issue
 
   # Enable the GNOME Desktop Environment.
-  	displayManager = {
-		gdm = {
-			enable = true;
-			wayland = true;
-		};
+  	displayManager.gdm = {
+		enable = true;
+		wayland = true;
 	};
 	desktopManager = {
   		gnome.enable = true;
 	};
   	# Configure keymap in X11
-  	#xkb = {
-    		#layout = "us";
-    		#variant = "";
-  	#};
+  	xkb = {
+    		layout = "us";
+    		variant = "";
+  	};
   };
 
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
