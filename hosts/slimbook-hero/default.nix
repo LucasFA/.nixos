@@ -5,8 +5,8 @@
     "${builtins.fetchGit { 
 	url = "https://github.com/LucasFA/nixos-hardware.git"; 
 	ref = "master";
-	rev = "1d007a7c3992a260d4379e8e368a3f9305bcf4cd";
-	}}/slimbook/hero_rpl_rtx"
+	rev = "3cf99022bdcca6f7a7f7aef0672f9d8d8f5975e3";
+	}}/slimbook/hero/rpl_rtx"
     ./nvidia.nix
   ];
   fileSystems."/mnt/data" = 
