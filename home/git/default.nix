@@ -25,8 +25,8 @@ in
 		signByDefault = true;
 		key = null;
 	};
+	aliases = gitAliases;
 	extraConfig = {
-		aliases = gitAliases;
 		safe.directory = "/home/lucasfa/.nixos";
 		user.signingkey = "/home/lucasfa/.ssh/id_ed25519.pub";
 		core = { 
