@@ -10,6 +10,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./hosts/slimbook-hero
+      ./installed_programs.nix
     ];
 
   # Bootloader.
@@ -113,7 +114,7 @@
     description = "Lucas";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-    #  thunderbird
+    	# thunderbird
     	mpv
     	gnome.gnome-tweaks
 	spotify
@@ -121,30 +122,8 @@
     ];
   };
 
-  services.syncthing = {
-	enable = true;
-	dataDir = "/home/lucasfa/syncthing/";
-	user = "lucasfa";
-	group = "users";
-	openDefaultPorts = true;
-  	guiAddress = "127.0.0.1:8384";
-	overrideDevices = false;
-	overrideFolders = false;
-};
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # Install firefox.
-  programs = {
-	firefox.enable = true;
-  	fish.enable = true;
-  	htop.enable = true;
-  };
-  services = {
-	tailscale.enable = true;
-  };
-
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
