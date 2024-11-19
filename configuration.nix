@@ -154,6 +154,7 @@
     ventoy-full
     tealdeer
     dconf
+    wl-clipboard
   #  wget
   ];
   environment.gnome.excludePackages = (with pkgs; [
