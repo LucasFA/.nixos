@@ -4,6 +4,7 @@
   imports = [ ];
 
   services = {
+	flatpak.enable = true;
 	tailscale.enable = true;
   	syncthing = {
 	  enable = true;
