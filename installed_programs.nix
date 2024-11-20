@@ -22,5 +22,19 @@
 	firefox.enable = true;
   	fish.enable = true;
   	htop.enable = true;
+	steam.enable = true;
   };
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+    vim
+    gparted
+    ventoy-full
+    tealdeer
+    dconf
+    wl-clipboard
+    nvd
+  #  wget
+  ];
 }

@@ -125,17 +125,6 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    gparted
-    ventoy-full
-    tealdeer
-    dconf
-    wl-clipboard
-  #  wget
-  ];
   environment.gnome.excludePackages = (with pkgs; [
 	gnome-photos
 	gnome-tour

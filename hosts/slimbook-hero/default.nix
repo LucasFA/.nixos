@@ -5,7 +5,7 @@
     "${builtins.fetchGit { 
 	url = "https://github.com/LucasFA/nixos-hardware.git"; 
 	ref = "master";
-	rev = "3cf99022bdcca6f7a7f7aef0672f9d8d8f5975e3";
+	rev = "177d0bc2e759eca759ccaebc5bb73f5e96b09ab8";
 	}}/slimbook/hero/rpl_rtx"
     ./nvidia.nix
   ];
@@ -15,7 +15,7 @@
       options = [ "nofail" ];
     };
   fileSystems."/home/lucasfa/games" = {
-	mountPoint = "home/lucasfa/games";
+	mountPoint = "/home/lucasfa/games";
 	device = "/mnt/data/games";
 	options = [ "bind" ];
 	};
