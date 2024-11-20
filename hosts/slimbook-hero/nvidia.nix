@@ -1,12 +1,12 @@
 { pkgs, config, libs, ... }:
 
 {
-# Enable OpenGL
-  hardware.opengl.enable = true;
 
   hardware.graphics = {
 	enable = true;
 	enable32Bit = true;
+	# that implies the legacy version:
+	# hardware.opengl.enable = true;
   };
 
   # Load nvidia driver for Xorg and Wayland
