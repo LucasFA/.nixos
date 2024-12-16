@@ -24,6 +24,12 @@
   	htop.enable = true;
 	steam.enable = true;
   };
+  environment.shellAliases = {
+	nixos-rbb = "nixos-rebuild build --flake . && nvd diff /run/current-system result";
+	nixos-rbs = "nixos-rebuild switch --flake .";
+	home-managerb = "home-manager build --flake . && nvd diff /run/current-system result";
+  };
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -35,6 +41,7 @@
     dconf
     wl-clipboard
     nvd
+    nix-inspect
   #  wget
   ];
 }
