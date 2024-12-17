@@ -11,7 +11,6 @@
   ];
   fileSystems."/" = {
     options = [ "relatime" "lazytime"];
-    depends = [ "/nix" ];
   };
   fileSystems."/nix" = {
      device = "/dev/disk/by-label/Nix";
