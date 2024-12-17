@@ -167,10 +167,11 @@
   nix.gc = {
 	automatic = true;
 	dates = "weekly";
+	options = "--delete-older-than 30d";
 	};
   nix.optimise = {
-	automatic = true;
-	dates = [ "2 weeks" ];
+	automatic = false;
+	dates = [ "6 weeks" ];
 	};
 
   nix.package = pkgs.nixFlakes;
