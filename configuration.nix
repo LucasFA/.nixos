@@ -174,5 +174,14 @@
 	dates = [ "6 weeks" ];
 	};
 
+  # nix = {
+  	#registry.nixpkgs.flake = pkgs;
+	#channel.enable = false;
+  	#settings = {
+		# nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
+  		#experimental-features = [ "nix-command" "flakes" ];
+	#};
+  # };
   nix.package = pkgs.nixFlakes;
+  # environment.etc."nix/inputs/nixpkgs".source = "${pkgs}";
 }
