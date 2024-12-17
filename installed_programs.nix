@@ -23,6 +23,7 @@
   	fish.enable = true;
   	htop.enable = true;
 	steam.enable = true;
+	gamemode.enable = true;
   };
   environment.shellAliases = {
 	nixos-rbb = "nixos-rebuild build --flake . && nvd diff /run/current-system result";
