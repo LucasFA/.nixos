@@ -37,6 +37,7 @@
   environment.systemPackages = with pkgs; [
     vim
     gparted
+    btrfs-progs
     ventoy-full
     tealdeer
     dconf
