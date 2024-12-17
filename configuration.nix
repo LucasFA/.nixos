@@ -164,5 +164,14 @@
   system.stateVersion = "24.05"; # Did you read the comment?
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.gc = {
+	automatic = true;
+	dates = "weekly";
+	};
+  nix.optimise = {
+	automatic = true;
+	dates = [ "2 weeks" ];
+	};
+
   nix.package = pkgs.nixFlakes;
 }
