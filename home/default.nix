@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [
-	./home/git
+	./git
   ];
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -25,6 +25,12 @@
 	gh
 	chezmoi
   ];
+  programs = {
+    zed-editor = {
+      enable = true;
+      extensions = [ "nix" ];
+    };
+  };
 
 
   # This value determines the Home Manager release that your
