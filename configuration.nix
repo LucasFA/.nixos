@@ -167,7 +167,9 @@
   nix.gc = {
 	automatic = true;
 	dates = "weekly";
-	options = "--delete-older-than 30d";
+	persistent = true;
+	randomizedDelaySec = "30min";
+	options = "--delete-older-than 30d --max-jobs 2";
 	};
   nix.optimise = {
 	automatic = false;
