@@ -26,6 +26,7 @@
 	chezmoi
   ];
   programs = {
+    fish.enable = true;
     zed-editor = {
       enable = true;
       extensions = [ "nix" ];
@@ -80,7 +81,6 @@
   #
   home.sessionVariables = {
     EDITOR = "vim";
-    FOO = "worked";
   };
 
   # This value determines the Home Manager release that your
