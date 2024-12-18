@@ -116,7 +116,7 @@
     packages = with pkgs; [
     	# thunderbird
     	mpv
-    	gnome.gnome-tweaks
+    	gnome-tweaks
 	spotify
 	docker
     ];
@@ -129,7 +129,7 @@
 	gnome-photos
 	gnome-tour
 	gedit
-]) ++ (with pkgs.gnome; [
+]) ++ (with pkgs; [ # gnome pkgs
 	gnome-music
 	epiphany # web browser
 	totem # video player
@@ -184,6 +184,5 @@
   		#experimental-features = [ "nix-command" "flakes" ];
 	#};
   # };
-  nix.package = pkgs.nixFlakes;
   # environment.etc."nix/inputs/nixpkgs".source = "${pkgs}";
 }
