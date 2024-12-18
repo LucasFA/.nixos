@@ -45,5 +45,6 @@
     nvd
     nix-inspect
   #  wget
+    dmidecode
   ];
 }
