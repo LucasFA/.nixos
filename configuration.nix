@@ -172,8 +172,8 @@
 	options = "--delete-older-than 30d --max-jobs 2";
 	};
   nix.optimise = {
-	automatic = false;
-	dates = [ "6 weeks" ];
+	automatic = true;
+	dates = [ "monthly" ];
 	};
 
   # nix = {

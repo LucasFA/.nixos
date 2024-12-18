@@ -10,9 +10,6 @@
      neededForBoot = true;
      options = [ "noatime" ];
   };
-  services.beesd.filesystems.nix_store = {
-      spec = "LABEL=Nix";
-  };
   services.btrfs.autoScrub = {
     enable = true;
     fileSystems = [ "/nix/" ];
