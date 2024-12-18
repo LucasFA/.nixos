@@ -32,7 +32,7 @@
     };
   };
 
-  home.packages = [
+  #home.packages = [
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -45,7 +45,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-  ];
+  #];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -80,6 +80,7 @@
   #
   home.sessionVariables = {
     EDITOR = "vim";
+    FOO = "worked";
   };
 
   # This value determines the Home Manager release that your

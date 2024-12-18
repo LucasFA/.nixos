@@ -46,5 +46,6 @@
     nix-inspect
   #  wget
     dmidecode
+    lshw
   ];
 }
