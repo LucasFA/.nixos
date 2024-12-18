@@ -28,7 +28,6 @@
   environment.shellAliases = {
 	nixos-rbb = "nixos-rebuild build --flake . && nvd diff /run/current-system result";
 	nixos-rbs = "nixos-rebuild switch --flake .";
-	home-managerb = "home-manager build --flake . && nvd diff /run/current-system result";
   };
 
 
