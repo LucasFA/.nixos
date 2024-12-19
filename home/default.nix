@@ -2,6 +2,8 @@
 {
   imports = [
 	./git
+	./zed
+	./shell
   ];
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -25,21 +27,8 @@
 	gh
 	chezmoi
   ];
-  programs = {
-    bash = {
-	enable = true;
-  };
-    fish.enable = true;
-    zed-editor = {
-      enable = true;
-      extensions = [ "nix" ];
-      userSettings = {
-	vim_mode = true;
-	ui_font_size = 16;
-      };
-    };
-  };
-
+	programs = {
+};
   #home.packages = [
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
