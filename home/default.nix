@@ -76,9 +76,33 @@
   #
   #  /etc/profiles/per-user/lucasfa/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
+  home.sessionVariables = rec {
     EDITOR = "vim";
+
+    # XDG
+    XDG_CONFIG_HOME="$HOME/.config";
+    XDG_CACHE_HOME="$HOME/.cache";
+    XDG_DATA_HOME="$HOME/.local/share";
+    XDG_STATE_HOME="$HOME/.local/state";
+    # Not officially in the spec
+    XDG_BIN_HOME="$HOME/.local/bin";
+
+    # CARGO_HOME="$XDG_DATA_HOME"/cargo;
+    # PATH="$CARGO_HOME/bin:$PATH"; # Well, I'll be installing stuff with nix rather than directly with cargo
+    # RUSTUP_HOME="$XDG_DATA_HOME"/rustup;
+
+    # WINEPREFIX="$XDG_DATA_HOME"/wine;
+    # CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv;
+    # DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker;
   };
+  home.shellAliases = {
+    nvidia-settings="nvidia-settings --config=\"$XDG_CONFIG_HOME\"/nvidia/settings";
+    gs="git status";
+
+    # ls="eza"
+    # ll="eza -alh"
+    # etree="eza --tree"
+};
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
