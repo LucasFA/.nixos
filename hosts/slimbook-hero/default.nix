@@ -7,8 +7,8 @@
     "${
       builtins.fetchGit {
         url = "https://github.com/LucasFA/nixos-hardware.git";
-        ref = "master";
-        rev = "b0564f4a0cb20d89f3906d36ccc500c591d71922";
+        ref = "slimbook_hero-release";
+        rev = "918643ece19be45c85c9c0049958c37289570d95";
       }
     }/slimbook/hero/rpl_rtx"
     ./nvidia.nix
