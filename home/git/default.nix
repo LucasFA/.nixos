@@ -4,7 +4,7 @@ let
     sync = "!git pull --rebase && git push";
     ovp = "!git commit --all --allow-empty-message -m '' && git sync";
     lg = "lg1";
-    lg1 = "lg1-specific --all";
+    lg1 = "lg1-specific --all -n 20";
     lg2 = "lg2-specific --all";
     lg3 = "lg3-specific --all";
 
