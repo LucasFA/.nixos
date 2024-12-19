@@ -55,5 +55,8 @@
   #  wget
     dmidecode
     lshw
+
+    nixfmt-rfc-style
+    nixd
   ];
 }
