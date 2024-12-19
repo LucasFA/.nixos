@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 {
   imports = [
-	./git
-	./zed
-	./shell
-	./devtools
+    ./git
+    ./zed
+    ./shell
+    ./devtools
   ];
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -12,37 +12,37 @@
   home.homeDirectory = "/home/lucasfa";
 
   home.packages = with pkgs; [
-	# system utilities
-	htop
-	neofetch
-	file
-	which
-	# user utilities
-	ripgrep
-	speedtest-cli
-	zip
-	unzip
-	vifm
+    # system utilities
+    htop
+    neofetch
+    file
+    which
+    # user utilities
+    ripgrep
+    speedtest-cli
+    zip
+    unzip
+    vifm
 
-	# management
-	gh
-	chezmoi
+    # management
+    gh
+    chezmoi
   ];
-	programs = {
-};
+  programs = {
+  };
   #home.packages = [
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+  # # It is sometimes useful to fine-tune packages, for example, by applying
+  # # overrides. You can do that directly here, just don't forget the
+  # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+  # # fonts?
+  # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+  # # You can also create simple shell scripts directly inside your
+  # # configuration. For example, this adds a command 'my-hello' to your
+  # # environment:
+  # (pkgs.writeShellScriptBin "my-hello" ''
+  #   echo "Hello, ${config.home.username}!"
+  # '')
   #];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

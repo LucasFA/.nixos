@@ -3,15 +3,20 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 # test
 
-{ self, config, pkgs, ... }:
+{
+  self,
+  config,
+  pkgs,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./hosts/slimbook-hero
-      ./installed_programs.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./hosts/slimbook-hero
+    ./installed_programs.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = false;
@@ -19,27 +24,27 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.loader.timeout = 2;
   boot.loader.grub = {
-	enable = true;
-        copyKernels = false; # no need: uses them straight from /nix/store
-	configurationLimit = 25;
-	useOSProber = true;
-	efiSupport = true;
-     	#efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
-    	device = "nodev";
-      	font = "${pkgs.fira-code}/share/fonts/truetype/FiraCode-VF.ttf";
-	fontSize = 36;
-	extraEntries = ''
-                menuentry "Reboot" {
-                    reboot
-                }
- 		menuentry "Poweroff" {
-                    halt
-                }
-		'';
+    enable = true;
+    copyKernels = false; # no need: uses them straight from /nix/store
+    configurationLimit = 25;
+    useOSProber = true;
+    efiSupport = true;
+    #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
+    device = "nodev";
+    font = "${pkgs.fira-code}/share/fonts/truetype/FiraCode-VF.ttf";
+    fontSize = 36;
+    extraEntries = ''
+                      menuentry "Reboot" {
+                          reboot
+                      }
+       		menuentry "Poweroff" {
+                          halt
+                      }
+      		'';
   };
 
   boot.kernelParams = [
-];
+  ];
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -70,23 +75,22 @@
 
   # Enable the X11 windowing system.
   services.xserver = {
-	enable = true; # Yeah, no. Even using Wayland I need this. Just goes to TTY not an issue
+    enable = true; # Yeah, no. Even using Wayland I need this. Just goes to TTY not an issue
 
-  # Enable the GNOME Desktop Environment.
-  	displayManager.gdm = {
-		enable = true;
-		wayland = true;
-	};
-	desktopManager = {
-  		gnome.enable = true;
-	};
-  	# Configure keymap in X11
-  	xkb = {
-    		layout = "us";
-    		variant = "";
-  	};
+    # Enable the GNOME Desktop Environment.
+    displayManager.gdm = {
+      enable = true;
+      wayland = true;
+    };
+    desktopManager = {
+      gnome.enable = true;
+    };
+    # Configure keymap in X11
+    xkb = {
+      layout = "us";
+      variant = "";
+    };
   };
-
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -114,29 +118,35 @@
   users.users.lucasfa = {
     isNormalUser = true;
     description = "Lucas";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
-    	# thunderbird
-    	mpv
-    	gnome-tweaks
-	spotify
-	docker
+      # thunderbird
+      mpv
+      gnome-tweaks
+      spotify
+      docker
     ];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.gnome.excludePackages = (with pkgs; [
-	gnome-photos
-	gnome-tour
-	gedit
-]) ++ (with pkgs; [ # gnome pkgs
-	gnome-music
-	epiphany # web browser
-	totem # video player
-	geary # email reader
-	]);
+  environment.gnome.excludePackages =
+    (with pkgs; [
+      gnome-photos
+      gnome-tour
+      gedit
+    ])
+    ++ (with pkgs; [
+      # gnome pkgs
+      gnome-music
+      epiphany # web browser
+      totem # video player
+      geary # email reader
+    ]);
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -165,26 +175,29 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nix.gc = {
-	automatic = true;
-	dates = "weekly";
-	persistent = true;
-	randomizedDelaySec = "30min";
-	options = "--delete-older-than 30d --max-jobs 2";
-	};
+    automatic = true;
+    dates = "weekly";
+    persistent = true;
+    randomizedDelaySec = "30min";
+    options = "--delete-older-than 30d --max-jobs 2";
+  };
   nix.optimise = {
-	automatic = true;
-	dates = [ "monthly" ];
-	};
+    automatic = true;
+    dates = [ "monthly" ];
+  };
 
   # nix = {
-  	#registry.nixpkgs.flake = pkgs;
-	#channel.enable = false;
-  	#settings = {
-		# nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
-  		#experimental-features = [ "nix-command" "flakes" ];
-	#};
+  #registry.nixpkgs.flake = pkgs;
+  #channel.enable = false;
+  #settings = {
+  # nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
+  #experimental-features = [ "nix-command" "flakes" ];
+  #};
   # };
   # environment.etc."nix/inputs/nixpkgs".source = "${pkgs}";
 }
