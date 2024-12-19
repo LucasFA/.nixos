@@ -21,6 +21,22 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1734643571,
+        "narHash": "sha256-HXyOCRUxNvQ3UY2y4EGL+72DjpHPssgASs/g4HMTAdI=",
+        "owner": "LucasFA",
+        "repo": "nixos-hardware",
+        "rev": "2b81271c9f7bb0c6e3c8b4578f17015b9f1c485c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LucasFA",
+        "ref": "slimbook_hero-working",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1734323986,
@@ -39,6 +55,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs"
       }
     }

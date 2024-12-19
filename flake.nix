@@ -7,6 +7,7 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-hardware.url = "github:LucasFA/nixos-hardware/slimbook_hero-working";
 
     # use the following for unstable:
     # nixpkgs.url = "nixpkgs/nixos-unstable";
@@ -20,6 +21,7 @@
       self,
       nixpkgs,
       home-manager,
+      nixos-hardware,
       ...
     }:
     let
@@ -31,7 +33,10 @@
       nixosConfigurations = {
         nixos = lib.nixosSystem {
           inherit system;
-          modules = [ ./configuration.nix ];
+          modules = [
+            ./configuration.nix
+            nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
+          ];
         };
       };
       homeConfigurations = {
