@@ -14,6 +14,9 @@ let
   };
 in
 {
+  #home.file."${config.xdg.configHome}/git" = {
+    #source = ./ignore;
+  #};
   programs.git = {
     enable = true;
     userName = "LucasFA";
@@ -47,7 +50,7 @@ in
         colormoved = "default";
         colormovedws = "allow-indentation-change";
       };
-      merge.conflictstyle = "diff3";
+      merge.conflictstyle = "zdiff3";
       rebase.missingCommitsCheck = "error";
       help.autocorrect = "prompt";
       branch.sort = "committerdate";
@@ -64,10 +67,18 @@ in
       # insteadOf = https://github.com/rust-lang/crates.io-index
       # [url "https://github.com/RustSec/advisory-db"]
       # insteadOf = https://github.com/RustSec/advisory-db
+
       "credential \"https://git.overleaf.com\"" = {
         username = "lucasfa@correo.ugr.es";
         helper = "store";
       };
+
+      fetch.prune = "true";
+      fetch.prunetags = "true";
+
+      transfer.fsckobjects = "true";
+      fetch.fsckobjects = "true";
+      receive.fsckobjects = "true";
       "color \"diff-highlight\"" = {
         oldNormal = "red bold";
         oldHighlight = "red bold 52";
