@@ -42,20 +42,22 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # Development
     vim
+    tealdeer
+    nvd
+    nix-inspect
+    nixfmt-rfc-style
+    nixd
+    # System utilities
     gparted
     btrfs-progs
     ventoy-full
-    tealdeer
     dconf
     wl-clipboard
-    nvd
-    nix-inspect
-    #  wget
     dmidecode
     lshw
-
-    nixfmt-rfc-style
-    nixd
+    # User
+    element-web
   ];
 }
