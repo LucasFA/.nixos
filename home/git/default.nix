@@ -37,13 +37,14 @@ in
         autocrlf = "input";
         editor = "vim";
       };
-      init.defaultBranch = "main";
+      push.autoSetupRemote = "true";
       gpg.format = "ssh";
       commit = {
         verbose = true;
         # gpgSign = true;
       };
       color.ui = "true";
+      init.defaultBranch = "main";
 
       diff = {
         algorithm = "histogram";
