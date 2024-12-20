@@ -7,7 +7,7 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-hardware.url = "github:LucasFA/nixos-hardware/slimbook_hero";
+    nixos-hardware.url = "github:LucasFA/nixos-hardware/slimbook_hero-testing";
 
     # use the following for unstable:
     # nixpkgs.url = "nixpkgs/nixos-unstable";

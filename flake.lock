@@ -23,16 +23,16 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1734651168,
-        "narHash": "sha256-4eNp8FDx3R6RKiVv1bt1IdzG+nP6w/hdXD31QiuiYIc=",
+        "lastModified": 1734735015,
+        "narHash": "sha256-MdcdlYmu9aIdo/Mhhlc3q4qgOSTl3a3ITQcwfREdfUs=",
         "owner": "LucasFA",
         "repo": "nixos-hardware",
-        "rev": "d6cc71c834588bf751b9631e9dc438f18869bcf2",
+        "rev": "789027f4adecf01573a1d63545d08e6e7cd71b90",
         "type": "github"
       },
       "original": {
         "owner": "LucasFA",
-        "ref": "slimbook_hero",
+        "ref": "slimbook_hero-testing",
         "repo": "nixos-hardware",
         "type": "github"
       }
