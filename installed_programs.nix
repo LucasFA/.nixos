@@ -58,6 +58,8 @@
     dmidecode
     lshw
     # User
-    element-web
+    # element-web
+    # element-web-unwrapped
+    element-desktop
   ];
 }
