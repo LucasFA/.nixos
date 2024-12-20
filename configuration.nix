@@ -15,7 +15,9 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./hosts/slimbook-hero
+
     ./installed_programs.nix
+    ./nix.nix
   ];
 
   # Bootloader.
@@ -179,30 +181,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
-
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    persistent = true;
-    randomizedDelaySec = "30min";
-    options = "--delete-older-than 30d --max-jobs 2";
-  };
-  nix.optimise = {
-    automatic = true;
-    dates = [ "monthly" ];
-  };
-
-  # nix = {
-  #registry.nixpkgs.flake = pkgs;
-  #channel.enable = false;
-  #settings = {
-  # nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
-  #experimental-features = [ "nix-command" "flakes" ];
-  #};
-  # };
-  # environment.etc."nix/inputs/nixpkgs".source = "${pkgs}";
 }
