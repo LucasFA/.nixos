@@ -21,7 +21,7 @@
   services.btrfs.autoScrub = {
     enable = true;
     fileSystems = [ "/nix/" ];
-    interval = "1months";
+    interval = "monthly";
   };
   fileSystems."/mnt/data" = {
     device = "/dev/disk/by-uuid/0cf1fffe-2c1f-4c9a-b29b-5d63d22dd602";
