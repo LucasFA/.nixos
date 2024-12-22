@@ -13,6 +13,10 @@
   # services.xserver.videoDrivers = ["nvidia"]; #implied by nixos-hardware
 
   hardware.nvidia = {
+    powerManagement = {
+      enable = true;
+      finegrained = true;
+      };
     # Enable the Nvidia settings menu,
     # accessible via `nvidia-settings`.
     nvidiaSettings = true;
