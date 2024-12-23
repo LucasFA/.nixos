@@ -2,16 +2,25 @@
   pkgs,
   ...
 }:
-
+let 
+  confLimit = 25;
+in
 {
-  boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.loader.timeout = 2;
-  boot.loader.grub = {
+
+  boot.loader.systemd-boot = {
     enable = true;
+    editor = false;
+    memtest86.enable = true;
+    configurationLimit = confLimit;
+  };
+
+  boot.loader.grub = {
+    enable = false;
     copyKernels = false; # no need: uses them straight from /nix/store
-    configurationLimit = 25;
+    configurationLimit = confLimit;
     useOSProber = true;
     efiSupport = true;
     #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
