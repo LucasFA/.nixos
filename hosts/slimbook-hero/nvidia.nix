@@ -16,7 +16,7 @@
     powerManagement = {
       enable = true;
       finegrained = true;
-      };
+    };
     # Enable the Nvidia settings menu,
     # accessible via `nvidia-settings`.
     nvidiaSettings = true;
