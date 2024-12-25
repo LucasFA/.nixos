@@ -8,6 +8,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:LucasFA/nixos-hardware/slimbook_hero-testing";
+    my-nur-packages = {
+      url = "github:LucasFA/nur-packages";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # use the following for unstable:
     # nixpkgs.url = "nixpkgs/nixos-unstable";

@@ -21,6 +21,26 @@
         "type": "github"
       }
     },
+    "my-nur-packages": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1735150571,
+        "narHash": "sha256-bU7UxSzgEtvTlUMvno0KzIQS9mBKJdZ2hh5t5v6ddiQ=",
+        "owner": "LucasFA",
+        "repo": "nur-packages",
+        "rev": "478871d5d0ef073680a6a0fa9c8dfc66f5282b7c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LucasFA",
+        "repo": "nur-packages",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1734916558,
@@ -39,11 +59,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1734737257,
-        "narHash": "sha256-GIMyMt1pkkoXdCq9un859bX6YQZ/iYtukb9R5luazLM=",
+        "lastModified": 1734991663,
+        "narHash": "sha256-8T660guvdaOD+2/Cj970bWlQwAyZLKrrbkhYOFcY1YE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1c6e20d41d6a9c1d737945962160e8571df55daa",
+        "rev": "6c90912761c43e22b6fb000025ab96dd31c971ff",
         "type": "github"
       },
       "original": {
@@ -55,6 +75,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "my-nur-packages": "my-nur-packages",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs"
       }
