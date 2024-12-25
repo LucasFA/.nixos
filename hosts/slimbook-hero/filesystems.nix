@@ -20,7 +20,7 @@
   };
   services.btrfs.autoScrub = {
     enable = true;
-    fileSystems = [ "/nix/" ];
+    fileSystems = [ "/nix" ];
     interval = "monthly";
   };
   fileSystems."/mnt/data" = {
