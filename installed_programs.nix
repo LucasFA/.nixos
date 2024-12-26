@@ -61,5 +61,6 @@
     # element-web
     # element-web-unwrapped
     element-desktop
+    qbittorrent
   ];
 }
