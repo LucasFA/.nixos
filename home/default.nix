@@ -99,11 +99,6 @@
   };
   home.shellAliases = {
     nvidia-settings="nvidia-settings --config=\"$XDG_CONFIG_HOME\"/nvidia/settings";
-    gs="git status";
-
-    # ls="eza"
-    # ll="eza -alh"
-    # etree="eza --tree"
 };
 
   # This value determines the Home Manager release that your
