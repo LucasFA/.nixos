@@ -7,7 +7,7 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-hardware.url = "github:LucasFA/nixos-hardware/slimbook_hero-testing";
+    nixos-hardware.url = "github:LucasFA/nixos-hardware/slimbook_hero";
     my-nur-packages = {
       url = "github:LucasFA/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -52,7 +52,7 @@
       },
       "original": {
         "owner": "LucasFA",
-        "ref": "slimbook_hero-testing",
+        "ref": "slimbook_hero",
         "repo": "nixos-hardware",
         "type": "github"
       }
