@@ -5,13 +5,6 @@
   ...
 }:
 {
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
-
-  # services.xserver.videoDrivers = ["nvidia"]; #implied by nixos-hardware
-
   hardware.nvidia = {
     powerManagement = {
       enable = true;
