@@ -17,6 +17,12 @@ in
     configurationLimit = confLimit;
   };
 
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  #boot.kernelPackages = pkgs.linuxKernel_latest;
+  boot.kernel.sysctl."kernel.sysrq" = 1;
+
+  boot.kernelParams = [ ];
+
   boot.loader.grub = {
     enable = false;
     copyKernels = false; # no need: uses them straight from /nix/store
@@ -36,7 +42,4 @@ in
                       }
       		'';
   };
-
-  boot.kernelParams = [
-  ];
 }
