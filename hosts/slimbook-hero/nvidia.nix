@@ -5,6 +5,7 @@
   ...
 }:
 {
+  services.switcherooControl.enable = true;
   hardware.nvidia = {
     powerManagement = {
       enable = true;
