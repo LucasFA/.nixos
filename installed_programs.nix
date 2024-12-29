@@ -62,5 +62,6 @@
     # element-web-unwrapped
     element-desktop
     qbittorrent
+    discord
   ];
 }
