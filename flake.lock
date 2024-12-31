@@ -72,12 +72,29 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-lucasfa": {
+      "locked": {
+        "lastModified": 1735667105,
+        "narHash": "sha256-h8mLa+xVAGQzWadqJCurBbzJXd4tA6iG2SUlG25+aMo=",
+        "owner": "LucasFA",
+        "repo": "nixpkgs",
+        "rev": "8cd76a09e422eaef25abd2837beae39d02850bf6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LucasFA",
+        "ref": "nixos-24.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "my-nur-packages": "my-nur-packages",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-lucasfa": "nixpkgs-lucasfa"
       }
     }
   },

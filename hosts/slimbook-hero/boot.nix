@@ -1,14 +1,31 @@
 {
   config,
   pkgs,
+  pkgs-lucasfa,
   ...
 }:
-let 
+let
   confLimit = 25;
+  pkgs-lucasfa = import (/home/lucasfa/dev/nixpkgs);
 in
 {
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
-  boot.extraModulePackages = with config.boot.kernelPackages; [ qc71_laptop ];
+  boot = {
+    kernelPackages = pkgs.wip.linuxPackages_6_6;
+    extraModulePackages = with config.boot.kernelPackages; [ qc71_slimbook_laptop ];
+  };
+  nixpkgs.config = {
+    packageOverrides = pkgs: {
+      wip = pkgs-lucasfa #import (builtins.fetchGit {
+      { config = config.nixpkgs.config; };
+        # url = "/home/lucasfa/dev/nixpkgs";
+        #ref = "lucasfa_fork";
+        #rev = "b39ea173481341a13c7ca08b807adc4107f99f42";
+
+        #owner = "LucasFA";
+        #repo = "nixpkgs";
+        #hash = "sha256-0000000000";
+    };
+  };
   #pkgs.linuxKernel.packages.linux_6_6.qc71_laptop
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";

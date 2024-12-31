@@ -8,6 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:LucasFA/nixos-hardware/slimbook_hero";
+    nixpkgs-lucasfa.url = "github:LucasFA/nixpkgs/nixos-24.11";
     my-nur-packages = {
       url = "github:LucasFA/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +25,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-lucasfa,
       home-manager,
       nixos-hardware,
       ...
@@ -32,6 +34,7 @@
       system = "x86_64-linux";
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
+      pkgs-lucasfa = nixpkgs-lucasfa.legacyPackages.${system};
     in
     {
       nixosConfigurations = {
@@ -41,6 +44,9 @@
             ./configuration.nix
             nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
           ];
+          #specialArgs = { 
+            #pkgs-lucasfa = import pkgs-lucasfa { inherit system; };
+          #};
         };
       };
       homeConfigurations = {

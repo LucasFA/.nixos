@@ -35,8 +35,8 @@
     gamemode.enable = true;
   };
   environment.shellAliases = {
-    nixos-rbb = "nixos-rebuild build --flake . && nvd diff /run/current-system result";
-    nixos-rbs = "nixos-rebuild switch --flake .";
+    nixos-rbb = "nixos-rebuild build --flake . $argv && nvd diff /run/current-system result";
+    #nixos-rbs = "nixos-rebuild switch --flake .";
   };
 
   # List packages installed in system profile. To search, run:
