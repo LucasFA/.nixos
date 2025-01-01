@@ -6,7 +6,13 @@
 }:
 let
   confLimit = 25;
-  pkgs-lucasfa = import (/home/lucasfa/dev/nixpkgs);
+  pkgs-lucasfa = import (pkgs.fetchFromGitHub{
+        owner = "LucasFA";
+        repo = "nixpkgs";
+        ##ref = "lucasfa_fork";
+        rev = "b39ea173481341a13c7ca08b807adc4107f99f42";
+        hash = "sha256-45ED2m2BOxfCB7XOkULcTDlSw2lf1IYzyC9pUC4JWIU=";
+        }) { inherit system; };
 in
 {
   boot = {
@@ -15,15 +21,7 @@ in
   };
   nixpkgs.config = {
     packageOverrides = pkgs: {
-      wip = pkgs-lucasfa #import (builtins.fetchGit {
-      { config = config.nixpkgs.config; };
-        # url = "/home/lucasfa/dev/nixpkgs";
-        #ref = "lucasfa_fork";
-        #rev = "b39ea173481341a13c7ca08b807adc4107f99f42";
-
-        #owner = "LucasFA";
-        #repo = "nixpkgs";
-        #hash = "sha256-0000000000";
+      wip = pkgs-lucasfa { config = config.nixpkgs.config; };
     };
   };
   #pkgs.linuxKernel.packages.linux_6_6.qc71_laptop

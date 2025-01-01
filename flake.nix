@@ -44,9 +44,9 @@
             ./configuration.nix
             nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
           ];
-          #specialArgs = { 
-            #pkgs-lucasfa = import pkgs-lucasfa { inherit system; };
-          #};
+          specialArgs = { 
+            pkgs-lucasfa = import pkgs-lucasfa { inherit system; };
+          };
         };
       };
       homeConfigurations = {
