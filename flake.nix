@@ -33,8 +33,7 @@
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
-      pkgs = nixpkgs.legacyPackages.${system};
-      pkgs-lucasfa = nixpkgs-lucasfa.legacyPackages.${system};
+      pkgs = nixpkgs-lucasfa.legacyPackages.${system};
     in
     {
       nixosConfigurations = {
@@ -44,9 +43,6 @@
             ./configuration.nix
             nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
           ];
-          #specialArgs = { 
-            #pkgs-lucasfa = import pkgs-lucasfa { inherit system; };
-          #};
         };
       };
       homeConfigurations = {
