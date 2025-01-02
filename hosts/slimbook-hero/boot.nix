@@ -9,7 +9,7 @@ in
 {
   boot.kernelPackages = pkgs.linuxPackages_6_6;
   boot.extraModulePackages = with config.boot.kernelPackages; [ qc71_laptop ];
-  #pkgs.linuxKernel.packages.linux_6_6.qc71_laptop
+
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.loader.timeout = 2;

@@ -63,5 +63,6 @@
     element-desktop
     qbittorrent
     discord
+    telegram-desktop
   ];
 }
