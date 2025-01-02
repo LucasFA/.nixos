@@ -34,6 +34,6 @@
   fileSystems."/home/lucasfa/games" = {
     mountPoint = "/home/lucasfa/games";
     device = "/mnt/data/games";
-    options = [ "bind" ];
+    options = [ "bind" "noatime" ];
   };
 }
