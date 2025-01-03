@@ -15,9 +15,9 @@
     ./hardware-configuration.nix
     ./hosts/slimbook-hero
 
-    ./core
-    ./installed_programs.nix
-    ./nix.nix
+    #./core
+    #./installed_programs.nix
+    #./nix.nix
   ];
 
   networking.hostName = "nixos"; # Define your hostname.
