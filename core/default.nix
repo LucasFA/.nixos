@@ -18,8 +18,8 @@
     flags = [
       "--update-input"
       "nixpkgs"
-      "-L"
+      "--print-build-logs"
     ];
-    randomizedDelaySec = "10min";
+    randomizedDelaySec = "15min";
   };
 }
