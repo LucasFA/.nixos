@@ -3,7 +3,7 @@
   pkgs,
   ...
 }:
-let 
+let
   confLimit = 25;
 in
 {

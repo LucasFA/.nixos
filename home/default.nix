@@ -83,12 +83,12 @@
     EDITOR = "vim";
 
     # XDG
-    XDG_CONFIG_HOME="$HOME/.config";
-    XDG_CACHE_HOME="$HOME/.cache";
-    XDG_DATA_HOME="$HOME/.local/share";
-    XDG_STATE_HOME="$HOME/.local/state";
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_CACHE_HOME = "$HOME/.cache";
+    XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_STATE_HOME = "$HOME/.local/state";
     # Not officially in the spec
-    XDG_BIN_HOME="$HOME/.local/bin";
+    XDG_BIN_HOME = "$HOME/.local/bin";
 
     # CARGO_HOME="$XDG_DATA_HOME"/cargo;
     # PATH="$CARGO_HOME/bin:$PATH"; # Well, I'll be installing stuff with nix rather than directly with cargo
@@ -99,8 +99,8 @@
     # DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker;
   };
   home.shellAliases = {
-    nvidia-settings="nvidia-settings --config=\"$XDG_CONFIG_HOME\"/nvidia/settings";
-};
+    nvidia-settings = "nvidia-settings --config=\"$XDG_CONFIG_HOME\"/nvidia/settings";
+  };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

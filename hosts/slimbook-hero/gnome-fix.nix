@@ -6,10 +6,10 @@
 # See https://discourse.nixos.org/t/suspend-resume-cycling-on-system-resume/32322/12
 {
   systemd = {
-     services."gnome-suspend" = {
+    services."gnome-suspend" = {
       description = "suspend gnome shell";
       before = [
-        "systemd-suspend.service" 
+        "systemd-suspend.service"
         "systemd-hibernate.service"
         "nvidia-suspend.service"
         "nvidia-hibernate.service"
@@ -26,7 +26,7 @@
     services."gnome-resume" = {
       description = "resume gnome shell";
       after = [
-        "systemd-suspend.service" 
+        "systemd-suspend.service"
         "systemd-hibernate.service"
         "nvidia-resume.service"
       ];

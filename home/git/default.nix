@@ -15,7 +15,7 @@ let
 in
 {
   #home.file."${config.xdg.configHome}/git" = {
-    #source = ./ignore;
+  #source = ./ignore;
   #};
   programs.git = {
     enable = true;

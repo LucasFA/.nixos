@@ -5,6 +5,6 @@
     fish.enable = true;
   };
   home.shellAliases = {
-    gs="git status";
-};
+    gs = "git status";
+  };
 }
