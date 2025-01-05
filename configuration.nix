@@ -14,12 +14,12 @@
   imports = [
     ./hosts/slimbook-hero
 
-    ./core 
+    ./core
     ./installed_programs.nix
     ./nix.nix
   ];
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "slimbook"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary

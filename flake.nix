@@ -43,7 +43,7 @@
     in
     {
       nixosConfigurations = {
-        nixos = lib.nixosSystem {
+        slimbook = lib.nixosSystem {
           inherit system;
           modules = [
             ./configuration.nix
