@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [
+    ./nixos_specific
     ./git
     ./zed
     ./shell
