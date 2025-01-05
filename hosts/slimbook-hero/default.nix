@@ -6,7 +6,7 @@
 {
   imports = [
     # nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
-    ../../hardware-configuration.nix
+    ./hardware-configuration.nix
     ./gnome-fix.nix
     ./boot.nix
     ./opinionated_slimbook.nix
