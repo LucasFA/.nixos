@@ -12,7 +12,6 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
     ./hosts/slimbook-hero
 
     ./core
