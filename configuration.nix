@@ -14,7 +14,7 @@
   imports = [
     ./hosts/slimbook-hero
 
-    ./core
+    ./core 
     ./installed_programs.nix
     ./nix.nix
   ];
