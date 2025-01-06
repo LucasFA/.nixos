@@ -38,6 +38,9 @@
     nixos-rbb = "nixos-rebuild build --flake . && nvd diff /run/current-system result";
     nixos-rbs = "nixos-rebuild switch --flake .";
   };
+  virtualisation = {
+    docker.enable = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
