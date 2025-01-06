@@ -2,8 +2,8 @@
   description = "My first flake!";
 
   inputs = {
-    nixpkgs.url = "git+file:///home/lucasfa/dev/nixpkgs?ref=testing-nixos-24.11";
-    #nixpkgs.url = "github:LucasFA/nixpkgs/testing-nixos-24.11";
+    nixpkgs.url = "git+file:///home/lucasfa/dev/nixpkgs?ref=testing-nixos-24.11-slimbook";
+    #nixpkgs.url = "github:LucasFA/nixpkgs/testing-nixos-24.11-slimbook";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";

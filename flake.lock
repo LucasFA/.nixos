@@ -59,18 +59,18 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1736179838,
-        "narHash": "sha256-JrFRMqzdXn4ltMGtMeR7cdeur0zNHes6tYaXbYKIdl4=",
-        "owner": "LucasFA",
-        "repo": "nixpkgs",
-        "rev": "b45ad8e081f70a3f304915b652cb198e79447384",
-        "type": "github"
+        "lastModified": 1736203073,
+        "narHash": "sha256-90+PIv5hgePfeBaEHu+xu0ju/g9o7NMvBaMnlq71kYY=",
+        "ref": "testing-nixos-24.11-slimbook",
+        "rev": "5fc570ad5d492364f18fce483b94c32dee616874",
+        "revCount": 734383,
+        "type": "git",
+        "url": "file:///home/lucasfa/dev/nixpkgs"
       },
       "original": {
-        "owner": "LucasFA",
-        "ref": "testing-nixos-24.11",
-        "repo": "nixpkgs",
-        "type": "github"
+        "ref": "testing-nixos-24.11-slimbook",
+        "type": "git",
+        "url": "file:///home/lucasfa/dev/nixpkgs"
       }
     },
     "nixpkgs_2": {
