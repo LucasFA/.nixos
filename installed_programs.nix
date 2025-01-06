@@ -52,6 +52,7 @@
     nix-inspect
     nixfmt-rfc-style
     nixd
+    distrobox
     # System utilities
     gparted
     btrfs-progs
