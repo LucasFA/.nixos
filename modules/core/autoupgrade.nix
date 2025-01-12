@@ -1,20 +1,11 @@
 {
+  config,
   lib,
   ...
 }:
 {
-  services.xserver = {
-    displayManager.gdm = {
-      enable = true;
-      wayland = true;
-    };
-    desktopManager = {
-      gnome.enable = true;
-    };
-  };
-
   system.autoUpgrade = {
-    enable = true;
+    enable = lib.mkDefault true;
     flake = "github:LucasFA/.nixos";
     flags = [
       "--update-input"
