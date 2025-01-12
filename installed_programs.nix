@@ -54,6 +54,7 @@
     nixd
     distrobox
     # System utilities
+    nix-output-monitor
     gparted
     btrfs-progs
     ventoy-full
