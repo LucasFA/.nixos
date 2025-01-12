@@ -11,15 +11,7 @@
 }:
 
 {
-  imports = [
-    ./hosts/slimbook-hero
 
-    ./core
-    ./installed_programs.nix
-    ./nix.nix
-  ];
-
-  networking.hostName = "slimbook"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -28,24 +20,6 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "Atlantic/Canary";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "es_ES.UTF-8";
-    LC_IDENTIFICATION = "es_ES.UTF-8";
-    LC_MEASUREMENT = "es_ES.UTF-8";
-    LC_MONETARY = "es_ES.UTF-8";
-    LC_NAME = "es_ES.UTF-8";
-    LC_NUMERIC = "es_ES.UTF-8";
-    LC_PAPER = "es_ES.UTF-8";
-    LC_TELEPHONE = "es_ES.UTF-8";
-    LC_TIME = "es_ES.UTF-8";
-  };
 
   # Enable the X11 windowing system.
   services.xserver = {
@@ -99,19 +73,6 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.gnome.excludePackages =
-    (with pkgs; [
-      gnome-photos
-      gnome-tour
-      gedit
-    ])
-    ++ (with pkgs; [
-      # gnome.* pkgs
-      gnome-music
-      epiphany # web browser
-      totem # video player
-      geary # email reader
-    ]);
   environment.sessionVariables = {
     # Make flatpak work, see https://wiki.nixos.org/wiki/Flatpak#Usage
     # Not needed in GNOME. For the possibility of changing to another DE or a WM, keep it.
