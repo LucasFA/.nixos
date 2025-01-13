@@ -11,4 +11,7 @@
     memoryPercent = 90;
     algorithm = "zstd";
   };
+  boot.kernel.sysctl = {
+    "vm.page-cluster" = 0;
+  };
 }
