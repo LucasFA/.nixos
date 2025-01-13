@@ -1,7 +1,5 @@
 {
   self,
-  # config,
-  # pkgs,
   ...
 }:
 {
@@ -12,7 +10,14 @@
       "nix-command"
       "flakes"
     ];
+    # remove channels, use flakes
+    #registry.nixpkgs.flake = nixpkgs;
+    #channel.enable = false;
+    #settings.nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
   };
+  # https://github.com/NixOS/nix/issues/9574 # part of removing channels
+  #environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
+
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -25,11 +30,4 @@
     dates = [ "monthly" ];
   };
 
-  # nix = {
-  #registry.nixpkgs.flake = pkgs;
-  #settings = {
-  # nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
-  #};
-  # };
-  # environment.etc."nix/inputs/nixpkgs".source = "${pkgs}";
 }
