@@ -1,5 +1,4 @@
 {
-  inputs,
   lib,
   ...
 }:
@@ -16,6 +15,7 @@
 
   system.autoUpgrade = {
     enable = true;
+    flake = "github:LucasFA/.nixos";
     flags = [
       "--update-input"
       "nixpkgs"
