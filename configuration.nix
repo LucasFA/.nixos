@@ -64,12 +64,6 @@
       "wheel"
       "docker"
     ];
-    packages = with pkgs; [
-      # thunderbird
-      mpv
-      gnome-tweaks
-      spotify
-    ];
   };
 
   # Allow unfree packages

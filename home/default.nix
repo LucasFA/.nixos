@@ -30,6 +30,10 @@
     # management
     gh
     chezmoi
+
+    # GUI packages
+    mpv
+    spotify
   ];
   programs = {
   };

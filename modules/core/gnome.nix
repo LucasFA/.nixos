@@ -18,6 +18,9 @@
     };
   };
 
+  users.users.lucasfa.packages = with pkgs; [
+    gnome-tweaks
+  ];
   environment.gnome.excludePackages = (
     with pkgs;
     [
