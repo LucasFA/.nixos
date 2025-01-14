@@ -5,13 +5,7 @@
     ./base-systems/personal 
     ./base-systems/gaming
     ./base-systems/development
+    ./misc.nix
   ];
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    ventoy-full
-    dmidecode
-    lshw
-  ];
 }
