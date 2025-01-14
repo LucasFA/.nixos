@@ -92,7 +92,6 @@
       mpv
       gnome-tweaks
       spotify
-      docker
     ];
   };
 
