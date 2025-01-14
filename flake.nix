@@ -46,7 +46,7 @@
         slimbook = lib.nixosSystem {
           inherit system;
           modules = [
-            ./configuration.nix
+            ./hosts/slimbook-hero
             nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
             home-manager.nixosModules.home-manager {
               home-manager.useGlobalPkgs = true;
