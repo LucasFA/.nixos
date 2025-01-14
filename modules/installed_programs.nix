@@ -1,11 +1,12 @@
 { pkgs, ... }:
 
 {
-  imports = [ ];
+  imports = [
+    ./base-systems/usage/personal 
+    ./base-systems/usage/gaming
+  ];
 
   services = {
-    flatpak.enable = true;
-    tailscale.enable = true;
     syncthing = {
       enable = true;
       dataDir = "/home/lucasfa/syncthing/";
@@ -18,22 +19,6 @@
     };
   };
 
-  programs = {
-    firefox.enable = true;
-    bash = {
-      interactiveShellInit = ''
-        if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-        then
-          shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-          exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
-        fi
-      '';
-    };
-    fish.enable = true;
-    htop.enable = true;
-    steam.enable = true;
-    gamemode.enable = true;
-  };
   environment.shellAliases = {
     nixos-rbb = "nixos-rebuild build --flake . && nvd diff /run/current-system result";
     nixos-rbs = "nixos-rebuild switch --flake .";
@@ -52,9 +37,10 @@
     nix-inspect
     nixfmt-rfc-style
     nixd
-    distrobox
-    # System utilities
     nix-output-monitor
+    distrobox
+
+    # System utilities
     gparted
     btrfs-progs
     ventoy-full
@@ -62,12 +48,6 @@
     wl-clipboard
     dmidecode
     lshw
-    # User
-    # element-web
-    # element-web-unwrapped
-    element-desktop
-    qbittorrent
-    discord
-    telegram-desktop
+
   ];
 }
