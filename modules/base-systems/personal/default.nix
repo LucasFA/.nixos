@@ -24,4 +24,17 @@
     discord
     telegram-desktop
   ];
+
+  services = {
+    syncthing = {
+      enable = true;
+      dataDir = "/home/lucasfa/syncthing/";
+      user = "lucasfa";
+      group = "users";
+      openDefaultPorts = true;
+      guiAddress = "127.0.0.1:8384";
+      overrideDevices = false; # These
+      overrideFolders = false; # two settings permit imperative folder declaration
+    };
+  };
 }

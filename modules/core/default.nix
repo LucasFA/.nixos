@@ -34,4 +34,10 @@
     nix-output-monitor
     nixfmt-rfc-style
   ];
+
+  environment.shellAliases = {
+    nixos-rbb = "nixos-rebuild build --flake . && nvd diff /run/current-system result";
+    nixos-rbs = "nixos-rebuild switch --flake .";
+  };
+
 }
