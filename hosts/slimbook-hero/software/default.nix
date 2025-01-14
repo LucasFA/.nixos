@@ -6,7 +6,10 @@
 {
   imports = [
     ../../../modules/core
-    ../../../modules/installed_programs.nix
+    ../../../modules/base-systems/personal
+    ../../../modules/base-systems/gaming
+    ../../../modules/base-systems/development
+    ../../../modules/misc.nix
   ];
 
   networking.hostName = "slimbook";
