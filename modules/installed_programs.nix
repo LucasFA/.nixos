@@ -2,8 +2,8 @@
 
 {
   imports = [
-    ./base-systems/usage/personal 
-    ./base-systems/usage/gaming
+    ./base-systems/personal 
+    ./base-systems/gaming
   ];
 
   services = {
