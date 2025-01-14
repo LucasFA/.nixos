@@ -55,6 +55,11 @@
             }
           ];
         };
+        server-hp-omen = lib.nixosSystem {
+          inherit system;
+          modules = [
+         ];
+        };
       };
       homeConfigurations = {
         lucasfa = home-manager.lib.homeManagerConfiguration {
