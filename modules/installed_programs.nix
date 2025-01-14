@@ -4,6 +4,7 @@
   imports = [
     ./base-systems/personal 
     ./base-systems/gaming
+    ./base-systems/development
   ];
 
   services = {
@@ -23,31 +24,12 @@
     nixos-rbb = "nixos-rebuild build --flake . && nvd diff /run/current-system result";
     nixos-rbs = "nixos-rebuild switch --flake .";
   };
-  virtualisation = {
-    docker.enable = true;
-  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # Development
-    vim
-    tealdeer
-    nvd
-    nix-inspect
-    nixfmt-rfc-style
-    nixd
-    nix-output-monitor
-    distrobox
-
-    # System utilities
-    gparted
-    btrfs-progs
     ventoy-full
-    dconf
-    wl-clipboard
     dmidecode
     lshw
-
   ];
 }
