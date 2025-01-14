@@ -7,7 +7,6 @@
   imports = [
     ../../modules/core
     ../../modules/installed_programs.nix
-    ../../modules/nix.nix
 
     ./hardware-configuration.nix
     ./boot.nix

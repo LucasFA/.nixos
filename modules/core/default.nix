@@ -6,6 +6,7 @@
   imports = [
     ./locale.nix
     ./autoupgrade.nix
-    ./gnome.nix
+    ./gnome
+    ./nix.nix
   ];
 }
