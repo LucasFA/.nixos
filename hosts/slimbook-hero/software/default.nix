@@ -1,4 +1,3 @@
-
 {
   pkgs,
   ...
@@ -22,7 +21,6 @@
     };
   };
 
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lucasfa = {
     isNormalUser = true;
@@ -33,7 +31,6 @@
       "docker"
     ];
   };
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

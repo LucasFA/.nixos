@@ -48,7 +48,8 @@
           modules = [
             ./hosts/slimbook-hero
             nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
-            home-manager.nixosModules.home-manager {
+            home-manager.nixosModules.home-manager
+            {
               home-manager.useGlobalPkgs = true;
               home-manager.users.lucasfa = import ./home;
             }
