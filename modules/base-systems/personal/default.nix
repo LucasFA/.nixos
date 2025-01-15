@@ -1,13 +1,10 @@
 { pkgs, ... }:
 
 {
-  services = {
-    flatpak.enable = true;
-    tailscale.enable = true;
-  };
-  programs = {
-    htop.enable = true;
-  };
+  imports = [
+    ../graphical
+  ];
+
   environment.systemPackages = with pkgs; [
     telegram-desktop
     element-desktop
@@ -15,6 +12,14 @@
     qbittorrent
     discord
   ];
+
+  services = {
+    flatpak.enable = true;
+    tailscale.enable = true;
+  };
+  programs = {
+    htop.enable = true;
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lucasfa = {
