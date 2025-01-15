@@ -3,6 +3,7 @@
 {
   imports = [
     ../graphical
+    ../../user
   ];
 
   environment.systemPackages = with pkgs; [
@@ -19,17 +20,6 @@
   };
   programs = {
     htop.enable = true;
-  };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.lucasfa = {
-    isNormalUser = true;
-    description = "Lucas";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ] ++ 
-      lib.optional config.virtualisation.docker.enable "docker";
   };
 
   services = {
