@@ -8,7 +8,6 @@
 {
   imports = [
     ../graphical
-    ../../user
   ];
 
   environment.systemPackages = with pkgs; [

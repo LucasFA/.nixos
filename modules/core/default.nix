@@ -5,6 +5,7 @@
 }:
 {
   imports = [
+    ./user
     ./locale.nix
     ./autoupgrade.nix
     ./nix.nix
