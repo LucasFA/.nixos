@@ -59,7 +59,7 @@
           inherit system;
           modules = [
             ./hosts/hp-omen
-         ];
+          ];
         };
       };
       homeConfigurations = {

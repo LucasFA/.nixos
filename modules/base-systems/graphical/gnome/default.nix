@@ -19,7 +19,6 @@
     };
   };
 
-
   users.users.lucasfa.packages = with pkgs; [
     gnome-tweaks
   ];
