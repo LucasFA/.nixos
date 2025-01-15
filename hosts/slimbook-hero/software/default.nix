@@ -1,5 +1,7 @@
 {
   pkgs,
+  lib,
+  config,
   ...
 }:
 
@@ -31,8 +33,8 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-      "docker"
-    ];
+    ] ++ 
+      lib.optional config.virtualisation.docker.enable "docker";
   };
 
   # This value determines the NixOS release from which the default
