@@ -59,6 +59,11 @@
           inherit system;
           modules = [
             ./hosts/hp-omen
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.users.lucasfa = import ./home;
+            }
           ];
         };
       };
