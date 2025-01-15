@@ -11,7 +11,7 @@
   ];
 
   services.tailscale.enable = true;
-  # networking.hostName = "server-hp-omen";
+  networking.hostName = "server-hp-omen";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
