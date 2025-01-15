@@ -13,6 +13,8 @@
   home.username = "lucasfa";
   home.homeDirectory = "/home/lucasfa";
 
+  services.caffeine.enable = true;
+
   home.packages = with pkgs; [
     # system utilities
     htop
