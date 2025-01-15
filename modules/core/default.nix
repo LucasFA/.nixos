@@ -11,17 +11,14 @@
     ./nix.nix
     ./networking.nix
     ./sound.nix
+    ./shells.nix
   ];
 
-  programs.firefox.enable = true;
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
   environment.systemPackages = with pkgs; [
     # Development
-    vim
-    tealdeer
-    nvd
     nix-inspect
 
     # System utilities
@@ -34,10 +31,4 @@
     nix-output-monitor
     nixfmt-rfc-style
   ];
-
-  environment.shellAliases = {
-    nixos-rbb = "nixos-rebuild build --flake . && nvd diff /run/current-system result";
-    nixos-rbs = "nixos-rebuild switch --flake .";
-  };
-
 }
