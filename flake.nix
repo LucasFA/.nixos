@@ -58,6 +58,7 @@
         server-hp-omen = lib.nixosSystem {
           inherit system;
           modules = [
+            ./hosts/hp-omen
          ];
         };
       };
