@@ -16,27 +16,6 @@
 
   networking.hostName = "slimbook";
 
-  # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true; # Yeah, no. Even using Wayland I need this. Just goes to TTY not an issue
-    # Configure keymap in X11
-    xkb = {
-      layout = "us";
-      variant = "";
-    };
-  };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.lucasfa = {
-    isNormalUser = true;
-    description = "Lucas";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ] ++ 
-      lib.optional config.virtualisation.docker.enable "docker";
-  };
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
