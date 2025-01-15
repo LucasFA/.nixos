@@ -21,8 +21,6 @@
     nix-inspect
 
     # System utilities
-    wl-clipboard
-    gparted
     btrfs-progs
     dconf
 
