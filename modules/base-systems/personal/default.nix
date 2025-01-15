@@ -19,10 +19,11 @@
     htop.enable = true;
   };
   environment.systemPackages = with pkgs; [
+    telegram-desktop
     element-desktop
+    signal-desktop
     qbittorrent
     discord
-    telegram-desktop
   ];
 
   # Enable the X11 windowing system.

@@ -8,6 +8,8 @@
   imports = [
     ./gnome-fix.nix
   ];
+
+  services.caffeine.enable = true;
   services.xserver = {
     displayManager.gdm = {
       enable = true;
@@ -17,6 +19,7 @@
       gnome.enable = true;
     };
   };
+
 
   users.users.lucasfa.packages = with pkgs; [
     gnome-tweaks
