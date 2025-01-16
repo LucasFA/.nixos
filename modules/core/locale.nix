@@ -6,7 +6,7 @@
 }:
 {
   # Set your time zone.
-  time.timeZone = lib.mkDefault "Atlantic/Canary";
+  time.timeZone = lib.mkOverride 900 "Atlantic/Canary"; # Higher preference than lib.MkDefault
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
