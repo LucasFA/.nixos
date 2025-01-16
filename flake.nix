@@ -59,6 +59,7 @@
           inherit system;
           modules = [
             ./hosts/hp-omen
+            nixos-hardware.nixosModules.omen-15-ce002ns
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
