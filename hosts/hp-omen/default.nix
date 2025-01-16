@@ -8,6 +8,7 @@
     ../../modules/core
     ./configuration.nix
     ./hardware-configuration.nix
+    ./wol.nix
   ];
 
   services.tailscale.enable = true;
