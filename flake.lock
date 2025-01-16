@@ -93,8 +93,29 @@
         "my-nur-packages": "my-nur-packages",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "srvos": "srvos",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "srvos": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1737032197,
+        "narHash": "sha256-ms2TO/G7MTzEgkNNFnUkOwz+TZbhurQvtSf4L4JXNXA=",
+        "owner": "nix-community",
+        "repo": "srvos",
+        "rev": "1b225750753c6063744abe78e9977e7814475ea5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "srvos",
+        "type": "github"
       }
     },
     "systems": {

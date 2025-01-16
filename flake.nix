@@ -12,6 +12,10 @@
       url = "github:LucasFA/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    srvos = {
+      url = "github:nix-community/srvos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     treefmt-nix.url = "github:numtide/treefmt-nix";
 
     # use the following for unstable:
@@ -27,6 +31,7 @@
       nixpkgs,
       home-manager,
       nixos-hardware,
+      srvos,
       systems,
       treefmt-nix,
       ...
@@ -60,6 +65,9 @@
           modules = [
             ./hosts/hp-omen
             nixos-hardware.nixosModules.omen-15-ce002ns
+            srvos.nixosModules.common
+            srvos.nixosModules.server
+            srvos.nixosModules.mixins-systemd-boot
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
