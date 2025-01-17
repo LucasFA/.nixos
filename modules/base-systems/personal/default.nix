@@ -24,6 +24,11 @@
   };
   programs = {
     htop.enable = true;
+    autofirma = {
+      enable = true;
+      # firefoxIntegration.enable = true;  # Let Firefox use AutoFirma
+    };
+    # configuradorfnmt.enable = true;
   };
 
   services = {

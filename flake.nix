@@ -8,6 +8,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:LucasFA/nixos-hardware";
+    autofirma-nix = {
+      url = "github:nix-community/autofirma-nix/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     my-nur-packages = {
       url = "github:LucasFA/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,6 +36,7 @@
       home-manager,
       nixos-hardware,
       srvos,
+      autofirma-nix,
       systems,
       treefmt-nix,
       ...
@@ -55,6 +60,7 @@
             nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
             srvos.nixosModules.common
             srvos.nixosModules.mixins-systemd-boot
+            autofirma-nix.nixosModules.default
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
