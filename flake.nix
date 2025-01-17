@@ -53,6 +53,8 @@
           modules = [
             ./hosts/slimbook-hero
             nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
+            srvos.nixosModules.common
+            srvos.nixosModules.mixins-systemd-boot
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
