@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [
+    ./gnome
     ./nixos_specific
     ./git
     ./zed
@@ -12,8 +13,6 @@
   # paths it should manage.
   home.username = "lucasfa";
   home.homeDirectory = "/home/lucasfa";
-
-  services.caffeine.enable = true;
 
   home.packages = with pkgs; [
     # system utilities
