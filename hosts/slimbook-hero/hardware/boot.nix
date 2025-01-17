@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -12,7 +13,7 @@ in
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.loader.timeout = 2;
+  boot.loader.timeout = lib.mkForce 1;
 
   boot.loader.systemd-boot = {
     enable = true;
