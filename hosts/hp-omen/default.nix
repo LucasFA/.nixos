@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 {
@@ -11,7 +12,8 @@
     ./wol.nix
   ];
 
-  services.tailscale.enable = true;
+  services.tailscale.enable = lib.mkForce true; # #### This settings allows to have no SSH keys for root or wheel group
+  users.allowNoPasswordLogin = true; # ### therefore, force tailscale: very dangerous otherwise
   networking.hostName = "server-hp-omen";
 
   # This value determines the NixOS release from which the default
