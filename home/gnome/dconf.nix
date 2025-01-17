@@ -164,7 +164,7 @@ with lib.hm.gvariant;
       enable-hot-corners = false;
       font-antialiasing = "grayscale";
       show-battery-percentage = true;
-      text-scaling-factor = 1.32;
+      text-scaling-factor = 1.25;
     };
 
     "org/gnome/desktop/notifications" = {
