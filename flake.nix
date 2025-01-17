@@ -20,7 +20,10 @@
       url = "github:nix-community/srvos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # use the following for unstable:
     # nixpkgs.url = "nixpkgs/nixos-unstable";
