@@ -1,5 +1,6 @@
 {
   self,
+  lib,
   ...
 }:
 {
@@ -11,9 +12,9 @@
       "flakes"
     ];
     # remove channels, use flakes
-    #registry.nixpkgs.flake = nixpkgs;
+    # registry.nixpkgs.flake = "nixpkgs";
     #channel.enable = false;
-    #settings.nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
+    nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
   };
   # https://github.com/NixOS/nix/issues/9574 # part of removing channels
   #environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
