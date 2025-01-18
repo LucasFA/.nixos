@@ -14,6 +14,14 @@
     ./shells.nix
   ];
 
+  services.xserver = {
+    # Configure keymap in X11
+    xkb = {
+      layout = "us";
+      variant = "";
+    };
+  };
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
