@@ -7,5 +7,6 @@
   environment.systemPackages = with pkgs; [
     nixd
     distrobox
+    compose2nix
   ];
 }
