@@ -12,6 +12,7 @@
     ./networking.nix
     ./sound.nix
     ./shells.nix
+    ./utils.nix
   ];
 
   services.xserver = {
