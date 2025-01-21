@@ -86,6 +86,15 @@
             }
           ];
         };
+        live = nixpkgs.lib.nixosSystem {
+          # build ISO with `nix build .#nixosConfigurations.live.config.system.build.isoImage`
+          system = "x86_64-linux";
+          modules = [
+            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+            ./modules/core
+            ./hosts/live
+          ];
+        };
       };
       homeConfigurations = {
         lucasfa = home-manager.lib.homeManagerConfiguration {
