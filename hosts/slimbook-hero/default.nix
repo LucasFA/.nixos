@@ -5,6 +5,7 @@
 
 {
   imports = [
+    ../form-factor/laptop
     ./hardware
     ./software
   ];
