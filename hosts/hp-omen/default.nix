@@ -7,6 +7,7 @@
 
   imports = [
     ../../modules/core
+    ../../modules/base-systems/server
     ./configuration.nix
     ./hardware-configuration.nix
     ./wol.nix
