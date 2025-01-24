@@ -20,6 +20,10 @@
       url = "github:nix-community/srvos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    compose2nix = {
+      url = "github:aksiksi/compose2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,7 +37,7 @@
   };
 
   outputs =
-    {
+    inputs@{
       self,
       nixpkgs,
       home-manager,
@@ -72,7 +76,7 @@
           ];
         };
         server-hp-omen = lib.nixosSystem {
-          inherit system;
+          specialArgs = { inherit inputs system; };
           modules = [
             ./hosts/hp-omen
             nixos-hardware.nixosModules.omen-15-ce002ns
