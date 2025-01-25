@@ -9,4 +9,5 @@
       "wheel"
     ] ++ lib.optional config.virtualisation.docker.enable "docker";
   };
+  users.users.root.extraGroups = lib.optional config.virtualisation.docker.enable "docker";
 }
