@@ -79,6 +79,7 @@
           specialArgs = { inherit inputs system; };
           modules = [
             ./hosts/hp-omen
+            # /home/lucasfa/server/compose.nix
             nixos-hardware.nixosModules.omen-15-ce002ns
             srvos.nixosModules.common
             srvos.nixosModules.server
