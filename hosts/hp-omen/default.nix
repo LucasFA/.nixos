@@ -9,8 +9,9 @@
   imports = [
     ../../modules/core
     ../../modules/base-systems/server
-    ./configuration.nix
+    ./hardware
     ./hardware-configuration.nix
+    ./configuration.nix
     ./wol.nix
   ];
   environment.systemPackages = [
