@@ -4,6 +4,7 @@
 }:
 {
   environment.systemPackages = with pkgs; [
+    trash-cli
     smartmontools
     cryptsetup
   ];

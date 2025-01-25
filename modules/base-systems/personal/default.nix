@@ -16,6 +16,7 @@
     signal-desktop
     qbittorrent
     discord
+    jellyfin-media-player
   ];
 
   services = {
