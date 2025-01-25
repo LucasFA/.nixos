@@ -12,7 +12,10 @@
 
   services.btrfs.autoScrub = {
     enable = true;
-    fileSystems = [ "/nix" "/mnt/WD_8tb" ];
+    fileSystems = [
+      "/nix"
+      "/mnt/WD_8tb"
+    ];
     interval = "monthly";
   };
 
