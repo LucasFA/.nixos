@@ -14,6 +14,11 @@
     ./configuration.nix
     ./wol.nix
   ];
+
+  boot.kernel.sysctl = {
+    "vm.overcommit_memory" = 1;
+  };
+  hardware.nvidia-container-toolkit.enable = true;
   environment.systemPackages = [
     inputs.compose2nix.packages.x86_64-linux.default
   ];
