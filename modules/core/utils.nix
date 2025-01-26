@@ -8,4 +8,5 @@
     smartmontools
     cryptsetup
   ];
+  services.locate.enable = true;
 }
