@@ -30,7 +30,4 @@
     automatic = true;
     dates = [ "monthly" ];
   };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 }
