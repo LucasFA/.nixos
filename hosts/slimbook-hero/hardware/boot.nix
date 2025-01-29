@@ -2,14 +2,20 @@
   config,
   lib,
   pkgs,
+  kernel,
   ...
 }:
 let
   confLimit = 25;
+  qc71_laptop = pkgs.callPackage ./qc71_slimbook_laptop.nix {
+    # Make sure the module targets the same kernel as your system is using.
+    kernel = config.boot.kernelPackages.kernel;
+  };
 in
 {
   boot.kernelPackages = pkgs.linuxPackages_6_12;
-  # boot.extraModulePackages = with config.boot.kernelPackages; [ qc71_laptop ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ qc71_laptop ];
+
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
