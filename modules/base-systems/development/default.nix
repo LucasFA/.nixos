@@ -8,5 +8,6 @@
     nixd
     distrobox
     compose2nix
+    licensee
   ];
 }
