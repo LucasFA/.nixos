@@ -12,6 +12,7 @@
     ../../../modules/base-systems/work
     ../../../modules/base-systems/gaming
     ../../../modules/base-systems/development
+    ../../../modules/borgbackup/client.nix
     ../../../modules/misc.nix
   ];
 
