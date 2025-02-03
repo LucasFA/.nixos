@@ -14,6 +14,7 @@
     ./configuration.nix
     ./wol.nix
   ];
+  services.hdapsd.enable = false;
 
   boot.kernel.sysctl = {
     "vm.overcommit_memory" = 1;
