@@ -16,7 +16,6 @@ in
   boot.extraModulePackages = with config.boot.kernelPackages; [ qc71_slimbook_laptop ];
   boot.kernelModules = [ "qc71_laptop" ];
 
-
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.loader.timeout = lib.mkForce 1;
