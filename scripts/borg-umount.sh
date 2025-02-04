@@ -1,1 +1,1 @@
-borg-job-home-lucafa umount borgtest && rmdir borgtest
+sudo borg-job-system umount borgtest && sudo rmdir borgtest

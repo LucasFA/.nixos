@@ -1,1 +1,1 @@
-mkdir borgtest && borg-job-home-lucafa mount borg@server-hp-omen:/mnt/WD_8tb/server/data/borg/home-lucasfa-slimbook ./borgtest/
+sudo mkdir borgtest && sudo borg-job-system mount borg@server-hp-omen:/mnt/WD_8tb/server/data/borg/slimbook ./borgtest/
