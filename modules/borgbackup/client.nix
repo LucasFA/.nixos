@@ -23,6 +23,7 @@ let
     ++ [
       "/root/.cache"
       "/var/lib/docker"
+      "/var/lib/flatpak"
       "/var/log/journal"
       "/var/cache"
       "/var/tmp"
