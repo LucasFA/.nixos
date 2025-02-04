@@ -60,8 +60,8 @@ in
   imports = [
     ./persistent.nix
   ];
-  services.borgbackup.jobs.home-lucafa = mkDailyBorgJob [ "/home/lucasfa" ];
   services.borgbackup.jobs.system = mkDailyBorgJob [
+    "/home/lucasfa"
     "/var"
     "/root"
   ];

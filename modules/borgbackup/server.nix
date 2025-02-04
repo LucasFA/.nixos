@@ -18,5 +18,4 @@ in
     publicKey = slimbook_borg_ssh_key;
   };
   services.borgbackup.repos.slimbook = mkRepo "/mnt/WD_8tb/server/data/borg/slimbook";
-  services.borgbackup.repos.home-lucasfa = mkRepo "/mnt/WD_8tb/server/data/borg/home-lucasfa-slimbook";
 }
