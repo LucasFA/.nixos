@@ -27,6 +27,9 @@ let
   ];
 in
 {
+  imports = [
+    ./persistent.nix
+  ];
   services.borgbackup.jobs.home-lucafa = {
     paths = [ "/home/lucasfa" ];
     exclude = excludeList;
@@ -40,7 +43,7 @@ in
     environment.BORG_EXIT_CODES = "modern";
     compression = "auto,zstd";
 
-    startAt = "hourly";
+    startAt = "daily";
     prune.keep = {
       within = "3d";
       daily = 7;
