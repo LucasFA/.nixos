@@ -25,7 +25,7 @@
   ];
   services.tailscale.enable = lib.mkForce true; # #### allowNoPasswordLogin allows to have no SSH keys for root or any
   users.allowNoPasswordLogin = true; # ### wheel group user. Therefore, force tailscale: otherwise locked out
-  services.openssh.enable = lib.mkForce false; # Rely exclusively on tailscale
+  # services.openssh.enable = lib.mkForce false; # Rely exclusively on tailscale
   networking.hostName = "server-hp-omen";
 
   # This value determines the NixOS release from which the default
