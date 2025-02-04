@@ -38,7 +38,7 @@ let
       paths = paths;
       exclude = excludeList;
       doInit = true;
-      repo = "ssh://borg@server-hp-omen:22/mnt/WD_8tb/server/data/borg/home-lucasfa-slimbook";
+      repo = "ssh://borg@server-hp-omen:22/mnt/WD_8tb/server/data/borg/slimbook";
       encryption = {
         mode = "repokey-blake2";
         passphrase = "prolonged ranting unhinge surviving herself energetic grievous reimburse trophy undermost enrage outmost";

@@ -11,10 +11,10 @@ in
     hostNames = [ "slimbook" ];
     publicKey = slimbook_borg_ssh_key;
   };
-  services.borgbackup.repos.home-lucafa = {
+  services.borgbackup.repos.slimbook = {
     authorizedKeys = [
       slimbook_borg_ssh_key
     ];
-    path = "/mnt/WD_8tb/server/data/borg/home-lucasfa-slimbook";
+    path = "/mnt/WD_8tb/server/data/borg/slimbook";
   };
 }
