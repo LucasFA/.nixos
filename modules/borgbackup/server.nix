@@ -4,7 +4,7 @@
   ...
 }:
 let
-  slimbook_borg_ssh_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAEwhJlxsj16mbf4OwTsGYlFD1uLMAwpWGQ7YGy70Fwp lucasfa@slimbook Backup of /home/lucasfa";
+  slimbook_borg_ssh_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM5kC93c4adHZUbRiSiGNAhb48UEQF73UoLsBg1SWT5j root@slimbook Borg backup of /home/lucasfa";
 in
 {
   programs.ssh.knownHosts."slimbook" = {
