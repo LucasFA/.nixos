@@ -50,7 +50,7 @@ let
     {
       paths = paths;
       exclude = excludeList;
-      doInit = true;
+      doInit = false;
       repo = repo;
       encryption = {
         mode = "repokey-blake2";
