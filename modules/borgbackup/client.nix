@@ -46,6 +46,8 @@ let
       paths,
       startAt ? "daily",
       repo ? "ssh://borg@server-hp-omen:22/mnt/WD_8tb/server/data/borg/slimbook",
+      persistentTimer ? true,
+      removableDevice ? false,
     }:
     {
       paths = paths;
@@ -61,6 +63,8 @@ let
       compression = "auto,zstd";
 
       startAt = startAt;
+      persistentTimer = persistentTimer;
+      removableDevice = removableDevice;
       prune.keep = {
         within = "3d";
         daily = 7;
@@ -70,13 +74,12 @@ let
     };
 in
 {
-  imports = [
-    ./persistent.nix
-  ];
   services.borgbackup.jobs.system = mkDailyBorgJob defaultPaths;
   services.borgbackup.jobs.local_backup = mkBorgJob {
     paths = defaultPaths;
-    startAt = [ ];
+    startAt = [ ]; # Run only manually
     repo = "/run/media/lucasfa/WD/borg_backups/slimbook";
-  }; # Run only manually
+    removableDevice = true;
+    persistentTimer = false;
+  };
 }
