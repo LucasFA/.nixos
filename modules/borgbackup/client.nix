@@ -58,8 +58,11 @@ let
         mode = "repokey-blake2";
         passphrase = "prolonged ranting unhinge surviving herself energetic grievous reimburse trophy undermost enrage outmost";
       };
-      environment.BORG_RSH = "ssh -i /home/lucasfa/.ssh/id_ed25519_borg_home_lucasfa";
-      environment.BORG_EXIT_CODES = "modern";
+      environment = {
+        BORG_RSH = "ssh -i /home/lucasfa/.ssh/id_ed25519_borg_home_lucasfa";
+        BORG_EXIT_CODES = "modern";
+        # BORG_RELOCATED_REPO_ACCESS_IS_OK = "yes"; # for moved repo warning
+      };
       compression = "auto,zstd";
 
       startAt = startAt;
