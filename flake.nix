@@ -97,6 +97,7 @@
           modules = [
             (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
             ./modules/core
+            ./modules/base-systems/graphical
             ./hosts/live
           ];
         };
