@@ -9,6 +9,9 @@
   environment.systemPackages = with pkgs; [
     onlyoffice-desktopeditors
   ];
+  environment.shellAliases = {
+    "sf" = "npx @salesforce/cli";
+  };
 
   services = {
   };
