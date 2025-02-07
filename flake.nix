@@ -8,6 +8,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:LucasFA/nixos-hardware";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
     autofirma-nix = {
       url = "github:nix-community/autofirma-nix/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,6 +48,7 @@
       home-manager,
       nixos-hardware,
       srvos,
+      agenix,
       autofirma-nix,
       systems,
       treefmt-nix,
@@ -62,11 +68,13 @@
       nixosConfigurations = {
         slimbook = lib.nixosSystem {
           inherit system;
+          specialArgs = { inherit inputs; };
           modules = [
             ./hosts/slimbook-hero
             nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
             srvos.nixosModules.common
             srvos.nixosModules.mixins-systemd-boot
+            agenix.nixosModules.default
             autofirma-nix.nixosModules.default
             home-manager.nixosModules.home-manager
             {
