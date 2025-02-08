@@ -10,7 +10,8 @@
     inputs.agenix.packages."${system}".default
   ];
   age.identityPaths = [
-    "/home/lucasfa/.ssh/id_25519_lucasfa"
-    "/home/lucasfa/.ssh/id_25519"
+    "/home/lucasfa/.ssh/id_ed25519_lucasfa"
+    "/home/lucasfa/.ssh/id_ed25519"
+    "/etc/ssh/id_ed25519"
   ];
 }
