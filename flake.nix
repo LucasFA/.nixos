@@ -92,6 +92,7 @@
             srvos.nixosModules.common
             srvos.nixosModules.server
             srvos.nixosModules.mixins-systemd-boot
+            agenix.nixosModules.default
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -106,6 +107,7 @@
             (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
             ./modules/core
             ./modules/base-systems/graphical
+            agenix.nixosModules.default
             ./hosts/live
           ];
         };

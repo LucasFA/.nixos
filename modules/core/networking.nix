@@ -1,4 +1,5 @@
 {
+  config,
   ...
 }:
 {
@@ -16,4 +17,11 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
+
+  age.secrets.wifiPH.file = ./../../secrets/wifiPH.age;
+  networking.wireless.networks = {
+    MOVISTAR_PLUS_0723 = {
+      psk = config.age.secrets.wifiPH.path;
+    };
+  };
 }
