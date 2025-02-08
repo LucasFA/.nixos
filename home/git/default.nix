@@ -32,7 +32,7 @@ in
     aliases = gitAliases;
     extraConfig = {
       safe.directory = "/home/lucasfa/.nixos";
-      user.signingkey = "/home/lucasfa/.ssh/id_ed25519.pub";
+      user.signingkey = "/home/lucasfa/.ssh/id_ed25519_lucasfa.pub";
       core = {
         autocrlf = "input";
         editor = "vim";
