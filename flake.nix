@@ -102,6 +102,7 @@
         };
         live = nixpkgs.lib.nixosSystem {
           # build ISO with `nix build .#nixosConfigurations.live.config.system.build.isoImage`
+          specialArgs = { inherit inputs system; };
           system = "x86_64-linux";
           modules = [
             (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
