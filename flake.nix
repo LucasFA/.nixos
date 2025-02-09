@@ -118,14 +118,12 @@
           inherit pkgs;
           modules = [
             ./home
-            ./home/slimbook
           ];
         };
         "lucasfa@server-hp-omen" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
             ./home
-            ./home/server-hp-omen
           ];
         };
       };

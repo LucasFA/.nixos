@@ -26,7 +26,7 @@ in
       stripLeadingSymbols = false;
     };
     signing = {
-      signByDefault = true;
+      signByDefault = false;
       key = null;
     };
     aliases = gitAliases;
