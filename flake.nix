@@ -69,7 +69,7 @@
           inherit pkgs;
           modules = [
             ./home
-            ./home/server-hp-omen
+            "./home/${hostname}"
           ];
         };
     in

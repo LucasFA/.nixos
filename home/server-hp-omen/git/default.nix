@@ -7,7 +7,7 @@
 {
   programs.git = {
     extraConfig = {
-      user.signingKey = lib.mkForce "/home/lucasfa/.ssh/id_ed25519.pub";
+      user.signingKey = "/home/lucasfa/.ssh/id_ed25519";
     };
   };
 }
