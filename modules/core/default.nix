@@ -14,6 +14,7 @@
     ./shells.nix
     ./utils.nix
     ./nixpkgs.nix
+    ./agenix
   ];
 
   services.xserver = {

@@ -14,7 +14,6 @@
     ../../../modules/base-systems/development
     ../../../modules/borgbackup/client.nix
     ../../../modules/misc.nix
-    ../../../modules/agenix
   ];
 
   networking.hostName = "slimbook";
