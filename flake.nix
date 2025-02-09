@@ -117,6 +117,10 @@
           inherit pkgs;
           modules = [ ./home ];
         };
+        "lucasfa@server-hp-omen" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./home ./home/server-hp-omen ];
+        };
       };
       # formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
       # for `nix fmt`
