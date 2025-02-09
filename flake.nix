@@ -63,15 +63,6 @@
 
       # Eval the treefmt modules from ./modules/treefmt/default.nix
       treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./modules/treefmt);
-      mkHM =
-        user: hostname:
-        home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [
-            ./home
-            "./home/${hostname}"
-          ];
-        };
     in
     {
       nixosConfigurations = {
@@ -123,8 +114,20 @@
         };
       };
       homeConfigurations = {
-        "lucasfa@slimbook" = mkHM "lucasfa" "slimbook";
-        "lucasfa@server-hp-omen" = mkHM "lucasfa" "server-hp-omen";
+        "lucasfa@slimbook" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            ./home
+            ./home/slimbook
+          ];
+        };
+        "lucasfa@server-hp-omen" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            ./home
+            ./home/server-hp-omen
+          ];
+        };
       };
       # formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
       # for `nix fmt`
