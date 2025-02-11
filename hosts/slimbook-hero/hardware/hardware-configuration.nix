@@ -17,15 +17,20 @@
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "nvme"
+    "usb_storage"
+    "sd_mod"
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/adab2378-2d59-4a34-a631-c7707f623579";
+    device = "/dev/disk/by-uuid/ac9ca2e7-e9d6-40ea-843d-ae20b2480bd0";
     fsType = "ext4";
   };
+
+  boot.initrd.luks.devices."luks-cf2e118d-0c9b-4536-a99b-0096ba0b36ee".device =
+    "/dev/disk/by-uuid/cf2e118d-0c9b-4536-a99b-0096ba0b36ee";
 
   fileSystems."/boot/efi" = {
     device = "/dev/disk/by-uuid/5AAD-342F";
