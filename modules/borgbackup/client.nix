@@ -23,7 +23,6 @@ let
       ".npm/_cacache"
       "*/node_modules"
       "*.pyc"
-      "/home/lucasfa/dev/***/[.]git"
       "/home/lucasfa/games"
       "/home/*/.direnv"
       "/home/*/.cache"
