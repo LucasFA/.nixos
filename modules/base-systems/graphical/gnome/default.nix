@@ -7,6 +7,7 @@
 {
   imports = [
     ./gnome-fix.nix
+    ./keyring.nix
   ];
 
   services.xserver = {
