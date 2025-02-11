@@ -105,9 +105,8 @@
           specialArgs = { inherit inputs system; };
           system = "x86_64-linux";
           modules = [
-            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix")
             ./modules/core
-            ./modules/base-systems/graphical
             agenix.nixosModules.default
             ./hosts/live
           ];
