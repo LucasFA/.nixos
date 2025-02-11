@@ -19,6 +19,8 @@
     "nvme"
     "usb_storage"
     "sd_mod"
+    "aesni_intel"
+    "cryptd"
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
