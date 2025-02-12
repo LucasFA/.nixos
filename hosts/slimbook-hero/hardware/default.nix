@@ -10,5 +10,6 @@
     ./nvidia.nix
     ./filesystems.nix
     ./zram.nix
+    ./power.nix
   ];
 }
