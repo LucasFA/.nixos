@@ -18,6 +18,7 @@
   systemd.sleep.extraConfig = lib.mkForce ''
     AllowSuspend=yes
   '';
+  system.autoUpgrade.enable = false;
 
   boot.kernel.sysctl = {
     "vm.overcommit_memory" = 1;
