@@ -15,6 +15,9 @@
     ./wol.nix
   ];
   services.hdapsd.enable = false;
+  systemd.sleep.extraConfig = lib.mkForce ''
+    AllowSuspend=yes
+  '';
 
   boot.kernel.sysctl = {
     "vm.overcommit_memory" = 1;
