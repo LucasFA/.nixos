@@ -17,6 +17,7 @@
     ./agenix
   ];
 
+  services.thermald.enable = true;
   services.xserver = {
     # Configure keymap in X11
     xkb = {
