@@ -3,8 +3,10 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-24.11";
+    # nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
+      # url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:LucasFA/nixos-hardware";
@@ -15,6 +17,7 @@
     };
     autofirma-nix = {
       url = "github:nix-community/autofirma-nix/release-24.11";
+      # url = "github:nix-community/autofirma-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     my-nur-packages = {
@@ -39,6 +42,14 @@
 
     # or any branch you want:
     # nixpkgs.url = "nixpkgs/{BRANCH-NAME}";
+  };
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
   };
 
   outputs =
