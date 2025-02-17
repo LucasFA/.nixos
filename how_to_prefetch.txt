@@ -1,0 +1,2 @@
+Example:
+nix store prefetch-file --unpack https://github.com/Slimbook-Team/qc71_laptop/archive/refs/heads/master.zip
