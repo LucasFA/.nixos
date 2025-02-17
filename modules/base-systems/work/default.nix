@@ -8,6 +8,7 @@
 {
   environment.systemPackages = with pkgs; [
     onlyoffice-desktopeditors
+    nodejs_22
   ];
   environment.shellAliases = {
     "sf" = "npx @salesforce/cli";
