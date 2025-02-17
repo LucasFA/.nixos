@@ -13,8 +13,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "Slimbook-Team";
     repo = "qc71_laptop";
-    rev = "ebab4af0b2c5b162bb9f27c80cd284c36b8fb7a9";
-    hash = "sha256-sRvxcdocYKnwMH/qYkKj66uClI1bSmMSxXHrHsc7uco=";
+    rev = "f1475751a272a7cf78321f60390da6108b4b3904";
+    hash = "sha256-/D3/v0mKaExMlUnGGTtRDEXOlylMWYeylJih/gzqqGA=";
   };
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
