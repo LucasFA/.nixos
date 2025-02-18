@@ -8,6 +8,7 @@
 {
   environment.systemPackages = with pkgs; [
     onlyoffice-desktopeditors
+    libreoffice-qt
     nodejs_22
   ];
   environment.shellAliases = {

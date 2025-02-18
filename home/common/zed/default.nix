@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   programs.zed-editor = {
-    enable = true;
+    # enable = true;
     extensions = [ "nix" ];
     userSettings = {
       vim_mode = true;
