@@ -8,6 +8,7 @@
     ./shell
     ./vscode
     ./devtools
+    ./xdg-user
   ];
 
   # Home Manager needs a bit of information about you and the
