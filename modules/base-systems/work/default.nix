@@ -9,7 +9,7 @@
   environment.systemPackages = with pkgs; [
     onlyoffice-desktopeditors
     libreoffice-qt
-    nodejs_22
+    nodejs_20
   ];
   environment.shellAliases = {
     "sf" = "npx @salesforce/cli";
