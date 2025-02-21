@@ -10,6 +10,8 @@
     onlyoffice-desktopeditors
     libreoffice-qt
     nodejs_20
+    thunderbird
+    gnome-boxes
   ];
   environment.shellAliases = {
     "sf" = "npx @salesforce/cli";
