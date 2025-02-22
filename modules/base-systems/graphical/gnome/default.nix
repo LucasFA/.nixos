@@ -22,6 +22,7 @@
 
   users.users.lucasfa.packages = with pkgs; [
     gnome-tweaks
+    # ffmpegthumbnailer # thumbnails without totem installed
   ];
   environment.gnome.excludePackages = (
     with pkgs;
@@ -32,7 +33,7 @@
 
       gnome-music
       epiphany # web browser
-      totem # video player
+      # totem # video player and thumbnail generator
       geary # email reader
     ]
   );
