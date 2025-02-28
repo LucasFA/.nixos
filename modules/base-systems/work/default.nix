@@ -23,8 +23,6 @@
   programs.virt-manager.enable = true;
   users.users.lucasfa.extraGroups = [ "libvirtd" ];
 
-  services = {
-  };
   programs = {
     autofirma = {
       enable = lib.mkDefault true;
