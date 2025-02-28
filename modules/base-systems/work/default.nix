@@ -10,12 +10,18 @@
     onlyoffice-desktopeditors
     libreoffice-qt
     nodejs_20
+    uv
     thunderbird
+    evolution
     gnome-boxes
   ];
   environment.shellAliases = {
     "sf" = "npx @salesforce/cli";
   };
+
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+  users.users.lucasfa.extraGroups = [ "libvirtd" ];
 
   services = {
   };
