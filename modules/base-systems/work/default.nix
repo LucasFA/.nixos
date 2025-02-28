@@ -6,6 +6,9 @@
 }:
 
 {
+  imports = [
+    ./vm.nix
+  ];
   environment.systemPackages = with pkgs; [
     onlyoffice-desktopeditors
     libreoffice-qt
@@ -18,10 +21,6 @@
   environment.shellAliases = {
     "sf" = "npx @salesforce/cli";
   };
-
-  virtualisation.libvirtd.enable = true;
-  programs.virt-manager.enable = true;
-  users.users.lucasfa.extraGroups = [ "libvirtd" ];
 
   programs = {
     autofirma = {
