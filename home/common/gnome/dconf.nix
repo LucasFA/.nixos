@@ -121,7 +121,7 @@ with lib.hm.gvariant;
     "org/gnome/mutter" = {
       dynamic-workspaces = true;
       experimental-features = [ "scale-monitor-framebuffer" ];
-      workspaces-only-on-primary = true;
+      workspaces-only-on-primary = false;
     };
 
     "org/gnome/nautilus/window-state" = {
