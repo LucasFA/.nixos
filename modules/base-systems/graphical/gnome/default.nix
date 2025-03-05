@@ -24,6 +24,9 @@
     gnome-tweaks
     # ffmpegthumbnailer # thumbnails without totem installed
   ];
+  environment.systemPackages = with pkgs; [
+    libgsf
+  ];
   environment.gnome.excludePackages = (
     with pkgs;
     [
