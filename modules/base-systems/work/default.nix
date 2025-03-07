@@ -15,9 +15,12 @@
     nodejs_20
     uv
     thunderbird
-    evolution
     gnome-boxes
   ];
+  programs.evolution = {
+    enable = true;
+    plugins = [ pkgs.evolution-ews ];
+  };
   environment.shellAliases = {
     "sf" = "npx @salesforce/cli";
   };
