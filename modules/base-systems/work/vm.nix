@@ -14,7 +14,7 @@
       package = pkgs.qemu_kvm;
       ovmf = {
         enable = true;
-        packages = [pkgs.OVMFFull.fd];
+        packages = [ pkgs.OVMFFull.fd ];
       };
       swtpm.enable = true;
     };
@@ -24,7 +24,8 @@
     socat
     virt-manager
     virt-viewer
-    spice spice-gtk
+    spice
+    spice-gtk
     spice-protocol
     win-virtio
     win-spice
