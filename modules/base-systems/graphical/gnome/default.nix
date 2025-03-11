@@ -20,6 +20,11 @@
     };
   };
 
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.gnomeExtensions.gsconnect;
+  };
+
   users.users.lucasfa.packages = with pkgs; [
     gnome-tweaks
     # ffmpegthumbnailer # thumbnails without totem installed
