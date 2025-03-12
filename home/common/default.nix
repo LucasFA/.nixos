@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [
+    ./audio.nix
     ./gnome
     ./nixos_specific
     ./git
