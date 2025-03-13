@@ -11,7 +11,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    # telegram-desktop
+    telegram-desktop
     element-desktop
     signal-desktop
     qbittorrent
