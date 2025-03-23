@@ -36,11 +36,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1742530857,
-        "narHash": "sha256-M/8PLG23cSHrIf3anLr0qkkzoFX58N/1CYzTLnjvUX4=",
+        "lastModified": 1742617202,
+        "narHash": "sha256-SJ34dc4cmptEwYa/bubRpzE5IyplA/Qz6hh8+VfFeIU=",
         "owner": "nix-community",
         "repo": "autofirma-nix",
-        "rev": "bc600b5244a9b7ac8f83e676fba8eea337241b0b",
+        "rev": "4644512b0a367c6646d6139cc718bb24cb3027f5",
         "type": "github"
       },
       "original": {
@@ -167,11 +167,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1742234739,
-        "narHash": "sha256-zFL6zsf/5OztR1NSNQF33dvS1fL/BzVUjabZq4qrtY4=",
+        "lastModified": 1742655702,
+        "narHash": "sha256-jbqlw4sPArFtNtA1s3kLg7/A4fzP4GLk9bGbtUJg0JQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "f6af7280a3390e65c2ad8fd059cdc303426cbd59",
+        "rev": "0948aeedc296f964140d9429223c7e4a0702a1ff",
         "type": "github"
       },
       "original": {
