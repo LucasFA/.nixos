@@ -36,11 +36,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1742617202,
-        "narHash": "sha256-SJ34dc4cmptEwYa/bubRpzE5IyplA/Qz6hh8+VfFeIU=",
+        "lastModified": 1742876440,
+        "narHash": "sha256-ZM/fMpC8cHGl6KRBfc4FqEHsk+xvnZCM51SdiN4H9zc=",
         "owner": "nix-community",
         "repo": "autofirma-nix",
-        "rev": "4644512b0a367c6646d6139cc718bb24cb3027f5",
+        "rev": "4443787ebf081e0d8670b5544f1ca867861a1de1",
         "type": "github"
       },
       "original": {
@@ -205,11 +205,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1738191851,
-        "narHash": "sha256-P4vFfmT7BhLtDUT88riG/28tIvWXji8qc38L/vKuo9o=",
+        "lastModified": 1742744995,
+        "narHash": "sha256-UYGq9uiTfsVbz6TYuuF5EYivXm8Rw2eQuisC6WBu+dU=",
         "owner": "LucasFA",
         "repo": "nur-packages",
-        "rev": "16caafa1511dd07c4fa1f0f9fcba257b155c176a",
+        "rev": "f3e085432472aea6f3349dfabb7964e95621f973",
         "type": "github"
       },
       "original": {
@@ -258,11 +258,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1742512142,
-        "narHash": "sha256-8XfURTDxOm6+33swQJu/hx6xw1Tznl8vJJN5HwVqckg=",
+        "lastModified": 1742751704,
+        "narHash": "sha256-rBfc+H1dDBUQ2mgVITMGBPI1PGuCznf9rcWX/XIULyE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "7105ae3957700a9646cc4b766f5815b23ed0c682",
+        "rev": "f0946fa5f1fb876a9dc2e1850d9d3a4e3f914092",
         "type": "github"
       },
       "original": {
