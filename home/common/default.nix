@@ -35,10 +35,16 @@
     chezmoi
 
     # GUI packages
-    mpv
     spotify
   ];
   programs = {
+    mpv = {
+      enable = true;
+      scripts = [
+        pkgs.mpvScripts.mpv-cheatsheet # Show some simple mappings on '?'
+        pkgs.mpvScripts.uosc # Nicer UI
+      ];
+    };
   };
 
   #home.packages = [
