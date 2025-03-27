@@ -7,6 +7,10 @@
 
   nix = {
     settings = {
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
       keep-outputs = true;
       keep-derivations = true;
       experimental-features = [
