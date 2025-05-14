@@ -6,7 +6,8 @@
 }:
 {
   imports = [
-    ./gnome-fix.nix
+    ./sleep-fix.nix
+    ./fix-vid-properties.nix
     ./keyring.nix
   ];
 
