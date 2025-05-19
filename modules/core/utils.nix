@@ -8,6 +8,7 @@
     trash-cli
     smartmontools
     cryptsetup
+    bc
   ];
   services.locate.enable = true;
 }
