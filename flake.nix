@@ -126,18 +126,18 @@
         };
       };
       homeConfigurations = {
-        "lucasfa@slimbook" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [
-            ./home
-          ];
-        };
-        "lucasfa@server-hp-omen" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [
-            ./home
-          ];
-        };
+        # "lucasfa@slimbook" = home-manager.lib.homeManagerConfiguration {
+          # inherit pkgs;
+          # modules = [
+            # ./home
+          # ];
+        # };
+        # "lucasfa@server-hp-omen" = home-manager.lib.homeManagerConfiguration {
+          # inherit pkgs;
+          # modules = [
+            # ./home
+          # ];
+        # };
       };
       # formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
       # for `nix fmt`
