@@ -2,7 +2,7 @@
 {
   programs = {
     mangohud = {
-      enable = true;
+      enable = false;
       enableSessionWide = false;
     };
   };
