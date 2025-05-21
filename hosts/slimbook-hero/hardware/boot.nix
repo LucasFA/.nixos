@@ -21,11 +21,25 @@ in
   boot.loader.timeout = lib.mkForce 1;
 
   boot.loader.systemd-boot = {
-    enable = true;
+    #enable = true;
     editor = false;
     memtest86.enable = true;
     configurationLimit = confLimit;
   };
+  # Secure boot -- requires systemd-boot to work
+  environment.systemPackages = with pkgs; [
+    sbctl
+  ];
+  # Lanzaboote currently replaces the systemd-boot module.
+  # This setting is usually set to true in configuration.nix
+  # generated at installation time. So we force it to false
+  # for now.
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
+  
 
   # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   #boot.kernelPackages = pkgs.linuxKernel_latest;

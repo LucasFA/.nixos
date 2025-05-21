@@ -15,6 +15,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     autofirma-nix = {
       url = "github:nix-community/autofirma-nix/release-24.11";
       # url = "github:nix-community/autofirma-nix";
@@ -50,6 +54,7 @@
       home-manager,
       nixos-hardware,
       srvos,
+      lanzaboote,
       agenix,
       autofirma-nix,
       systems,
@@ -76,6 +81,7 @@
             nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
             srvos.nixosModules.common
             srvos.nixosModules.mixins-systemd-boot
+            lanzaboote.nixosModules.lanzaboote
             agenix.nixosModules.default
             autofirma-nix.nixosModules.default
             home-manager.nixosModules.home-manager
