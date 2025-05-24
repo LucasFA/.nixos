@@ -9,5 +9,6 @@
     distrobox
     compose2nix
     licensee
+    fd
   ];
 }
