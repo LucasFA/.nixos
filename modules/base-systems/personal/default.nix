@@ -34,7 +34,7 @@
 
   services = {
     syncthing = {
-      enable = true;
+      enable = false;
       dataDir = "/home/lucasfa/syncthing/";
       user = "lucasfa";
       group = "users";
