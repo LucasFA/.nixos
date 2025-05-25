@@ -10,5 +10,6 @@
     compose2nix
     licensee
     fd
+    bat
   ];
 }
