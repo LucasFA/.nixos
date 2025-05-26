@@ -39,6 +39,6 @@ let
       "/var/tmp"
       "/var/log"
     ];
-in 
+in
 {
 }
