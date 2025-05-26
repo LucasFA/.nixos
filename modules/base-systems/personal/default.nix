@@ -25,6 +25,8 @@
   };
   programs = {
     htop.enable = true;
+    kdeconnect.enable = true;
+    localsend.enable = true;
     autofirma = {
       enable = true;
       # firefoxIntegration.enable = true;  # Let Firefox use AutoFirma
