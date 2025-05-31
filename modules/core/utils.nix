@@ -5,6 +5,7 @@
 {
   environment.systemPackages = with pkgs; [
     dig
+    dust
     trash-cli
     smartmontools
     cryptsetup
