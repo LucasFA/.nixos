@@ -1,5 +1,6 @@
 { lib, ... }:
 {
+  # Allow unfree packages
   #nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate =
     pkg:
@@ -10,5 +11,6 @@
       "nvidia-settings"
       "spotify"
       "discord"
+      "unrar"
     ];
 }
