@@ -15,12 +15,12 @@
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
-#    extraConfig.pipewire = {
-#      "10-quantum-size" = {
-#        "context.properties" = {
-#          "default.clock.min-quantum" = 1024;
-#        };
-#      };
-#    };
+    #    extraConfig.pipewire = {
+    #      "10-quantum-size" = {
+    #        "context.properties" = {
+    #          "default.clock.min-quantum" = 1024;
+    #        };
+    #      };
+    #    };
   };
 }
