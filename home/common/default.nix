@@ -3,7 +3,7 @@
   imports = [
     ./audio.nix
     ./gnome
-    ./nixos_specific
+    ./mangohud
     ./git
     ./zed
     ./mpv
