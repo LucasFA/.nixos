@@ -6,6 +6,7 @@
     ./nixos_specific
     ./git
     ./zed
+    ./mpv
     ./shell
     ./vscode
     ./devtools
@@ -38,15 +39,6 @@
     # GUI packages
     spotify
   ];
-  programs = {
-    mpv = {
-      enable = true;
-      scripts = [
-        pkgs.mpvScripts.mpv-cheatsheet # Show some simple mappings on '?'
-        pkgs.mpvScripts.uosc # Nicer UI
-      ];
-    };
-  };
 
   #home.packages = [
   # # It is sometimes useful to fine-tune packages, for example, by applying
