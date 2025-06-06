@@ -12,4 +12,5 @@
     ./zram.nix
     ./power.nix
   ];
+  hardware.intelgpu.vaapiDriver = "intel-media-driver";
 }
