@@ -8,4 +8,5 @@
     enable = true;
     git = true;
   };
+  programs.yazi.enable = true;
 }
