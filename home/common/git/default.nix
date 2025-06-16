@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 let
   gitAliases = {
+    ul = "!git add flake.lock && git commit -m 'update lockfile' && git push";
     sync = "!git pull --rebase && git push";
     ovp = "!git commit --all --allow-empty-message -m '' && git sync";
     lg = "lg1";
