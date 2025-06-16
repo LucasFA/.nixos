@@ -7,12 +7,12 @@
 
 {
   zramSwap = {
-    enable = false;
-    memoryPercent = 75;
+    enable = true;
+    memoryPercent = 25;
     algorithm = "zstd";
   };
   boot.kernel.sysctl = {
     "vm.page-cluster" = 0;
-    "vm.swappiness" = 120;
+    "vm.swappiness" = 150;
   };
 }

@@ -12,16 +12,6 @@
       "lazytime"
     ];
   };
-  swapDevices = [
-    {
-      device = "/var/lib/swapfile";
-      size = 16 * 1024; # 16 GB
-    }
-  ];
-  boot.kernelParams = [
-    "zswap.enabled=1" # enables zswap
-    "zswap.max_pool_percent=25" # maximum percentage of RAM that zswap is allowed to use
-  ];
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/884ae108-21f0-4683-ad71-a39ccd45e910";
     fsType = "btrfs";
