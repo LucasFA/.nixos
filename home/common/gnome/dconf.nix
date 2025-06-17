@@ -6,6 +6,14 @@ with lib.hm.gvariant;
 {
   dconf.settings = {
     # manual
+    "org/gnome/desktop/break-reminders" = {
+      selected-breaks = [ "movement" ];
+    };
+    "org/gnome/desktop/break-reminders/movement" = {
+      durantion-seconds = 180;
+      interval-seconds = 2400;
+      play-sound = true;
+    };
     "org/gnome/desktop/datetime" = {
       automatic-timezone = true;
     };
@@ -130,7 +138,6 @@ with lib.hm.gvariant;
 
     "org/gnome/settings-daemon/plugins/color" = {
       night-light-enabled = true;
-      night-light-schedule-automatic = false;
     };
 
     "org/gnome/settings-daemon/plugins/power" = {
