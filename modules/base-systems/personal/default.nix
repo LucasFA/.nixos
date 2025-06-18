@@ -17,6 +17,7 @@
     qbittorrent
     discord
     jellyfin-media-player
+    rquickshare
   ];
 
   services = {
