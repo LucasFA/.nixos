@@ -2,8 +2,8 @@
 {
   services.upower = {
     enable = true;
-    percentageCritical = 10;
-    percentageAction = 8;
+    percentageCritical = 15;
+    percentageAction = 10;
     criticalPowerAction = "PowerOff";
   };
 }
