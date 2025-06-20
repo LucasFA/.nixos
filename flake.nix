@@ -16,8 +16,8 @@
       inputs.home-manager.follows = "home-manager";
     };
     autofirma-nix = {
-      url = "github:nix-community/autofirma-nix/release-24.11";
-      # url = "github:nix-community/autofirma-nix";
+      # url = "github:nix-community/autofirma-nix/release-24.11";
+      url = "github:nix-community/autofirma-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     my-nur-packages = {
