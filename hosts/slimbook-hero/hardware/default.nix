@@ -13,7 +13,4 @@
     ./power.nix
   ];
   hardware.intelgpu.vaapiDriver = "intel-media-driver";
-  systemd.sleep.extraConfig = ''
-    AllowSuspend=no
-  '';
 }
