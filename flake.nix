@@ -97,7 +97,7 @@
           modules = [
             ./hosts/nuc1
             # /home/lucasfa/server/compose.nix
-            # nixos-hardware.nixosModules.omen-15-ce002ns
+            nixos-hardware.nixosModules.intel-nuc-5i5ryb
             srvos.nixosModules.common
             #srvos.nixosModules.server
             # srvos.nixosModules.mixins-systemd-boot
