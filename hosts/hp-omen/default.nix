@@ -27,8 +27,11 @@
   environment.systemPackages = [
     inputs.compose2nix.packages.x86_64-linux.default
   ];
-  services.tailscale.enable = lib.mkForce true; # #### allowNoPasswordLogin allows to have no SSH keys for root or any
-  users.allowNoPasswordLogin = true; # ### wheel group user. Therefore, force tailscale: otherwise locked out
+
+  # #### allowNoPasswordLogin allows to have no SSH keys for root or any
+  # ### wheel group user. Therefore, force tailscale: otherwise you are locked out even with keyboard and monitor
+  services.tailscale.enable = lib.mkForce true;
+  users.allowNoPasswordLogin = true; # Read above!
   # services.openssh.enable = lib.mkForce false; # Rely exclusively on tailscale
   networking.hostName = "server-hp-omen";
 
