@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports = [
@@ -6,4 +6,5 @@
     # ../../forgejo
   ];
   virtualisation.docker.enable = true;
+  services.openssh.enable = lib.mkForce false
 }
