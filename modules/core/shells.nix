@@ -3,6 +3,8 @@
 
   environment.systemPackages = with pkgs; [
     vim
+    fd
+    ripgrep
     tealdeer
     nvd
   ];
