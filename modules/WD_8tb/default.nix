@@ -20,4 +20,11 @@
       "x-systemd.device-timeout=15s"
     ];
   };
+  fileSystems."/home/lucasfa/server/mounts" = {
+    mountPoint = "/home/lucasfa/server/mounts";
+    device = "/mnt/WD_8tb/server/config";
+    options = [
+      "bind"
+    ];
+  };
 }
