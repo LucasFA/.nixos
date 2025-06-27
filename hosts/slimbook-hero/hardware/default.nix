@@ -11,6 +11,7 @@
     ./filesystems.nix
     ./zram.nix
     ./power.nix
+    ./hdmi-disconnect
   ];
   hardware.intelgpu.vaapiDriver = "intel-media-driver";
 }
