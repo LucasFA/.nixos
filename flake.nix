@@ -9,6 +9,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager-stable = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-hardware.url = "github:LucasFA/nixos-hardware";
     agenix = {
       url = "github:ryantm/agenix";
@@ -49,6 +53,7 @@
       nixpkgs,
       nixpkgs-stable,
       home-manager,
+      home-manager-stable,
       nixos-hardware,
       srvos,
       agenix,
@@ -61,7 +66,6 @@
       system = "x86_64-linux";
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
-      lib-stable = nixpkgs-stable.lib;
       pkgs-stable = nixpkgs-stable.legacyPackages.${system};
       # Small tool to iterate over each systems
       eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
@@ -88,24 +92,24 @@
             }
           ];
         };
-        server-nuc1 = lib-stable.nixosSystem {
+        server-nuc1 = nixpkgs-stable.lib.nixosSystem {
           specialArgs = { inherit inputs system; };
           modules = [
             ./hosts/nuc1
             # /home/lucasfa/server/compose.nix
             # nixos-hardware.nixosModules.omen-15-ce002ns
             srvos.nixosModules.common
-            srvos.nixosModules.server
-            srvos.nixosModules.mixins-systemd-boot
+            #srvos.nixosModules.server
+            # srvos.nixosModules.mixins-systemd-boot
             agenix.nixosModules.default
-            home-manager.nixosModules.home-manager
+            home-manager-stable.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.users.lucasfa = import ./home;
             }
           ];
         };
-        server-hp-omen = lib-stable.nixosSystem {
+        server-hp-omen = nixpkgs-stable.lib.nixosSystem {
           specialArgs = { inherit inputs system; };
           modules = [
             ./hosts/hp-omen
@@ -115,14 +119,14 @@
             srvos.nixosModules.server
             srvos.nixosModules.mixins-systemd-boot
             agenix.nixosModules.default
-            home-manager.nixosModules.home-manager
+            home-manager-stable.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.users.lucasfa = import ./home;
             }
           ];
         };
-        live = lib-stable.nixosSystem {
+        live = nixpkgs-stable.lib.nixosSystem {
           # build ISO with `nix build .#nixosConfigurations.live.config.system.build.isoImage`
           specialArgs = { inherit inputs system; };
           system = "x86_64-linux";
