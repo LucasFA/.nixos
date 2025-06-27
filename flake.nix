@@ -2,7 +2,7 @@
   description = "My first flake!";
 
   inputs = {
-    # nixpkgs.url = "nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "nixpkgs/nixos-25.05";
     nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager = {
       # url = "github:nix-community/home-manager/release-25.05";
@@ -47,6 +47,7 @@
     inputs@{
       self,
       nixpkgs,
+      nixpkgs-stable,
       home-manager,
       nixos-hardware,
       srvos,
@@ -60,6 +61,8 @@
       system = "x86_64-linux";
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
+      lib-stable = nixpkgs-stable.lib;
+      pkgs-stable = nixpkgs-stable.legacyPackages.${system};
       # Small tool to iterate over each systems
       eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
 
@@ -85,7 +88,7 @@
             }
           ];
         };
-        server-hp-omen = lib.nixosSystem {
+        server-hp-omen = lib-stable.nixosSystem {
           specialArgs = { inherit inputs system; };
           modules = [
             ./hosts/hp-omen
@@ -102,12 +105,12 @@
             }
           ];
         };
-        live = nixpkgs.lib.nixosSystem {
+        live = lib-stable.nixosSystem {
           # build ISO with `nix build .#nixosConfigurations.live.config.system.build.isoImage`
           specialArgs = { inherit inputs system; };
           system = "x86_64-linux";
           modules = [
-            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix")
+            (nixpkgs-stable + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix")
             ./modules/core
             agenix.nixosModules.default
             ./hosts/live

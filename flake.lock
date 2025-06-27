@@ -342,6 +342,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1750838302,
+        "narHash": "sha256-aVkL3/yu50oQzi2YuKo0ceiCypVZpZXYd2P2p1FMJM4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "7284e2decc982b81a296ab35aa46e804baaa1cfe",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-25.05",
+        "type": "indirect"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1750741721,
@@ -388,6 +403,7 @@
         "my-nur-packages": "my-nur-packages",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs-stable": "nixpkgs-stable",
         "srvos": "srvos",
         "systems": "systems_2",
         "treefmt-nix": "treefmt-nix_2"
