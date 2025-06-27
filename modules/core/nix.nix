@@ -40,10 +40,10 @@
 
     gc = {
       automatic = true;
-      dates = "weekly";
+      dates = "monthly";
       persistent = true;
       randomizedDelaySec = "30min";
-      options = "--delete-older-than 14d --max-jobs 2";
+      options = "--delete-older-than 28d --max-jobs 2";
     };
     optimise = {
       automatic = true;
