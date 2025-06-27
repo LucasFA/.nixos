@@ -6,5 +6,5 @@
     # ../../forgejo
   ];
   virtualisation.docker.enable = true;
-  services.openssh.enable = lib.mkForce false
+  services.openssh.enable = lib.mkForce false;
 }
