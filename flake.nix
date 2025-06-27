@@ -88,6 +88,23 @@
             }
           ];
         };
+        server-nuc1 = lib-stable.nixosSystem {
+          specialArgs = { inherit inputs system; };
+          modules = [
+            ./hosts/nuc1
+            # /home/lucasfa/server/compose.nix
+            # nixos-hardware.nixosModules.omen-15-ce002ns
+            srvos.nixosModules.common
+            srvos.nixosModules.server
+            srvos.nixosModules.mixins-systemd-boot
+            agenix.nixosModules.default
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.users.lucasfa = import ./home;
+            }
+          ];
+        };
         server-hp-omen = lib-stable.nixosSystem {
           specialArgs = { inherit inputs system; };
           modules = [
