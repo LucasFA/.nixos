@@ -11,6 +11,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    spotify
     telegram-desktop
     element-desktop
     signal-desktop

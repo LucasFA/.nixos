@@ -37,7 +37,6 @@
     chezmoi
 
     # GUI packages
-    spotify
   ];
 
   #home.packages = [
