@@ -15,6 +15,7 @@
     ./utils.nix
     ./nixpkgs.nix
     ./agenix
+    ./printer.nix
   ];
 
   services.thermald.enable = true;

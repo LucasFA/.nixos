@@ -12,5 +12,6 @@
       "spotify"
       "discord"
       "unrar"
+      "hplip"
     ];
 }
