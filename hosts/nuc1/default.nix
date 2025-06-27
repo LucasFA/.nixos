@@ -9,7 +9,7 @@
   imports = [
     ./hardware-configuration.nix
     ./configuration.nix
-    ./hardware
+    ../../modules/WD_8tb
     ../../modules/core
   ];
 }

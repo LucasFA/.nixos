@@ -9,25 +9,9 @@
 }:
 
 {
-
-  services.btrfs.autoScrub = {
-    enable = true;
-    fileSystems = [
-      "/nix"
-      "/mnt/WD_8tb"
-    ];
-    interval = "monthly";
-  };
-
-  fileSystems."/mnt/WD_8tb" = {
-    device = "/dev/disk/by-uuid/a265d817-d3d2-4658-ac5c-a925e94c3232";
-    fsType = "btrfs";
-    options = [
-      "nofail"
-      "noatime"
-    ];
-  };
-
+  import = [
+    ../../../modules/WD_8tb
+  ];
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/e9407266-6514-4e96-8797-1667f344023c";
     fsType = "btrfs";

@@ -1,0 +1,22 @@
+{
+  ...
+}:
+
+{
+  services.btrfs.autoScrub = {
+    enable = true;
+    fileSystems = [
+      "/mnt/WD_8tb"
+    ];
+    interval = "monthly";
+  };
+
+  fileSystems."/mnt/WD_8tb" = {
+    device = "/dev/disk/by-uuid/a265d817-d3d2-4658-ac5c-a925e94c3232";
+    fsType = "btrfs";
+    options = [
+      "nofail"
+      "noatime"
+      "x-systemd.device-timeout=15s"
+    ];
+  };

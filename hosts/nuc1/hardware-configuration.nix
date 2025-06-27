@@ -31,15 +31,6 @@
     fsType = "ext4";
   };
 
-  fileSystems."/mnt/WD_8tb" = {
-    device = "/dev/disk/by-uuid/a265d817-d3d2-4658-ac5c-a925e94c3232";
-    fsType = "btrfs";
-    options = [
-      "nofail"
-      "noatime"
-    ];
-  };
-
   swapDevices = [
     { device = "/dev/disk/by-uuid/bf2e5a75-9a9f-4d01-b4bf-46b429c21b4b"; }
   ];
