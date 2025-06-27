@@ -9,6 +9,7 @@
   imports = [
     ./hardware-configuration.nix
     ./configuration.nix
+    ./hardware
     ../../modules/core
   ];
 }
