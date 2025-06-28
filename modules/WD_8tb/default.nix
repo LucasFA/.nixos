@@ -16,7 +16,7 @@
     fsType = "btrfs";
     options = [
       "nofail"
-      "noatime"
+      "lazytime"
       "x-systemd.device-timeout=15s"
     ];
   };
