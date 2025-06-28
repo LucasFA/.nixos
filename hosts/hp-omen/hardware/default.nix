@@ -9,7 +9,7 @@
 }:
 
 {
-  import = [
+  imports = [
     ../../../modules/WD_8tb
   ];
   fileSystems."/nix" = {
