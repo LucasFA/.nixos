@@ -10,15 +10,10 @@
 }:
 
 {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-  ];
-
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.grub.useOSProber = false;
 
   boot.loader.timeout = lib.mkForce 2;
 
@@ -41,13 +36,6 @@
 
   # Enable network manager applet
   programs.nm-applet.enable = true;
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the LXQT Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.lxqt.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -81,23 +69,8 @@
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "lucasfa";
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
-  ];
-
   # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
-  services.tailscale.enable = lib.mkForce true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
