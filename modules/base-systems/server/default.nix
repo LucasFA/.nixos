@@ -7,4 +7,5 @@
   ];
   virtualisation.docker.enable = true;
   services.openssh.enable = lib.mkForce false;
+  networking.networkmanager.ethernet.macAddress = "stable";
 }
