@@ -20,7 +20,10 @@
     jellyfin-media-player
     rquickshare
   ];
-  networking.firewall.allowedUDPPorts = [ 6882 6771 ]; # qBittorrent and Local peer discovery
+  networking.firewall.allowedUDPPorts = [
+    6882
+    6771
+  ]; # qBittorrent and Local peer discovery
   networking.firewall.allowedTCPPorts = [ 6882 ];
 
   services = {
