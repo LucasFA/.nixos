@@ -7,7 +7,7 @@ with lib.hm.gvariant;
   dconf.settings = {
     # manual
     "org/gnome/desktop/break-reminders" = {
-      selected-breaks = [ "movement" ];
+      selected-breaks = [ ];
     };
     "org/gnome/desktop/break-reminders/movement" = {
       durantion-seconds = 180;
