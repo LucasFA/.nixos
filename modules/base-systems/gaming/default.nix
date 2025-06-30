@@ -29,5 +29,6 @@
   };
   environment.systemPackages = with pkgs; [
     protonup-qt
+    pcsx2
   ];
 }
