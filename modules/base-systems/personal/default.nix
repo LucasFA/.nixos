@@ -15,16 +15,10 @@
     telegram-desktop
     element-desktop
     signal-desktop
-    qbittorrent
     discord
     jellyfin-media-player
     rquickshare
   ];
-  networking.firewall.allowedUDPPorts = [
-    6882
-    6771
-  ]; # qBittorrent and Local peer discovery
-  networking.firewall.allowedTCPPorts = [ 6882 ];
 
   services = {
     flatpak.enable = true;
