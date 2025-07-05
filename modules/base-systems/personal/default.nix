@@ -8,6 +8,7 @@
 {
   imports = [
     ../graphical
+    ./torrent.nix
   ];
 
   environment.systemPackages = with pkgs; [
