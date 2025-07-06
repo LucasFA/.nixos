@@ -11,7 +11,16 @@
     # ../../forgejo
   ];
   virtualisation.docker.enable = true;
-  services.openssh.enable = lib.mkForce true;
+  services.fail2ban.enable = true;
+  services.openssh = {
+    enable = lib.mkForce true;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
+      AllowUsers = [ "lucasfa" ];
+    };
+  };
   users.users.lucasfa.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA8s/0c98/d6Q6SkPTzKS0S7lm26uIywus/YNXKs3Ayp"
   ];
