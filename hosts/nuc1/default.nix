@@ -27,7 +27,7 @@
     };
   };
   networking.wireguard = {
-    enable = true;
+    enable = false;
     interfaces = {
       wg0 = {
         ips = [ "10.2.0.2/32" ];
