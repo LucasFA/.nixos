@@ -15,5 +15,5 @@
   ]; # qBittorrent and Local peer discovery
   networking.firewall.allowedTCPPorts = [ 6882 ];
   networking.wireguard.enable = true;
-  
+
 }

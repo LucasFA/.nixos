@@ -15,11 +15,6 @@ let
   ];
 in
 {
-  # age.identityPaths = [
-    # #"/home/lucasfa/.ssh/id_ed25519_lucasfa"
-    # "/home/lucasfa/.ssh/id_ed25519"
-    # #"/etc/ssh/id_ed25519"
-  # ];
   "protonVPNPrivateKeyFile.age".publicKeys = [
     server-nuc1
     lucasfa-server-nuc1
