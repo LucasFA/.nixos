@@ -11,7 +11,7 @@
     # ../../forgejo
   ];
   virtualisation.docker.enable = true;
-  services.openssh.enable = lib.mkForce false;
+  services.openssh.enable = lib.mkForce true;
   networking.networkmanager.ethernet.macAddress = "stable";
 
   services.tailscale.enable = lib.mkForce true; # #### allowNoPasswordLogin allows to have no SSH keys for root or any
