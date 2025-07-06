@@ -35,9 +35,9 @@
         privateKeyFile = config.age.secrets.protonVPNPrivateKeyFile.path;
         peers = [
           {
-            publicKey = "Z/l/+DAz1YilevRfmEMMjNbzYOVCB0sOJc3vVKhQ/gw=";
+            publicKey = "QkRTXcTgRJGTjSFe/Qaa8l6hi7NbITvGFRSdhUpMvSw=";
             allowedIPs = [ "0.0.0.0/0" ];
-            endpoint = "62.169.136.220:51820";
+            endpoint = "185.246.211.72:51820";
             persistentKeepalive = 25;
           }
         ];
