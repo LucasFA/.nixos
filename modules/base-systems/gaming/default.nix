@@ -5,7 +5,7 @@ let
     inherit (pkgs) system config;
     overlays = [
       #(self: super: {
-        #stdenv = super.stdenvAdapters.impureUseNativeOptimizations super.stdenv;
+      #stdenv = super.stdenvAdapters.impureUseNativeOptimizations super.stdenv;
       #})
       (self: super: {
         rpcs3 = super.rpcs3.overrideAttrs (old: {
@@ -48,10 +48,13 @@ in
       capSysNice = true;
     };
   };
-  environment.systemPackages = with pkgs; [
-    protonup-qt
-    pcsx2
-  ] ++ [
-    patchedPkgs.rpcs3
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+      protonup-qt
+      pcsx2
+    ]
+    ++ [
+      patchedPkgs.rpcs3
+    ];
 }
