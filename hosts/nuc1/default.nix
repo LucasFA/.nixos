@@ -13,11 +13,12 @@
     ../../modules/core
     ../../modules/base-systems/server
   ];
+  # As there is no DE, this has to be manually set in order to install intel-media-driver et al
+  hardware.graphics.enable = true;
   networking.firewall = {
     allowedUDPPorts = [ 51820 ]; # Clients and peers can use the same port, see listenport. Wireguard
   };
 
-  hardware.graphics.enable = true; # as there is no DE, this has to be manually set in order to install intel-media-driver et al
   age.secrets = {
     protonVPNPrivateKeyFile = {
       file = ./../../secrets/protonVPNPrivateKeyFile.age; # config.age.secrets.protonVPNPrivateKeyFile.path;
