@@ -18,6 +18,16 @@ in
   #home.file."${config.xdg.configHome}/git" = {
   #source = ./ignore;
   #};
+
+  home.shellAliases = {
+    g = "git";
+    gs = "git status";
+    gp = "git push";
+    gl = "git pull";
+    ga = "git add";
+    gapa = "git add --patch";
+    gb = "git branch";
+  };
   programs.git = {
     enable = true;
     userName = "LucasFA";
