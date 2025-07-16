@@ -32,6 +32,7 @@
     # ffmpegthumbnailer # thumbnails without totem installed
   ];
   environment.systemPackages = with pkgs; [
+    gnomeExtensions.gsconnect
     libgsf
   ];
   environment.gnome.excludePackages = (
