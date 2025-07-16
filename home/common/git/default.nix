@@ -22,6 +22,7 @@ in
   home.shellAliases = {
     g = "git";
     gs = "git status";
+    gsh = "git show";
     gd = "git diff";
     gc = "git commit";
     gp = "git push";
