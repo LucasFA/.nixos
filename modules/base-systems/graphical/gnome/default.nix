@@ -29,7 +29,7 @@
 
   users.users.lucasfa.packages = with pkgs; [
     gnome-tweaks
-    # ffmpegthumbnailer # thumbnails without totem installed
+    ffmpegthumbnailer # thumbnails without totem installed
   ];
   environment.systemPackages = with pkgs; [
     gnomeExtensions.gsconnect
