@@ -19,6 +19,7 @@
     discord
     jellyfin-media-player
     rquickshare
+    subsurface
   ];
 
   services = {
