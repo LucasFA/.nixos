@@ -18,6 +18,7 @@
       "nofail"
       "lazytime"
       "x-systemd.device-timeout=15s"
+      "autodefrag"
     ];
   };
   fileSystems."/home/lucasfa/server/mounts" = {
