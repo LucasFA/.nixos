@@ -28,6 +28,7 @@ in
     gp = "git push";
     gl = "git pull";
     ga = "git add";
+    gaa = "git add --all";
     gapa = "git add --patch";
     gb = "git branch";
   };
