@@ -21,11 +21,11 @@
       "autodefrag"
     ];
   };
-  fileSystems."/home/lucasfa/server/mounts" = {
-    mountPoint = "/home/lucasfa/server/mounts";
-    device = "/mnt/WD_8tb/server/config";
-    options = [
-      "bind"
-    ];
-  };
+  # fileSystems."/home/lucasfa/server/mounts" = {
+    # mountPoint = "/home/lucasfa/server/mounts";
+    # device = "/mnt/WD_8tb/server/config";
+    # options = [
+      # "bind"
+    # ];
+  # };
 }
