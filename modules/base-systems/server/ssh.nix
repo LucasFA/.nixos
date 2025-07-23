@@ -7,7 +7,7 @@
   # By default tailscale,
   services.tailscale.enable = lib.mkForce true; # #### allowNoPasswordLogin allows to have no SSH keys for root or any
   users.allowNoPasswordLogin = true; # ### wheel group user. Therefore, force tailscale: otherwise locked out
-  networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+  services.tailsclae.enable = true; # networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
 
   # but you can also log in through standard SSH. If no port forwarding in the router, at least in the LAN
   services.fail2ban.enable = true;
