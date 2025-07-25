@@ -23,6 +23,7 @@ in
     g = "git";
     gs = "git status";
     gsh = "git show";
+    grs = "git restore";
     gd = "git diff";
     gc = "git commit";
     gp = "git push";
