@@ -20,4 +20,7 @@ in
     lucasfa-server-nuc1
     slimbook
   ];
+  "restic/env.age".publicKeys = [ slimbook ];
+  "restic/repo.age".publicKeys = [ slimbook ];
+  "restic/applicationKey.age".publicKeys = [ slimbook ];
 }

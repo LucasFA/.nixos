@@ -4,6 +4,7 @@
   ...
 }:
 let
+  backupPaths = [ "/home/lucasfa" ];
   defaultPaths = [
     "/home"
     "/etc"
@@ -39,6 +40,21 @@ let
       "/var/tmp"
       "/var/log"
     ];
+    defaultTimer = {
+      OnCalendar = "daily";
+      RandomizedDelaySec = "5h";
+    };
 in
 {
+  services.restic.backups = {
+    # backblaze =
+    server = {
+      initialize = true; # ?
+      paths = backupPaths;
+      user = "lucasfa";
+      exclude = excludeList;
+      repository = "";
+      passwordFile = "";
+    };
+  };
 }
