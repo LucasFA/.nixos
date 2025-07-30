@@ -4,7 +4,7 @@
   ...
 }:
 {
-
+  programs.command-not-found.enable = true;
   nix = {
     settings = {
       # See https://github.com/NixOS/nix/issues/11728
