@@ -22,10 +22,10 @@
     ];
   };
   # fileSystems."/home/lucasfa/server/mounts" = {
-    # mountPoint = "/home/lucasfa/server/mounts";
-    # device = "/mnt/WD_8tb/server/config";
-    # options = [
-      # "bind"
-    # ];
+  # mountPoint = "/home/lucasfa/server/mounts";
+  # device = "/mnt/WD_8tb/server/config";
+  # options = [
+  # "bind"
+  # ];
   # };
 }
