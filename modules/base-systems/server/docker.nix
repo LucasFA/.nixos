@@ -5,10 +5,15 @@
   ...
 }:
 {
+  virtualisation.podman = {
+    enable = false;
+    dockerSocket.enable = true;
+  };
+
   virtualisation.docker = {
     enable = true;
     rootless = {
-      enable = true;
+      enable = false;
       setSocketVariable = true;
     };
   };
@@ -18,3 +23,4 @@
     capabilities = "cap_net_bind_service+ep";
     source = "${pkgs.rootlesskit}/bin/rootlesskit";
   };
+}

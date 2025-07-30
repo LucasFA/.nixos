@@ -1,4 +1,7 @@
 { lib, config, ... }:
+let
+  virt = config.virtualisation;
+in
 {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lucasfa = {
@@ -7,7 +10,9 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-    ] ++ lib.optional config.virtualisation.docker.enable "docker";
+    ]
+    ++ lib.optional virt.docker.enable "docker"
+    ++ lib.optional (virt.podman.enable && virt.podman.dockerSocket.enable) "podman";
   };
   users.users.root.extraGroups = lib.optional config.virtualisation.docker.enable "docker";
 }
