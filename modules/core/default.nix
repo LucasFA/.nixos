@@ -42,4 +42,5 @@
     nix-output-monitor
     nixfmt-rfc-style
   ];
+  fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
 }
