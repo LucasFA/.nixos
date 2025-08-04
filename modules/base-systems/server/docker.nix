@@ -9,6 +9,11 @@
     enable = false;
     dockerSocket.enable = true;
   };
+  environment.shellAliases = {
+    "dc" = "docker compose";
+    "dcu" = "docker compose up -d";
+    "dcd" = "docker compose down";
+  };
 
   virtualisation.docker = {
     enable = true;
