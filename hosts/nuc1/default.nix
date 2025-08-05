@@ -12,6 +12,7 @@
     ../../modules/WD_8tb
     ../../modules/core
     ../../modules/base-systems/server
+    ../../modules/restic/server.nix
   ];
   # As there is no DE, this has to be manually set in order to install intel-media-driver et al
   hardware.graphics.enable = true;
