@@ -23,7 +23,7 @@ in
   "protonVPNPrivateKeyFile.age".publicKeys = [
     server-nuc1
     lucasfa-server-nuc1
-    slimbook
+    # slimbook
   ];
 
   "restic/htpasswd.age".publicKeys = [ lucasfa-server-nuc1 lucasfaKey ];
