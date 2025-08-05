@@ -41,19 +41,27 @@ let
   ];
   defaultTimer = {
     OnCalendar = "daily";
-    RandomizedDelaySec = "5h";
+    RandomizedDelaySec = "1h";
   };
+  pruneOpts = [
+    "--keep-daily 7"
+    "--keep-weekly 5"
+    "--keep-monthly 12"
+    "--keep-yearly 2"
+  ];
 in
 {
   services.restic.backups = {
     # backblaze =
-    server = {
+    nuc1 = {
       initialize = true; # ?
       paths = backupPaths;
       user = "lucasfa";
       exclude = excludeList;
-      repository = "";
-      passwordFile = "";
+      repository = "rest:http://server-nuc1:8000/slimbook";
+      passwordFile = config.age.secrets.resticPasswordFile.path;
+      pruneOpts = pruneOpts;
+      timerConfig = defaultTimer;
     };
   };
 }
