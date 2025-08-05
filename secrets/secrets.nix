@@ -25,7 +25,9 @@ in
     lucasfa-server-nuc1
     slimbook
   ];
-  "restic/env.age".publicKeys = [ backupKeys ];
-  "restic/repo.age".publicKeys = [ backupKeys ];
-  "restic/applicationKey.age".publicKeys = [ backupKeys ];
+
+  "restic/htpasswd.age".publicKeys = [ lucasfa-server-nuc1 lucasfaKey ];
+  "restic/env.age".publicKeys = backupKeys;
+  "restic/repo.age".publicKeys = backupKeys;
+  "restic/applicationKey.age".publicKeys = backupKeys;
 }
