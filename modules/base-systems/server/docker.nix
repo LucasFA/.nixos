@@ -13,6 +13,7 @@
     "dc" = "docker compose";
     "dcu" = "docker compose up -d";
     "dcd" = "docker compose down";
+    "dceu" = "docker compose --env-file=../.env up -d";
   };
 
   virtualisation.docker = {
