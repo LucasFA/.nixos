@@ -6,17 +6,17 @@
 }:
 let
   backupPaths = [ "/home/lucasfa" ];
-  defaultPaths = [
-    "/home"
-    "/etc"
-    "/var"
-    "/root"
-    "/etc/group"
-    "/etc/machine-id"
-    "/etc/NetworkManager/system-connections"
-    "/etc/passwd"
-    "/etc/subgid"
-  ];
+  # defaultPaths = [
+  # "/home"
+  # "/etc"
+  # "/var"
+  # "/root"
+  # "/etc/group"
+  # "/etc/machine-id"
+  # "/etc/NetworkManager/system-connections"
+  # "/etc/passwd"
+  # "/etc/subgid"
+  # ];
   excludeList = [
     "*/cache2" # firefox
     "*/Cache"
@@ -24,7 +24,7 @@ let
     ".npm/_cacache"
     "*/node_modules"
     "*.pyc"
-    "/home/lucasfa/games"
+
     "/home/*/.direnv"
     "/home/*/.cache"
     "/home/*/.cargo"
@@ -39,6 +39,14 @@ let
     "/var/cache"
     "/var/tmp"
     "/var/log"
+  ]
+  ++ [
+    "/home/*/Downloads"
+    "/home/*/games"
+    "/home/*/.local/share/*/shadercache" # eg Victoria 3
+    "/home/*/.var" # flatpaks
+    "/home/*/.local/share/Steam"
+    "/home/*/torrents"
   ];
   defaultTimer = {
     OnCalendar = "daily";
