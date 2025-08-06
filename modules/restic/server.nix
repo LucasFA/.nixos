@@ -15,6 +15,7 @@
   };
   services.restic.server = {
     enable = true;
+    privateRepos = true;
     htpasswd-file = config.age.secrets."restic/htpasswd".path;
     dataDir = "/mnt/WD_8tb/backups";
     listenAddress = "8000";

@@ -79,7 +79,7 @@ in
       paths = backupPaths;
       user = "lucasfa";
       exclude = excludeList;
-      repository = "rest:http://server-nuc1:8000/slimbook";
+      repository = "rest:http://server-nuc1:8000/lucasfa";
       passwordFile = config.age.secrets."restic/passwordFile".path;
       pruneOpts = pruneOpts;
       timerConfig = defaultTimer;
