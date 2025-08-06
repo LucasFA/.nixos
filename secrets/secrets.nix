@@ -32,8 +32,9 @@ in
     # slimbook
   ];
 
-  "restic/passwordFile.age".publicKeys = allUsers;
   "restic/htpasswd.age".publicKeys = servers;
+
+  "restic/passwordFile.age".publicKeys = allUsers;
   "restic/env.age".publicKeys = servers;
   "restic/repo.age".publicKeys = servers;
   "restic/applicationKey.age".publicKeys = servers;
