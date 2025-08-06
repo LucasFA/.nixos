@@ -58,6 +58,12 @@ in
     group = "users";
   };
 
+  age.secrets."restic/environmentFile" = {
+    file = ./../../secrets/restic/environmentFile.age;
+    owner = "lucasfa";
+    group = "users";
+  };
+
   services.restic.backups = {
     # backblaze =
     nuc1 = {
