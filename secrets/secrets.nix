@@ -35,7 +35,7 @@ in
   "restic/htpasswd.age".publicKeys = servers;
 
   "restic/passwordFile.age".publicKeys = allUsers;
-  "restic/env.age".publicKeys = servers;
+  "restic/environmentFile.age".publicKeys = allUsers;
   "restic/repo.age".publicKeys = servers;
   "restic/applicationKey.age".publicKeys = servers;
 

@@ -69,6 +69,7 @@ in
       passwordFile = config.age.secrets."restic/passwordFile".path;
       pruneOpts = pruneOpts;
       timerConfig = defaultTimer;
+      environmentFile = config.age.secrets."restic/environmentFile".path;
     };
   };
 }
