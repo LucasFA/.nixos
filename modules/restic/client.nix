@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -51,6 +52,12 @@ let
   ];
 in
 {
+  age.secrets."restic/passwordFile" = {
+    file = ./../../secrets/restic/passwordFile.age;
+    owner = "lucasfa";
+    group = "users";
+  };
+
   services.restic.backups = {
     # backblaze =
     nuc1 = {
@@ -59,7 +66,7 @@ in
       user = "lucasfa";
       exclude = excludeList;
       repository = "rest:http://server-nuc1:8000/slimbook";
-      passwordFile = config.age.secrets.resticPasswordFile.path;
+      passwordFile = config.age.secrets."restic/passwordFile".path;
       pruneOpts = pruneOpts;
       timerConfig = defaultTimer;
     };
