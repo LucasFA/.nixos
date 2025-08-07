@@ -43,16 +43,35 @@
     };
   };
 
+
+  boot.kernel.sysctl = {
+    "net.core.rmem_max" = 6400000;
+    "net.core.wmem_max" = 6400000;
+  };
+  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true"; # Don't create default ~/Sync folder
   services = {
     syncthing = {
-      enable = false;
-      dataDir = "/home/lucasfa/syncthing/";
+      enable = true;
+      dataDir = "/home/lucasfa";
       user = "lucasfa";
       group = "users";
       openDefaultPorts = true;
       guiAddress = "127.0.0.1:8384";
-      overrideDevices = false; # These
-      overrideFolders = false; # two settings permit imperative folder declaration
+      settings.options.urAccepted = 3;
+      settings.options.relaysEnabled = false;
+      settings.devices = {
+        server-nuc1 = {
+          id = "3Q24ZE2-QVV66XD-AVEDCYP-STB76EP-Q3AVWLJ-KS7PA2L-SMOOTGJ-SVYQPQ3";
+        };
+      };
+      settings.folders = {
+        "home/lucasfa/syncthing" = {
+          label = "Server inbox";
+          id = "server-inbox";
+          devices = [ "server-nuc1" ];
+          path = "~/syncthing";
+        };
+      };
     };
   };
 }
