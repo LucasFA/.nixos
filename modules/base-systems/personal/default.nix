@@ -43,7 +43,6 @@
     };
   };
 
-
   boot.kernel.sysctl = {
     "net.core.rmem_max" = 6400000;
     "net.core.wmem_max" = 6400000;
