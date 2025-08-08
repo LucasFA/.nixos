@@ -72,6 +72,7 @@ in
     group = "users";
   };
 
+  systemd.services.restic.environment.GOMAXPROCS = "8";
   services.restic.backups = {
     # backblaze =
     nuc1 = {
