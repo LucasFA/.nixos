@@ -72,7 +72,7 @@ in
     group = "users";
   };
 
-  systemd.services.restic.environment.GOMAXPROCS = "8";
+  systemd.services.restic-backups-nuc1.environment.GOMAXPROCS = "8";
   services.restic.backups = {
     # backblaze =
     nuc1 = {
@@ -85,6 +85,7 @@ in
       pruneOpts = pruneOpts;
       timerConfig = defaultTimer;
       environmentFile = config.age.secrets."restic/environmentFile".path;
+      progressFps = 0.02;
     };
   };
 }
