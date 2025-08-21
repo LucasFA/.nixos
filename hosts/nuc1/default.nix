@@ -5,6 +5,9 @@
   config,
   ...
 }:
+let
+  dduper = pkgs.callPackage ./dduper.nix {};
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -14,6 +17,12 @@
     ../../modules/base-systems/server
     ../../modules/restic/server.nix
   ];
+  
+  environment.systemPackages = [
+    dduper
+  ];
+
+  services.udisks2.enable = true;
   # As there is no DE, this has to be manually set in order to install intel-media-driver et al
   hardware.graphics.enable = true;
   networking.firewall = {
