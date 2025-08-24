@@ -76,6 +76,11 @@ in
   systemd.services.restic-backups-nuc1.environment.GOMAXPROCS = "8";
   services.restic.backups = {
     # backblaze =
+
+
+# To run restic on a shell:
+# export $(cat ./scripts/restic-environment.env | xargs)
+# export $(cat /run/agenix/restic/environmentFile | xargs)
     nuc1 = {
       initialize = true; # ?
       paths = backupPaths;
