@@ -71,7 +71,6 @@ let
     passwordFile = config.age.secrets."restic/passwordFile".path;
     pruneOpts = pruneOpts;
     timerConfig = defaultTimer;
-    environmentFile = config.age.secrets."restic/environmentFile".path;
     extraBackupArgs = defaultExtraBackupArgs;
   };
 in
@@ -89,18 +88,27 @@ in
     group = "users";
   };
 
+  age.secrets."restic/backblazeCredentials" = {
+    file = ./../../secrets/restic/backblazeCredentials.age;
+    owner = "lucasfa";
+    group = "users";
+  };
+
   systemd.services.restic-backups-nuc1.environment.GOMAXPROCS = "8";
+  systemd.services.restic-backups-backblaze.environment.GOMAXPROCS = "8";
   # To run restic on a shell use the NixOS provided wrapper: `restic-<name>`, where <name>
   # is services.restic.backups.<name>. For example, restic-nuc1 or restic-backblaze
   services.restic.backups = {
-    #backblaze = backupJobTemplate // {
-      #initialize = true;
-      #repository = "rest:http://server-nuc1:8000/lucasfa";
-    #};
+    backblaze = backupJobTemplate // {
+      initialize = false;
+      repository = "s3:https://s3.eu-central-003.backblazeb2.com/slimbook-laptop"; 
+      environmentFile = config.age.secrets."restic/backblazeCredentials".path;
+    };
 
     nuc1 = backupJobTemplate // {
       initialize = false;
       repository = "rest:http://server-nuc1:8000/lucasfa";
+      environmentFile = config.age.secrets."restic/environmentFile".path;
       progressFps = 0.02;
     };
   };

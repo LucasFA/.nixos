@@ -36,6 +36,7 @@ in
 
   "restic/passwordFile.age".publicKeys = allUsers;
   "restic/environmentFile.age".publicKeys = allUsers;
+  "restic/backblazeCredentials.age".publicKeys = allUsers;
   "restic/repo.age".publicKeys = servers;
   "restic/applicationKey.age".publicKeys = servers;
 
