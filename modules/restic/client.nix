@@ -59,6 +59,21 @@ let
     "--keep-monthly 12"
     "--keep-yearly 2"
   ];
+  defaultExtraBackupArgs = [
+    "--exclude-caches"
+    "--exclude-if-present .nobackuplucasfa"
+    "--cleanup-cache"
+  ];
+  backupJobTemplate = {
+    paths = backupPaths;
+    user = "lucasfa";
+    exclude = excludeList;
+    passwordFile = config.age.secrets."restic/passwordFile".path;
+    pruneOpts = pruneOpts;
+    timerConfig = defaultTimer;
+    environmentFile = config.age.secrets."restic/environmentFile".path;
+    extraBackupArgs = defaultExtraBackupArgs;
+  };
 in
 {
   # environment.systemPackages = with pkgs; [ restic ];
@@ -78,24 +93,15 @@ in
   # To run restic on a shell use the NixOS provided wrapper: `restic-<name>`, where <name>
   # is services.restic.backups.<name>. For example, restic-nuc1 or restic-backblaze
   services.restic.backups = {
-    # backblaze =
+    #backblaze = backupJobTemplate // {
+      #initialize = true;
+      #repository = "rest:http://server-nuc1:8000/lucasfa";
+    #};
 
-    nuc1 = {
+    nuc1 = backupJobTemplate // {
       initialize = false;
-      paths = backupPaths;
-      user = "lucasfa";
-      exclude = excludeList;
       repository = "rest:http://server-nuc1:8000/lucasfa";
-      passwordFile = config.age.secrets."restic/passwordFile".path;
-      pruneOpts = pruneOpts;
-      timerConfig = defaultTimer;
-      environmentFile = config.age.secrets."restic/environmentFile".path;
       progressFps = 0.02;
-      extraBackupArgs = [
-         "--exclude-caches"
-         "--exclude-if-present .nobackuplucasfa"
-         "--cleanup-cache"
-      ];
     };
   };
 }
