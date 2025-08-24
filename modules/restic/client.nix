@@ -60,7 +60,7 @@ let
   ];
 in
 {
-  environment.systemPackages = with pkgs; [ restic ];
+  # environment.systemPackages = with pkgs; [ restic ];
   age.secrets."restic/passwordFile" = {
     file = ./../../secrets/restic/passwordFile.age;
     owner = "lucasfa";
@@ -74,13 +74,11 @@ in
   };
 
   systemd.services.restic-backups-nuc1.environment.GOMAXPROCS = "8";
+  # To run restic on a shell use the NixOS provided wrapper: `restic-<name>`, where <name>
+  # is services.restic.backups.<name>. For example, restic-nuc1 or restic-backblaze
   services.restic.backups = {
     # backblaze =
 
-
-# To run restic on a shell:
-# export $(cat ./scripts/restic-environment.env | xargs)
-# export $(cat /run/agenix/restic/environmentFile | xargs)
     nuc1 = {
       initialize = true; # ?
       paths = backupPaths;
