@@ -81,7 +81,7 @@ in
     # backblaze =
 
     nuc1 = {
-      initialize = true; # ?
+      initialize = false;
       paths = backupPaths;
       user = "lucasfa";
       exclude = excludeList;
