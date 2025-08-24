@@ -60,6 +60,7 @@ let
   ];
 in
 {
+  environment.systemPackages = with pkgs; [ restic ];
   age.secrets."restic/passwordFile" = {
     file = ./../../secrets/restic/passwordFile.age;
     owner = "lucasfa";
