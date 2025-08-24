@@ -17,7 +17,7 @@ let
   # "/etc/passwd"
   # "/etc/subgid"
   # ];
-  excludeList = [
+  excludeList = [ # general caches
     "*/cache2" # firefox
     "*/Cache"
     ".config/Code/CachedData"
@@ -31,7 +31,7 @@ let
     "/home/*/.npm"
     "/home/*/.mozilla/firefox/*/storage"
   ]
-  ++ [
+  ++ [ # /, /var
     "/root/.cache"
     "/var/lib/docker"
     "/var/lib/flatpak"
@@ -40,10 +40,11 @@ let
     "/var/tmp"
     "/var/log"
   ]
-  ++ [
+  ++ [ # Home folder stuffs
     "/home/*/Downloads"
     "/home/*/games"
-    "/home/*/.local/share/*/shadercache" # eg Victoria 3
+    "/home/*/.local/share/Paradox Interactive/*/shadercache" # eg Victoria 3
+    "/home/*/.config/rpcs3/*/caches" # I think shader caches
     "/home/*/.var" # flatpaks
     "/home/*/.local/share/Steam"
     "/home/*/torrents"
@@ -90,6 +91,11 @@ in
       timerConfig = defaultTimer;
       environmentFile = config.age.secrets."restic/environmentFile".path;
       progressFps = 0.02;
+      extraBackupArgs = [
+         "--exclude-caches"
+         "--exclude-if-present .nobackuplucasfa"
+         "--cleanup-cache"
+      ];
     };
   };
 }
