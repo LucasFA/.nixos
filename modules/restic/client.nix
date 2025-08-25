@@ -136,7 +136,7 @@ in
     };
 
     nuc1 = backupJobTemplate // {
-      repository = "rest:https://restic.lucasfa.com/lucasfa";
+      repository = "rest:https://restic.lucasfa.com/lucasfa/slimbook-laptop";
       environmentFile = config.age.secrets."restic/environmentFile".path;
       progressFps = 0.02;
     };
