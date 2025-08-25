@@ -6,7 +6,6 @@
 
 {
   imports = [
-    ../../borgbackup/server.nix
     # ../../forgejo
     ./ssh.nix
     ./dns.nix
