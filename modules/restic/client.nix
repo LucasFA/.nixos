@@ -136,7 +136,7 @@ in
     };
 
     nuc1 = backupJobTemplate // {
-      repository = "rest:http://server-nuc1:8000/lucasfa";
+      repository = "rest:https://restic.lucasfa.com/lucasfa";
       environmentFile = config.age.secrets."restic/environmentFile".path;
       progressFps = 0.02;
     };
