@@ -76,6 +76,30 @@ let
     timerConfig = defaultTimer;
     extraBackupArgs = defaultExtraBackupArgs;
   };
+  defaultNotifySet = {
+    enable = true;
+    description = "Notify on failed backup";
+    serviceConfig = {
+      Type = "oneshot";
+      User = config.users.users.lucasfa.name;
+    };
+
+    # required for notify-send
+    environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${
+      toString (if config.users.users.lucasfa.uid == null then 1000 else config.users.users.lucasfa.uid)
+    }/bus";
+  };
+  mkNotifyFailedBackupService =
+    suffix:
+    defaultNotifySet
+    // {
+      description = "Notify on failed backup to " + suffix;
+      script = ''
+        ${pkgs.libnotify}/bin/notify-send --urgency=critical \
+          "Backup failed" \
+          "$(journalctl -u restic-backups-${suffix} -n 5 -o cat)"
+      '';
+    };
 in
 {
   # environment.systemPackages = with pkgs; [ restic ];
@@ -103,16 +127,27 @@ in
   # is services.restic.backups.<name>. For example, restic-nuc1 or restic-backblaze
   services.restic.backups = {
     backblaze = backupJobTemplate // {
-      initialize = false;
       repository = "s3:https://s3.eu-central-003.backblazeb2.com/slimbook-laptop";
       environmentFile = config.age.secrets."restic/backblazeCredentials".path;
     };
 
     nuc1 = backupJobTemplate // {
-      initialize = false;
       repository = "rest:http://server-nuc1:8000/lucasfa";
       environmentFile = config.age.secrets."restic/environmentFile".path;
       progressFps = 0.02;
     };
   };
+
+  # Notification in case of failures
+  environment.systemPackages = [
+    pkgs.libnotify
+  ];
+
+  systemd.services.restic-backups-nuc1.unitConfig.OnFailure = "notify-backup-failed-nuc1.service";
+  systemd.services."notify-backup-failed-nuc1" = mkNotifyFailedBackupService "nuc1";
+
+  systemd.services.restic-backups-backblaze.unitConfig.OnFailure =
+    "notify-backup-failed-backblaze.service";
+  systemd.services."notify-backup-failed-backblaze" = mkNotifyFailedBackupService "backblaze";
+
 }
