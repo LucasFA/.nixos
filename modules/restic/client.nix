@@ -17,7 +17,8 @@ let
   # "/etc/passwd"
   # "/etc/subgid"
   # ];
-  excludeList = [ # general caches
+  excludeList = [
+    # general caches
     "*/cache2" # firefox
     "*/Cache"
     ".config/Code/CachedData"
@@ -31,7 +32,8 @@ let
     "/home/*/.npm"
     "/home/*/.mozilla/firefox/*/storage"
   ]
-  ++ [ # /, /var
+  ++ [
+    # /, /var
     "/root/.cache"
     "/var/lib/docker"
     "/var/lib/flatpak"
@@ -40,7 +42,8 @@ let
     "/var/tmp"
     "/var/log"
   ]
-  ++ [ # Home folder stuffs
+  ++ [
+    # Home folder stuffs
     "/home/*/Downloads"
     "/home/*/games"
     "/home/*/.local/share/Paradox Interactive/*/shadercache" # eg Victoria 3
@@ -101,7 +104,7 @@ in
   services.restic.backups = {
     backblaze = backupJobTemplate // {
       initialize = false;
-      repository = "s3:https://s3.eu-central-003.backblazeb2.com/slimbook-laptop"; 
+      repository = "s3:https://s3.eu-central-003.backblazeb2.com/slimbook-laptop";
       environmentFile = config.age.secrets."restic/backblazeCredentials".path;
     };
 

@@ -6,7 +6,7 @@
   ...
 }:
 let
-  dduper = pkgs.callPackage ./dduper.nix {};
+  dduper = pkgs.callPackage ./dduper.nix { };
 in
 {
   imports = [
@@ -17,7 +17,7 @@ in
     ../../modules/base-systems/server
     ../../modules/restic/server.nix
   ];
-  
+
   environment.systemPackages = [
     dduper
   ];
