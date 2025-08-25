@@ -54,6 +54,7 @@ let
   ];
   defaultTimer = {
     OnCalendar = "daily";
+    Persistent = true;
     RandomizedDelaySec = "1h";
   };
   pruneOpts = [
@@ -73,8 +74,12 @@ let
     exclude = excludeList;
     passwordFile = config.age.secrets."restic/passwordFile".path;
     pruneOpts = pruneOpts;
+    runCheck = true;
+    # Backblaze B2 pricing: 1G daily free egress + 300% of average monthly storage free egress # (IDK which it is...)
+    checkOpts = [ "--read-data-subset=5%" ];
     timerConfig = defaultTimer;
     extraBackupArgs = defaultExtraBackupArgs;
+
   };
   defaultNotifySet = {
     enable = true;
@@ -100,29 +105,28 @@ let
           "$(journalctl -u restic-backups-${suffix} -n 5 -o cat)"
       '';
     };
+  lucasfaOwnedAgeSecret = {
+    owner = "lucasfa";
+    group = "users";
+  };
 in
 {
   # environment.systemPackages = with pkgs; [ restic ];
-  age.secrets."restic/passwordFile" = {
+  age.secrets."restic/passwordFile" = lucasfaOwnedAgeSecret // {
     file = ./../../secrets/restic/passwordFile.age;
-    owner = "lucasfa";
-    group = "users";
   };
 
-  age.secrets."restic/environmentFile" = {
+  age.secrets."restic/environmentFile" = lucasfaOwnedAgeSecret // {
     file = ./../../secrets/restic/environmentFile.age;
-    owner = "lucasfa";
-    group = "users";
   };
 
-  age.secrets."restic/backblazeCredentials" = {
+  age.secrets."restic/backblazeCredentials" = lucasfaOwnedAgeSecret // {
     file = ./../../secrets/restic/backblazeCredentials.age;
-    owner = "lucasfa";
-    group = "users";
   };
 
   systemd.services.restic-backups-nuc1.environment.GOMAXPROCS = "8";
   systemd.services.restic-backups-backblaze.environment.GOMAXPROCS = "8";
+
   # To run restic on a shell use the NixOS provided wrapper: `restic-<name>`, where <name>
   # is services.restic.backups.<name>. For example, restic-nuc1 or restic-backblaze
   services.restic.backups = {
@@ -149,5 +153,4 @@ in
   systemd.services.restic-backups-backblaze.unitConfig.OnFailure =
     "notify-backup-failed-backblaze.service";
   systemd.services."notify-backup-failed-backblaze" = mkNotifyFailedBackupService "backblaze";
-
 }
