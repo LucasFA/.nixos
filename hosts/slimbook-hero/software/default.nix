@@ -12,7 +12,7 @@
     ../../../modules/base-systems/work
     ../../../modules/base-systems/gaming
     ../../../modules/base-systems/development
-    ../../../modules/restic/client.nix
+    ./restic-client.nix
     ../../../modules/misc.nix
   ];
 
