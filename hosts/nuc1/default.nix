@@ -1,4 +1,5 @@
 {
+  self,
   inputs,
   pkgs,
   lib,
@@ -31,7 +32,7 @@ in
 
   age.secrets = {
     protonVPNPrivateKeyFile = {
-      file = ./../../secrets/protonVPNPrivateKeyFile.age; # config.age.secrets.protonVPNPrivateKeyFile.path;
+      file = self.outPath + "protonVPNPrivateKeyFile.path";
       owner = "root";
       group = "root";
     };

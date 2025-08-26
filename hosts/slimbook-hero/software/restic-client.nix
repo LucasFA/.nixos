@@ -1,4 +1,5 @@
 {
+  self,
   config,
   pkgs,
   lib,
@@ -113,15 +114,15 @@ in
 {
   # environment.systemPackages = with pkgs; [ restic ];
   age.secrets."restic/passwordFile" = lucasfaOwnedAgeSecret // {
-    file = ./../../../secrets/restic/passwordFile.age;
+    file = self.outPath + "/secrets/restic/passwordFile.age";
   };
 
   age.secrets."restic/environmentFile" = lucasfaOwnedAgeSecret // {
-    file = ./../../../secrets/restic/environmentFile.age;
+    file = self.outPath + "/secrets/restic/environmentFile.age";
   };
 
   age.secrets."restic/backblazeCredentials" = lucasfaOwnedAgeSecret // {
-    file = ./../../../secrets/restic/backblazeCredentials.age;
+    file = self.outPath + "/secrets/restic/backblazeCredentials.age";
   };
 
   systemd.services.restic-backups-nuc1.environment.GOMAXPROCS = "8";

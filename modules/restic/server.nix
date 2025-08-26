@@ -1,4 +1,5 @@
 {
+  self,
   config,
   pkgs,
   lib,
@@ -7,7 +8,7 @@
 {
   age.secrets = {
     "restic/htpasswd" = {
-      file = ./../../secrets/restic/htpasswd.age;
+      file = self.outPath + "/secrets/restic/htpasswd.age";
       path = "/mnt/WD_8tb/backups/.htpasswd";
       owner = "restic";
       group = "restic";

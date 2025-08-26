@@ -77,7 +77,7 @@
       nixosConfigurations = {
         slimbook = lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs system self; };
           modules = [
             ./hosts/slimbook-hero
             nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
@@ -93,7 +93,7 @@
           ];
         };
         server-nuc1 = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = { inherit inputs system; };
+          specialArgs = { inherit inputs system self; };
           modules = [
             ./hosts/nuc1
             # /home/lucasfa/server/compose.nix
@@ -110,7 +110,7 @@
           ];
         };
         server-hp-omen = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = { inherit inputs system; };
+          specialArgs = { inherit inputs system self; };
           modules = [
             ./hosts/hp-omen
             # /home/lucasfa/server/compose.nix
@@ -128,7 +128,7 @@
         };
         live = nixpkgs-stable.lib.nixosSystem {
           # build ISO with `nix build .#nixosConfigurations.live.config.system.build.isoImage`
-          specialArgs = { inherit inputs system; };
+          specialArgs = { inherit inputs system self; };
           system = "x86_64-linux";
           modules = [
             (nixpkgs-stable + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix")
