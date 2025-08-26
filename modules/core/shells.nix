@@ -10,7 +10,9 @@
   ];
   environment.shellAliases = {
     nixos-rbb = "nixos-rebuild build --flake . && nvd diff /run/current-system result";
-    nixos-rbs = "nixos-rebuild switch --flake .";
+    nixos-rbs = "nixos-rebuild switch --flake ~/.nixos";
+    ".." = "cd ..";
+    "..." = "cd ../..";
   };
 
   programs = {
