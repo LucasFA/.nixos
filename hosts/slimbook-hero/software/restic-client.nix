@@ -132,7 +132,7 @@ in
   # is services.restic.backups.<name>. For example, restic-nuc1 or restic-backblaze
   services.restic.backups = {
     backblaze = backupJobTemplate // {
-      repository = "s3:https://s3.eu-central-003.backblazeb2.com/slimbook-laptop";
+      repository = "s3:https://s3.eu-central-003.backblazeb2.com/lucasfa-backups";
       environmentFile = config.age.secrets."restic/backblazeCredentials".path;
     };
 
