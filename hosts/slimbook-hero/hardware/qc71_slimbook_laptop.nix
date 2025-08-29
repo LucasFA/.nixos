@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = kernel.moduleBuildDependencies;
 
   makeFlags = [
-    "ARCH=x86_64"
+    "ARCH=${stdenv.hostPlatform.linuxArch}"
     "VERSION=${version}"
     "KDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
   ];
