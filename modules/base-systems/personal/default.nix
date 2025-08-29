@@ -17,9 +17,9 @@
     element-desktop
     signal-desktop
     discord
-    jellyfin-media-player
     rquickshare
     subsurface
+    # jellyfin-media-player # reinstall when EOL qt5 resolved
   ];
 
   services = {
