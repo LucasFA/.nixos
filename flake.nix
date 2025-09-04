@@ -126,6 +126,23 @@
             }
           ];
         };
+        server-node804 = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = { inherit inputs system self; };
+          modules = [
+            ./hosts/node804
+            # /home/lucasfa/server/compose.nix
+            # nixos-hardware.nixosModules.omen-15-ce002ns
+            srvos.nixosModules.common
+            srvos.nixosModules.server
+            srvos.nixosModules.mixins-systemd-boot
+            agenix.nixosModules.default
+            home-manager-stable.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.users.lucasfa = import ./home;
+            }
+          ];
+        };
         live = nixpkgs-stable.lib.nixosSystem {
           # build ISO with `nix build .#nixosConfigurations.live.config.system.build.isoImage`
           specialArgs = { inherit inputs system self; };
