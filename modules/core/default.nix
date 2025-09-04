@@ -15,6 +15,7 @@
     ./utils.nix
     ./nixpkgs.nix
     ./agenix
+    ./zram
   ];
 
   services.thermald.enable = true;

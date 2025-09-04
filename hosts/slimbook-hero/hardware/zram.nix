@@ -7,9 +7,7 @@
 
 {
   zramSwap = {
-    enable = true;
     memoryPercent = 66;
-    algorithm = "lz4";
   };
   boot.kernel.sysctl = {
     "vm.page-cluster" = 0;
