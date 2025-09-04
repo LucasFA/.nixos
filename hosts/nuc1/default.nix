@@ -29,30 +29,4 @@ in
   networking.firewall = {
     allowedUDPPorts = [ 51820 ]; # Clients and peers can use the same port, see listenport. Wireguard
   };
-
-  age.secrets = {
-    protonVPNPrivateKeyFile = {
-      file = self.outPath + "protonVPNPrivateKeyFile.path";
-      owner = "root";
-      group = "root";
-    };
-  };
-  networking.wireguard = {
-    enable = false;
-    interfaces = {
-      wg0 = {
-        ips = [ "10.2.0.2/32" ];
-        listenPort = 51820;
-        privateKeyFile = config.age.secrets.protonVPNPrivateKeyFile.path;
-        peers = [
-          {
-            publicKey = "QkRTXcTgRJGTjSFe/Qaa8l6hi7NbITvGFRSdhUpMvSw=";
-            allowedIPs = [ "0.0.0.0/0" ];
-            endpoint = "185.246.211.72:51820";
-            persistentKeepalive = 25;
-          }
-        ];
-      };
-    };
-  };
 }
