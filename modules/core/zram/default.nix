@@ -8,7 +8,7 @@
 {
   zramSwap = {
     enable = lib.mkDefault true;
-    memoryPercent = lib.mkDefault 25;
+    memoryPercent = lib.mkDefault 50;
     algorithm = lib.mkDefault "lz4";
   };
   boot.kernel.sysctl = {
