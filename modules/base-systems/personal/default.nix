@@ -9,6 +9,7 @@
   imports = [
     ../graphical
     ./torrent.nix
+    ./printer.nix
   ];
 
   environment.systemPackages = with pkgs; [
