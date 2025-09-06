@@ -27,6 +27,7 @@
       experimental-features = [
         "nix-command"
         "flakes"
+        "ca-derivations"
       ];
       nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
     };
