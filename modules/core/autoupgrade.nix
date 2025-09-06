@@ -5,7 +5,8 @@
 }:
 {
   system.autoUpgrade = {
-    enable = lib.mkDefault false; # man I wish didn't result in a) compiling huge things, sometimes, and b) making a ton of noise
+    # man I wish didn't result in a) compiling huge things, sometimes, and b) making a ton of noise
+    enable = lib.mkDefault false;
     flake = "github:LucasFA/.nixos";
     flags = [
       "--print-build-logs"
