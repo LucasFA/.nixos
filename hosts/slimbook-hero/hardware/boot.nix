@@ -13,7 +13,7 @@ let
 in
 {
   boot.kernelPackages = pkgs.linuxPackages_6_12;
-  boot.extraModulePackages = with config.boot.kernelPackages; [ ]; # qc71_slimbook_laptop ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ qc71_slimbook_laptop ];
   boot.kernelModules = [ "qc71_laptop" ];
 
   boot.loader.efi.canTouchEfiVariables = true;
