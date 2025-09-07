@@ -14,6 +14,7 @@
     ../../../modules/base-systems/development
     ./restic-client.nix
     ../../../modules/misc.nix
+    ./secureboot.nix
   ];
 
   networking.hostName = "slimbook";

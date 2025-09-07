@@ -32,6 +32,10 @@
       url = "github:nix-community/srvos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     compose2nix = {
       url = "github:aksiksi/compose2nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -56,6 +60,7 @@
       home-manager-stable,
       nixos-hardware,
       srvos,
+      lanzaboote,
       agenix,
       autofirma-nix,
       systems,
@@ -84,6 +89,7 @@
             srvos.nixosModules.common
             srvos.nixosModules.mixins-systemd-boot
             agenix.nixosModules.default
+            lanzaboote.nixosModules.lanzaboote
             autofirma-nix.nixosModules.default
             home-manager.nixosModules.home-manager
             {
