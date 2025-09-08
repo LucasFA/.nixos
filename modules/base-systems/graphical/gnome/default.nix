@@ -11,7 +11,7 @@
     ./keyring.nix
   ];
 
-  services.xserver = {
+  services = {
     displayManager.gdm = {
       enable = true;
       wayland = lib.mkDefault true;
