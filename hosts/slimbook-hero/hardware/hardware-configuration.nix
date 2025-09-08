@@ -33,7 +33,10 @@
 
   boot.initrd.luks.devices."luks-cf2e118d-0c9b-4536-a99b-0096ba0b36ee" = {
     device = "/dev/disk/by-uuid/cf2e118d-0c9b-4536-a99b-0096ba0b36ee";
-    crypttabExtraOpts = [ "tpm2-device=auto" "tpm2-measure-pcr=yes" ];
+    crypttabExtraOpts = [
+      "tpm2-device=auto"
+      "tpm2-measure-pcr=yes"
+    ];
   };
 
   fileSystems."/boot/efi" = {
