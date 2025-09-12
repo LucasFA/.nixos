@@ -1,4 +1,5 @@
 {
+  self,
   config,
   ...
 }:
@@ -17,4 +18,13 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
+
+  age.secrets.wirelessconf.file = self.outPath + "/secrets/wireless.conf.age";
+  networking.wireless.secretsFile = "/run/agenix/wireless.conf";
+  networking.wireless.networks = {
+    MOVISTAR_PLUS_0723 = {
+      psk = "ext:movistar_plus_0723";
+    };
+  };
+
 }

@@ -31,6 +31,7 @@ in
     lucasfa-server-nuc1
     # slimbook
   ];
+  "wireless.conf.age".publicKeys = allUsers;
 
   "restic/htpasswd.age".publicKeys = servers;
 
