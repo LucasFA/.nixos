@@ -42,5 +42,14 @@
     nix-output-monitor
     nixfmt-rfc-style
   ];
-  fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
+  fonts.packages =
+    with pkgs.nerd-fonts;
+    [
+      jetbrains-mono
+      ubuntu
+    ]
+    ++ [
+      pkgs.ubuntu-themes
+      pkgs.ubuntu-sans
+    ];
 }
