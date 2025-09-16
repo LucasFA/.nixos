@@ -12,6 +12,11 @@
     ./printer.nix
   ];
 
+  hardware.bluetooth.settings = {
+    General = {
+      Disable = "Handsfree";
+    };
+  };
   environment.systemPackages = with pkgs; [
     spotify
     spotify-player
