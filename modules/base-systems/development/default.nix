@@ -11,5 +11,6 @@
     licensee
     fd
     bat
+    zed-editor-fhs
   ];
 }
