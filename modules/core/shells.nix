@@ -6,6 +6,7 @@
     vim
     fd
     ripgrep
+    zoxide
     tealdeer
     nvd
   ];
