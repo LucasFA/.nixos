@@ -5,14 +5,16 @@
     git
     vim
     fd
+    fzf
     ripgrep
-    zoxide
     tealdeer
     nvd
   ];
+  programs.zoxide.enable = true;
+
   environment.shellAliases = {
     nixos-rbb = "nixos-rebuild build --flake . && nvd diff /run/current-system result";
-    nixos-rbs = "nixos-rebuild switch --flake ~/.nixos";
+    sunixos-rbs = "sudo nixos-rebuild switch --flake ~/.nixos";
     ".." = "cd ..";
     "..." = "cd ../..";
   };
