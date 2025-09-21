@@ -13,5 +13,6 @@
       "discord"
       "unrar"
       "hplip"
+      "obsidian"
     ];
 }

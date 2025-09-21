@@ -26,6 +26,7 @@
     discord
     rquickshare
     subsurface
+    obsidian
     # jellyfin-media-player # reinstall when EOL qt5 resolved
   ];
 
