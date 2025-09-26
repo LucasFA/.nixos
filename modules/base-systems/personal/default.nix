@@ -30,6 +30,13 @@
     # jellyfin-media-player # reinstall when EOL qt5 resolved
   ];
 
+  programs.nh = {
+    enable = true;
+    clean.enable = lib.mkDefault false;
+    clean.extraArgs = "--keep-since 7d --keep 3";
+    flake = "/home/lucasfa/.nixos";
+  };
+
   services = {
     flatpak.enable = true;
     tailscale.enable = true;
