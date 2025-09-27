@@ -12,10 +12,11 @@
     ../../../modules/base-systems/work
     ../../../modules/base-systems/gaming
     ../../../modules/base-systems/development
-    ./restic-client.nix
+    ../../../modules/restic/client.nix
     ../../../modules/misc.nix
     ./secureboot.nix
   ];
+  modules.restic.backups.personalLaptop = true;
 
   networking.hostName = "slimbook";
 
