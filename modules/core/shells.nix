@@ -10,6 +10,9 @@
     tealdeer
     nvd
   ];
+  programs.neovim = {
+    enable = true;
+  };
   programs.zoxide.enable = true;
 
   environment.shellAliases = {
