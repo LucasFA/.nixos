@@ -102,12 +102,10 @@ let
   };
 
   nuc1BackupJob =
-    {
-      subrepositoryName ? "slimbook-laptop",
-    }:
+    subrepositoryName:
     backupJobTemplate
     // {
-      repository = "rest:https://restic.lucasfa.com/lucasfa/" ++ subrepositoryName;
+      repository = "rest:https://restic.lucasfa.com/lucasfa/" + subrepositoryName;
       environmentFile = config.age.secrets."restic/environmentFile".path;
       progressFps = 0.02;
     };
@@ -158,30 +156,34 @@ in
 
     # To run restic on a shell use the NixOS provided wrapper: `restic-<name>`, where <name>
     # is services.restic.backups.<name>. For example, restic-nuc1 or restic-backblaze
-    services.restic.backups = lib.mkIf config.modules.restic.backups.personalLaptop {
-      backblaze = backblazeBackupJob;
-      backblaze-check = mkMonthlyCheckJob backblazeBackupJob;
-      nuc1 = nuc1BackupJob;
-      nuc1-check = mkMonthlyCheckJob nuc1BackupJob;
-    };
     services.restic.backups =
       let
         serverOverrides = {
-          paths = "/mnt/WD_8tb/server/data/immich";
+          paths = [ "/mnt/WD_8tb/server/data/immich" ];
           user = "restic";
           package = pkgs.writeShellScriptBin "restic" ''
             exec /run/wrappers/bin/restic "$@"
           '';
         };
       in
-      lib.mkIf config.modules.restic.backups.immich {
-        backblaze = backblazeBackupJob // serverOverrides;
-        nuc1 = nuc1BackupJob "immich" // serverOverrides;
-      };
+      lib.mkMerge [
+        (lib.mkIf config.modules.restic.backups.personalLaptop {
+          backblaze = backblazeBackupJob;
+          backblaze-check = mkMonthlyCheckJob backblazeBackupJob;
+          nuc1 = (nuc1BackupJob "slimbook-laptop");
+          nuc1-check = mkMonthlyCheckJob (nuc1BackupJob "slimbook-laptop");
+        })
+        (lib.mkIf config.modules.restic.backups.immich {
+          backblaze = backblazeBackupJob // serverOverrides;
+          nuc1 = (nuc1BackupJob "immich") // serverOverrides;
+        })
+      ];
 
     users.users.restic = {
-      isNormalUser = true;
+      isSystemUser = true;
+      group = "restic";
     };
+    users.groups.restic = { };
 
     security.wrappers.restic = {
       source = "${pkgs.restic.out}/bin/restic";

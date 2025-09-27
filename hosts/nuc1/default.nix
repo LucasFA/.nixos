@@ -17,7 +17,10 @@ in
     ../../modules/core
     ../../modules/base-systems/server
     ../../modules/restic/server.nix
+    ../../modules/restic/client.nix
   ];
+  modules.restic.backups.immich = true;
+  modules.restic.desktopNotification = false;
   environment.systemPackages = [
     dduper
   ];
