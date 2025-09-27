@@ -19,6 +19,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    caelestia-shell = {
+      url = "github:caelestia-dots/shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     autofirma-nix = {
       # url = "github:nix-community/autofirma-nix/release-24.11";
       url = "github:nix-community/autofirma-nix";

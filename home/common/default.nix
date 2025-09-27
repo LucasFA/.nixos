@@ -1,6 +1,13 @@
-{ config, pkgs, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
 {
   imports = [
+    #caelestia-shell
+    inputs.caelestia-shell.packages.homeManagerModules.default
     ./audio.nix
     ./gnome
     ./mangohud
@@ -12,6 +19,27 @@
     ./devtools
     ./xdg-user
   ];
+
+  programs.caelestia = {
+    enable = true;
+    systemd = {
+      enable = false; # if you prefer starting from your compositor
+      target = "graphical-session.target";
+      environment = [ ];
+    };
+    settings = {
+      bar.status = {
+        showBattery = true;
+      };
+      paths.wallpaperDir = "~/xdg/Pictures/Screenshots/";
+    };
+    cli = {
+      enable = true; # Also add caelestia-cli to path
+      settings = {
+        theme.enableGtk = false;
+      };
+    };
+  };
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
