@@ -72,30 +72,6 @@ let
       checkOpts = [ "--read-data" ];
     };
 
-  defaultNotifySet = {
-    enable = true;
-    description = "Notify on failed backup";
-    serviceConfig = {
-      Type = "oneshot";
-      User = config.users.users.lucasfa.name;
-    };
-
-    # required for notify-send
-    environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${
-      toString (if config.users.users.lucasfa.uid == null then 1000 else config.users.users.lucasfa.uid)
-    }/bus";
-  };
-  mkNotifyFailedBackupService =
-    suffix:
-    defaultNotifySet
-    // {
-      description = "Notify on failed backup to " + suffix;
-      script = ''
-        ${pkgs.libnotify}/bin/notify-send --urgency=critical \
-          "Backup failed" \
-          "$(journalctl -u restic-backups-${suffix} -n 5 -o cat)"
-      '';
-    };
   backblazeBackupJob = backupJobTemplate // {
     repository = "s3:https://s3.eu-central-003.backblazeb2.com/lucasfa-backups";
     environmentFile = config.age.secrets."restic/backblazeCredentials".path;
@@ -203,12 +179,39 @@ in
     environment.systemPackages = lib.mkIf config.modules.restic.desktopNotification [
       pkgs.libnotify
     ];
-    systemd.services = lib.mkIf config.modules.restic.desktopNotification {
-      restic-backups-nuc1.unitConfig.OnFailure = "notify-backup-failed-nuc1.service";
-      "notify-backup-failed-nuc1" = mkNotifyFailedBackupService "nuc1";
+    systemd.services =
+      let
+        defaultNotifySet = {
+          enable = true;
+          description = "Notify on failed backup";
+          serviceConfig = {
+            Type = "oneshot";
+            User = config.users.users.lucasfa.name;
+          };
 
-      restic-backups-backblaze.unitConfig.OnFailure = "notify-backup-failed-backblaze.service";
-      "notify-backup-failed-backblaze" = mkNotifyFailedBackupService "backblaze";
-    };
+          # required for notify-send
+          environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${
+            toString (if config.users.users.lucasfa.uid == null then 1000 else config.users.users.lucasfa.uid)
+          }/bus";
+        };
+        mkNotifyFailedBackupService =
+          suffix:
+          defaultNotifySet
+          // {
+            description = "Notify on failed backup to " + suffix;
+            script = ''
+              ${pkgs.libnotify}/bin/notify-send --urgency=critical \
+                "Backup failed" \
+                "$(journalctl -u restic-backups-${suffix} -n 5 -o cat)"
+            '';
+          };
+      in
+      lib.mkIf config.modules.restic.desktopNotification {
+        restic-backups-nuc1.unitConfig.OnFailure = "notify-backup-failed-nuc1.service";
+        "notify-backup-failed-nuc1" = mkNotifyFailedBackupService "nuc1";
+
+        restic-backups-backblaze.unitConfig.OnFailure = "notify-backup-failed-backblaze.service";
+        "notify-backup-failed-backblaze" = mkNotifyFailedBackupService "backblaze";
+      };
   };
 }
