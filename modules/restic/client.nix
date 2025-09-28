@@ -174,8 +174,9 @@ in
           nuc1-check = mkMonthlyCheckJob (nuc1BackupJob "slimbook-laptop");
         })
         (lib.mkIf config.modules.restic.backups.immich {
-          backblaze = backblazeBackupJob // serverOverrides;
-          nuc1 = (nuc1BackupJob "immich") // serverOverrides;
+          backblaze-immich = backblazeBackupJob // serverOverrides;
+          nuc1-immich = (nuc1BackupJob "immich") // serverOverrides;
+          nuc1-immich-check = mkMonthlyCheckJob (nuc1BackupJob "immich") // serverOverrides;
         })
       ];
 
@@ -189,7 +190,7 @@ in
       source = "${pkgs.restic.out}/bin/restic";
       owner = "restic";
       group = "users";
-      permissions = "u=rwx,g=,o=";
+      permissions = "u=rx,g=x,o=";
       capabilities = "cap_dac_read_search=+ep";
     };
 
