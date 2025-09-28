@@ -5,6 +5,12 @@
 }:
 {
   programs.command-not-found.enable = true;
+  programs.nh = {
+    enable = true;
+    clean.enable = lib.mkDefault false;
+    clean.extraArgs = "--keep-since 7d --keep 3";
+    flake = lib.mkDefault "/home/lucasfa/.nixos";
+  };
   nix = {
     settings = {
       # See https://github.com/NixOS/nix/issues/11728
