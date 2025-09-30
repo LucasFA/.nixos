@@ -140,14 +140,18 @@ in
           package = pkgs.writeShellScriptBin "restic" ''
             exec /run/wrappers/bin/restic "$@"
           '';
+          extraBackupArgs = defaultExtraBackupArgs ++ [ "--tag immich" ];
+        };
+        laptopOverrides = {
+          extraBackupArgs = defaultExtraBackupArgs ++ [ "--tag laptop" ];
         };
       in
       lib.mkMerge [
         (lib.mkIf config.modules.restic.backups.personalLaptop {
-          backblaze = backblazeBackupJob;
-          backblaze-check = mkMonthlyCheckJob backblazeBackupJob;
-          nuc1 = (nuc1BackupJob "slimbook-laptop");
-          nuc1-check = mkMonthlyCheckJob (nuc1BackupJob "slimbook-laptop");
+          backblaze = backblazeBackupJob // laptopOverrides;
+          backblaze-check = mkMonthlyCheckJob backblazeBackupJob // laptopOverrides;
+          nuc1 = (nuc1BackupJob "slimbook-laptop") // laptopOverrides;
+          nuc1-check = mkMonthlyCheckJob (nuc1BackupJob "slimbook-laptop") // laptopOverrides;
         })
         (lib.mkIf config.modules.restic.backups.immich {
           backblaze-immich = backblazeBackupJob // serverOverrides;
