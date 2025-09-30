@@ -30,7 +30,6 @@
     # jellyfin-media-player # reinstall when EOL qt5 resolved
   ];
 
-
   services = {
     flatpak.enable = true;
     tailscale.enable = true;
