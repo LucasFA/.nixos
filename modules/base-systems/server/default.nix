@@ -10,6 +10,7 @@
     ./ssh.nix
     ./dns.nix
     ./docker.nix
+    ./n8n.nix
   ];
 
   networking.networkmanager.ethernet.macAddress = "stable";

@@ -14,5 +14,6 @@
       "unrar"
       "hplip"
       "obsidian"
+      "n8n"
     ];
 }
