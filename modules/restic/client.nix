@@ -33,12 +33,12 @@ let
     "/home/*/torrents"
   ];
   defaultTimer = {
-    OnCalendar = "daily";
+    OnCalendar = "12:00";
     Persistent = true;
     RandomizedDelaySec = "1h";
   };
   monthlyTimer = defaultTimer // {
-    OnCalendar = "monthly";
+    OnCalendar = "*-*-05 16:00:00"; # monthly in day 05 at 4pm
   };
   pruneOpts = [
     "--keep-daily 7"
