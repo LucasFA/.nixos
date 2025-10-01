@@ -17,19 +17,19 @@
       download-buffer-size = 4 * 67108864; # 64 MiB, the default, * 4 = 256
       extra-substituters = [
         "https://cache.garnix.io"
-        "https://nix-community.cachix.org"
+        # "https://nix-community.cachix.org"
       ];
       extra-trusted-public-keys = [
         "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        # "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
 
       trusted-users = [
         "root"
         "@wheel"
       ];
-      keep-outputs = false;
-      keep-derivations = true;
+      #keep-outputs = false;
+      #keep-derivations = true;
       experimental-features = [
         "nix-command"
         "flakes"
@@ -47,14 +47,14 @@
 
     gc = {
       automatic = true;
-      dates = "monthly";
+      dates = [ "*-*-01 20:00:00" ];
       persistent = true;
       randomizedDelaySec = "30min";
-      options = "--delete-older-than 28d --max-jobs 2";
+      options = "--delete-older-than 14d --max-jobs 2";
     };
     optimise = {
       automatic = true;
-      dates = [ "monthly" ];
+      dates = [ "*-*-02 20:00:00" ];
     };
   };
 }
