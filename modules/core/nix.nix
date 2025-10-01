@@ -47,7 +47,7 @@
 
     gc = {
       automatic = true;
-      dates = [ "*-*-01 20:00:00" ];
+      dates = "*-*-01 20:00:00";
       persistent = true;
       randomizedDelaySec = "30min";
       options = "--delete-older-than 14d --max-jobs 2";
