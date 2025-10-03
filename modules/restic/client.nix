@@ -13,6 +13,7 @@ let
     "*/Cache"
     ".config/Code/CachedData"
     ".npm/_cacache"
+    "*/cache/_cacache"
     "*/node_modules"
     "*.pyc"
 
