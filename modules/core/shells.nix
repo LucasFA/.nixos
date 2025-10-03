@@ -1,17 +1,25 @@
 { pkgs, ... }:
 {
 
-  environment.systemPackages = with pkgs; [
-    git
-    vim
-    fd
-    fzf
-    ripgrep
-    tealdeer
-    nvd
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+      git
+      vim
+      fd
+      fzf
+      ripgrep
+      tealdeer
+      nvd
+    ];
   programs.neovim = {
     enable = true;
+    defaultEditor = true;
+    configure = {
+      packages.myVimPackage = with pkgs.vimPlugins; [
+        LazyVim
+      ];
+    };
   };
   programs.zoxide.enable = true;
 

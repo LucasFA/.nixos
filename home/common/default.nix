@@ -86,7 +86,7 @@
   #  /etc/profiles/per-user/lucasfa/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = rec {
-    EDITOR = "vim";
+    # EDITOR = lib.mkDefault "vim";
 
     # XDG
     XDG_CONFIG_HOME = "$HOME/.config";
