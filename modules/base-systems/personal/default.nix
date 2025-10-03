@@ -37,6 +37,7 @@
   programs = {
     htop.enable = true;
     kdeconnect.enable = true;
+    nix-ld.enable = true;
     autofirma = {
       enable = true;
       firefoxIntegration.enable = true; # Let Firefox use AutoFirma
