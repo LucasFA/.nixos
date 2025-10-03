@@ -14,7 +14,7 @@
     enable = true;
     defaultEditor = true;
     plugins = with pkgs.vimPlugins; [
-      LazyVim
+      # LazyVim
     ];
   };
 }
