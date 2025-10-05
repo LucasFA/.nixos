@@ -11,6 +11,7 @@
     ./dns.nix
     ./docker.nix
     ./n8n.nix
+    ./sftpgo.nix
   ];
 
   networking.networkmanager.ethernet.macAddress = "stable";

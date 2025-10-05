@@ -15,5 +15,6 @@
       "hplip"
       "obsidian"
       "n8n"
+      "sftpgo"
     ];
 }
