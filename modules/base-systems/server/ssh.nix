@@ -9,10 +9,10 @@
   users.allowNoPasswordLogin = true; # ### wheel group user. Therefore, force tailscale: otherwise locked out
   services.tailscale.openFirewall = true; # networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
 
-  # but you can also log in through standard SSH. If no port forwarding in the router, at least in the LAN
-  services.fail2ban.enable = true;
+  services.fail2ban.enable = false;
   services.openssh = {
-    enable = lib.mkForce true;
+    # but you could also log in through standard SSH. If no port forwarding in the router, at least in the LAN
+    enable = lib.mkForce false;
     settings = {
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
