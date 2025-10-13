@@ -14,10 +14,12 @@
 
   hardware.bluetooth.settings = {
     General = {
+      # Experimental = true;
       Disable = "Handsfree";
     };
   };
   environment.systemPackages = with pkgs; [
+    feishin
     spotify
     spotify-player
     telegram-desktop

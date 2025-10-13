@@ -55,6 +55,6 @@ in
       pcsx2
     ]
     ++ [
-      # patchedPkgs.rpcs3
+      patchedPkgs.rpcs3
     ];
 }
