@@ -14,5 +14,4 @@ in
     ++ lib.optional virt.docker.enable "docker"
     ++ lib.optional (virt.podman.enable && virt.podman.dockerSocket.enable) "podman";
   };
-  users.users.root.extraGroups = lib.optional config.virtualisation.docker.enable "docker";
 }
