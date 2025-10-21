@@ -149,17 +149,17 @@
             }
           ];
         };
-        live = nixpkgs-stable.lib.nixosSystem {
-          # build ISO with `nix build .#nixosConfigurations.live.config.system.build.isoImage`
-          specialArgs = { inherit inputs system self; };
-          system = "x86_64-linux";
-          modules = [
-            (nixpkgs-stable + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
-            (nixpkgs-stable + "/nixos/modules/installer/cd-dvd/channel.nix")
-            ./hosts/live
-            agenix.nixosModules.default
-          ];
-        };
+        # live = nixpkgs-stable.lib.nixosSystem {
+        # # build ISO with `nix build .#nixosConfigurations.live.config.system.build.isoImage`
+        # specialArgs = { inherit inputs system self; };
+        # system = "x86_64-linux";
+        # modules = [
+        # (nixpkgs-stable + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+        # (nixpkgs-stable + "/nixos/modules/installer/cd-dvd/channel.nix")
+        # ./hosts/live
+        # agenix.nixosModules.default
+        # ];
+        # };
       };
       homeConfigurations = {
         # "lucasfa@slimbook" = home-manager.lib.homeManagerConfiguration {
