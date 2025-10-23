@@ -2,6 +2,7 @@
 {
   imports = [
     ./common
+    # inputs.agenix.homeManagerModules.default
   ];
 
   # Let Home Manager install and manage itself.

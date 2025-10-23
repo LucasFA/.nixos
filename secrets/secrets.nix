@@ -26,6 +26,7 @@ let
   ];
 in
 {
+  "gmailAddress.age".publicKeys = allUsers;
   "protonVPNPrivateKeyFile.age".publicKeys = [
     server-nuc1
     lucasfa-server-nuc1

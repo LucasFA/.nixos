@@ -15,6 +15,9 @@ let
   };
 in
 {
+  # age.secrets.gmailAddress = {
+    # file = "../../secrets/gmailAddress.age";
+  # };
   #home.file."${config.xdg.configHome}/git" = {
   #source = ./ignore;
   #};
@@ -86,7 +89,7 @@ in
       # insteadOf = https://github.com/RustSec/advisory-db
 
       "credential \"https://git.overleaf.com\"" = {
-        username = "lucasfa@correo.ugr.es";
+        # username = config.age.secrets.gmailAddress; # "lucasfa@correo.ugr.es";
         helper = "store";
       };
 
