@@ -13,5 +13,8 @@
     bat
     zed-editor-fhs
     ghostty
+    cargo
+    python3
+    clang
   ];
 }
