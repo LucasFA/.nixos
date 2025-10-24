@@ -16,7 +16,7 @@ let
 in
 {
   # age.secrets.gmailAddress = {
-    # file = "../../secrets/gmailAddress.age";
+  # file = "../../secrets/gmailAddress.age";
   # };
   #home.file."${config.xdg.configHome}/git" = {
   #source = ./ignore;
