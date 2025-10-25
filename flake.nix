@@ -93,8 +93,14 @@
             autofirma-nix.nixosModules.default
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.users.lucasfa = import ./home;
+              home-manager = {
+                extraSpecialArgs = { inherit self; };
+                useGlobalPkgs = true;
+                users.lucasfa = import ./home;
+                sharedModules = [
+                  inputs.agenix.homeManagerModules.default
+                ];
+              };
             }
           ];
         };

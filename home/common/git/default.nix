@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  self,
+  config,
+  pkgs,
+  ...
+}:
 let
   gitAliases = {
     ul = "!git add flake.lock && git commit -m 'update lockfile' && git push";
@@ -15,9 +20,6 @@ let
   };
 in
 {
-  # age.secrets.gmailAddress = {
-  # file = "../../secrets/gmailAddress.age";
-  # };
   #home.file."${config.xdg.configHome}/git" = {
   #source = ./ignore;
   #};
@@ -89,7 +91,6 @@ in
       # insteadOf = https://github.com/RustSec/advisory-db
 
       "credential \"https://git.overleaf.com\"" = {
-        # username = config.age.secrets.gmailAddress; # "lucasfa@correo.ugr.es";
         helper = "store";
       };
 
