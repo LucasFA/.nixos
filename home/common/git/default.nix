@@ -32,6 +32,7 @@ in
     grs = "git restore";
     gd = "git diff";
     gc = "git commit";
+    gco = "git checkout";
     gp = "git push";
     gl = "git pull";
     ga = "git add";
