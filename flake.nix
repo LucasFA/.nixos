@@ -37,8 +37,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # compose2nix = {
-      # url = "github:aksiksi/compose2nix";
-      # inputs.nixpkgs.follows = "nixpkgs";
+    # url = "github:aksiksi/compose2nix";
+    # inputs.nixpkgs.follows = "nixpkgs";
     # };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
