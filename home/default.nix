@@ -2,8 +2,12 @@
 {
   imports = [
     ./common
-    # inputs.agenix.homeManagerModules.default
   ];
+  services.vicinae = {
+    enable = true; # default: false
+    autoStart = true; # default: true
+    # package = # specify package to use here. Can be omitted.
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = false;

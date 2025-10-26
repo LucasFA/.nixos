@@ -13,11 +13,11 @@
 
   services = {
     displayManager.gdm = {
-      enable = true;
+      enable = lib.mkDefault true;
       wayland = lib.mkDefault true;
     };
     desktopManager = {
-      gnome.enable = true;
+      gnome.enable = lib.mkDefault true;
     };
   };
 
@@ -27,11 +27,11 @@
     package = pkgs.gnomeExtensions.gsconnect;
   };
 
-  users.users.lucasfa.packages = with pkgs; [
+  users.users.lucasfa.packages = with pkgs; lib.mkIf config.services.desktopManager.gnome.enable [
     gnome-tweaks
     ffmpegthumbnailer # thumbnails without totem installed
   ];
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; lib.mkIf config.services.desktopManager.gnome.enable [
     gnomeExtensions.gsconnect
     libgsf
   ];
