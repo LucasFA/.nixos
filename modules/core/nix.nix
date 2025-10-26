@@ -8,7 +8,7 @@
   programs.nh = {
     enable = true;
     clean.enable = lib.mkDefault false;
-    clean.extraArgs = "--keep-since 7d --keep 3";
+    clean.extraArgs = "--keep-since 7d --keep 10";
     flake = lib.mkDefault "/home/lucasfa/.nixos";
   };
   nix = {

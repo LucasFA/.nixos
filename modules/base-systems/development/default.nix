@@ -13,8 +13,11 @@
     bat
     zed-editor-fhs
     ghostty
+    # Neovim deps
     cargo
     python3
     clang
+
+    hugo
   ];
 }
