@@ -7,7 +7,7 @@
   environment.systemPackages = with pkgs; [
     nixd
     distrobox
-    compose2nix
+    # compose2nix
     licensee
     fd
     bat
