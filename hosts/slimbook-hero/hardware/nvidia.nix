@@ -7,6 +7,7 @@
 {
   services.switcherooControl.enable = true;
   hardware.nvidia = {
+    primeBatterySaverSpecialisation = true;
     powerManagement = {
       enable = true;
       finegrained = true;
