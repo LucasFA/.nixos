@@ -2,10 +2,15 @@
 {
   imports = [
     ./gnome
+    ./hyprland.nix
   ];
 
   services.desktopManager.gnome.enable = true;
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    xwayland.enable = true;
+  };
 
   services.displayManager.autoLogin.enable = false;
   services.displayManager.autoLogin.user = "lucasfa";
@@ -14,7 +19,6 @@
   programs.firefox.enable = true;
 
   environment.systemPackages = with pkgs; [
-    kitty # necessary for hyprland
     wl-clipboard
     gparted
   ];

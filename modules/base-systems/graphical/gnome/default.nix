@@ -27,14 +27,18 @@
     package = pkgs.gnomeExtensions.gsconnect;
   };
 
-  users.users.lucasfa.packages = with pkgs; lib.mkIf config.services.desktopManager.gnome.enable [
-    gnome-tweaks
-    ffmpegthumbnailer # thumbnails without totem installed
-  ];
-  environment.systemPackages = with pkgs; lib.mkIf config.services.desktopManager.gnome.enable [
-    gnomeExtensions.gsconnect
-    libgsf
-  ];
+  users.users.lucasfa.packages =
+    with pkgs;
+    lib.mkIf config.services.desktopManager.gnome.enable [
+      gnome-tweaks
+      ffmpegthumbnailer # thumbnails without totem installed
+    ];
+  environment.systemPackages =
+    with pkgs;
+    lib.mkIf config.services.desktopManager.gnome.enable [
+      gnomeExtensions.gsconnect
+      libgsf
+    ];
   environment.gnome.excludePackages = (
     with pkgs;
     [
