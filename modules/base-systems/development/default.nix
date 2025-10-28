@@ -12,6 +12,7 @@
     fd
     bat
     zed-editor-fhs
+    helix
     ghostty
     # Neovim deps
     cargo
