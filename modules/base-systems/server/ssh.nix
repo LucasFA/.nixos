@@ -12,7 +12,7 @@
   services.fail2ban.enable = false;
   services.openssh = {
     # but you could also log in through standard SSH. If no port forwarding in the router, at least in the LAN
-    enable = lib.mkForce false;
+    enable = lib.mkForce true;
     settings = {
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
