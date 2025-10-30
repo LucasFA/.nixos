@@ -15,7 +15,7 @@ with lib.hm.gvariant;
       play-sound = true;
     };
     "org/gnome/desktop/datetime" = {
-      automatic-timezone = true;
+      automatic-timezone = false;
     };
     "org/gnome/system/location" = {
       enabled = true;
