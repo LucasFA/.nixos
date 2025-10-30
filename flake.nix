@@ -33,7 +33,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     srvos = {
-      url = "github:nix-community/srvos";
+      url = "github:LucasFA/srvos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lanzaboote = {
