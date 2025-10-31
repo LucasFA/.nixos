@@ -16,7 +16,7 @@
     ../../../modules/misc.nix
     ./secureboot.nix
   ];
-  modules.restic.backups.personalLaptop = true;
+  lfa.backups.personalLaptop.enable = true;
 
   networking.hostName = "slimbook";
 
