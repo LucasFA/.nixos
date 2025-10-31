@@ -14,10 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:LucasFA/nixos-hardware";
-    vicinae = {
-      url = "github:vicinaehq/vicinae";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -63,7 +59,6 @@
       home-manager,
       home-manager-stable,
       nixos-hardware,
-      vicinae,
       srvos,
       lanzaboote,
       agenix,
@@ -103,7 +98,6 @@
                 useGlobalPkgs = true;
                 users.lucasfa = import ./home;
                 sharedModules = [
-                  vicinae.homeManagerModules.default
                   inputs.agenix.homeManagerModules.default
                 ];
               };
