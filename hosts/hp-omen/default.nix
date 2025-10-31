@@ -24,9 +24,6 @@
     "vm.overcommit_memory" = 1;
   };
   hardware.nvidia-container-toolkit.enable = true;
-  environment.systemPackages = [
-    inputs.compose2nix.packages.x86_64-linux.default
-  ];
 
   # #### allowNoPasswordLogin allows to have no SSH keys for root or any
   # ### wheel group user. Therefore, force tailscale: otherwise you are locked out even with keyboard and monitor

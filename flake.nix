@@ -36,10 +36,6 @@
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # compose2nix = {
-    # url = "github:aksiksi/compose2nix";
-    # inputs.nixpkgs.follows = "nixpkgs";
-    # };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
