@@ -14,7 +14,7 @@
     helix
     ghostty
     # Neovim deps
-    cargo
+    rustup
     python3
     clang
 
