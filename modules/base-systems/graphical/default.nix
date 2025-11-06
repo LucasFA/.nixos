@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
+    ./sound.nix
     ./gnome
     ./hyprland.nix
   ];

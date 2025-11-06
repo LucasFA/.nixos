@@ -10,7 +10,6 @@
     ./autoupgrade.nix
     ./nix.nix
     ./networking.nix
-    ./sound.nix
     ./shells.nix
     ./utils.nix
     ./nixpkgs.nix
