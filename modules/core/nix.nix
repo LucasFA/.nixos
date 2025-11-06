@@ -16,7 +16,7 @@
       # See https://github.com/NixOS/nix/issues/11728
       download-buffer-size = 4 * 67108864; # 64 MiB, the default, * 4 = 256
       extra-substituters = [
-        "https://cache.garnix.io"
+        # "https://cache.garnix.io"
         # "https://nix-community.cachix.org"
       ];
       extra-trusted-public-keys = [
