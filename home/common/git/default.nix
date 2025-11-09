@@ -40,19 +40,23 @@ in
     gapa = "git add --patch";
     gb = "git branch";
   };
+  programs.diff-so-fancy = {
+    enable = true;
+    settings.stripLeadingSymbols = false;
+    enableGitIntegration = true;
+  };
   programs.git = {
     enable = true;
-    userName = "LucasFA";
-    userEmail = "23667494+LucasFA@users.noreply.github.com";
-    diff-so-fancy = {
-      enable = true;
-      stripLeadingSymbols = false;
-    };
     signing = {
       signByDefault = false;
       key = null;
     };
-    aliases = gitAliases;
+    settings = {
+      user = {
+        name = "LucasFA";
+        email = "23667494+LucasFA@users.noreply.github.com";
+      };
+      alias = gitAliases;
     extraConfig = {
       safe.directory = "/home/lucasfa/.nixos";
       core = {
@@ -118,4 +122,5 @@ in
       };
     };
   };
+    };
 }
