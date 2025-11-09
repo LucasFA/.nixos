@@ -6,6 +6,7 @@
   };
   environment.systemPackages = with pkgs; [
     nixd
+    nixfmt-rfc-style
     distrobox
     licensee
     fd
