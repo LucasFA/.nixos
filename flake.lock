@@ -311,11 +311,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1762700717,
-        "narHash": "sha256-l8bvpsXEiB3p2pMCb4ygqqwU2bS9CEOBGIIll4Skhsk=",
+        "lastModified": 1762702452,
+        "narHash": "sha256-P5Me1GSeP2lBKGRLhaZ+yt1YEZV4/dKd4VEW1FiwdLY=",
         "owner": "LucasFA",
         "repo": "nur-packages",
-        "rev": "1a5bcad77fe460f02ecc7b438e05521c3c4fdb63",
+        "rev": "cd461de1e9fcb482ca9ac09af80ae4842c9e4425",
         "type": "github"
       },
       "original": {
