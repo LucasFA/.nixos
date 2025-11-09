@@ -6,14 +6,10 @@
 }:
 let
   confLimit = 10;
-  qc71_slimbook_laptop = pkgs.callPackage ./qc71_slimbook_laptop.nix {
-    # Make sure the module targets the same kernel as your system is using.
-    kernel = config.boot.kernelPackages.kernel;
-  };
 in
 {
   boot.kernelPackages = pkgs.linuxPackages_6_12;
-  boot.extraModulePackages = with config.boot.kernelPackages; [ qc71_slimbook_laptop ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ qc71_slimbook_laptop.default ];
   boot.kernelModules = [ "qc71_laptop" ];
 
   boot.loader.efi.canTouchEfiVariables = true;
