@@ -8,7 +8,7 @@
   # Allow unfree packages
   #nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [
-    inputs.my-nur-packages.legacyPackages."${system}".overlays.qc71_slimbook_laptop
+    inputs.lucasfa-nur.legacyPackages."${system}".overlays.qc71_slimbook_laptop
   ];
   nixpkgs.config.allowUnfreePredicate =
     pkg:

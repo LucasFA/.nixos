@@ -23,7 +23,7 @@
       url = "github:nix-community/autofirma-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    my-nur-packages = {
+    lucasfa-nur = {
       url = "github:LucasFA/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
     };

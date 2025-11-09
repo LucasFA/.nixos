@@ -304,7 +304,7 @@
         "type": "github"
       }
     },
-    "my-nur-packages": {
+    "lucasfa-nur": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
@@ -484,7 +484,7 @@
         "home-manager": "home-manager_2",
         "home-manager-stable": "home-manager-stable",
         "lanzaboote": "lanzaboote",
-        "my-nur-packages": "my-nur-packages",
+        "lucasfa-nur": "lucasfa-nur",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-stable": "nixpkgs-stable_2",
