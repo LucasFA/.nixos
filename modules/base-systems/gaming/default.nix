@@ -58,6 +58,7 @@ in
     [
       protonup-qt
       pcsx2
+      ckan
     ]
     ++ [
       # patchedPkgs.rpcs3
