@@ -57,68 +57,68 @@ in
         email = "23667494+LucasFA@users.noreply.github.com";
       };
       alias = gitAliases;
-        safe.directory = "/home/lucasfa/.nixos";
-        core = {
-          autocrlf = "input";
-          editor = "vim";
-        };
-        push.autoSetupRemote = "true";
-        gpg.format = "ssh";
-        commit = {
-          verbose = true;
-          # gpgSign = true;
-        };
-        color.ui = "true";
-        init.defaultBranch = "main";
+      safe.directory = "/home/lucasfa/.nixos";
+      core = {
+        autocrlf = "input";
+        editor = "vim";
+      };
+      push.autoSetupRemote = "true";
+      gpg.format = "ssh";
+      commit = {
+        verbose = true;
+        # gpgSign = true;
+      };
+      color.ui = "true";
+      init.defaultBranch = "main";
 
-        diff = {
-          algorithm = "histogram";
-          colormoved = "default";
-          colormovedws = "allow-indentation-change";
-        };
-        merge.conflictstyle = "zdiff3";
-        rebase.missingCommitsCheck = "error";
-        help.autocorrect = "prompt";
-        branch.sort = "committerdate";
-        "url \"ssh://git@github.com:\"" = {
-          insteadOf = "https://github.com";
-          # insteadOf = "gh:"; # Can only have one :(
-        };
-        "url \"git@github.com:\"" = {
-          insteadOf = "gh:"; # Hacky AF :)
-        };
+      diff = {
+        algorithm = "histogram";
+        colormoved = "default";
+        colormovedws = "allow-indentation-change";
+      };
+      merge.conflictstyle = "zdiff3";
+      rebase.missingCommitsCheck = "error";
+      help.autocorrect = "prompt";
+      branch.sort = "committerdate";
+      "url \"ssh://git@github.com:\"" = {
+        insteadOf = "https://github.com";
+        # insteadOf = "gh:"; # Can only have one :(
+      };
+      "url \"git@github.com:\"" = {
+        insteadOf = "gh:"; # Hacky AF :)
+      };
 
-        # Make an particular exception for cargo to work correctly, see https://github.com/rust-lang/cargo/issues/3381
-        # [url "https://github.com/rust-lang/crates.io-index"]
-        # insteadOf = https://github.com/rust-lang/crates.io-index
-        # [url "https://github.com/RustSec/advisory-db"]
-        # insteadOf = https://github.com/RustSec/advisory-db
+      # Make an particular exception for cargo to work correctly, see https://github.com/rust-lang/cargo/issues/3381
+      # [url "https://github.com/rust-lang/crates.io-index"]
+      # insteadOf = https://github.com/rust-lang/crates.io-index
+      # [url "https://github.com/RustSec/advisory-db"]
+      # insteadOf = https://github.com/RustSec/advisory-db
 
-        "credential \"https://git.overleaf.com\"" = {
-          helper = "store";
-        };
+      "credential \"https://git.overleaf.com\"" = {
+        helper = "store";
+      };
 
-        fetch.prune = "true";
-        fetch.prunetags = "true";
+      fetch.prune = "true";
+      fetch.prunetags = "true";
 
-        transfer.fsckobjects = "true";
-        fetch.fsckobjects = "true";
-        receive.fsckobjects = "true";
-        "color \"diff-highlight\"" = {
-          oldNormal = "red bold";
-          oldHighlight = "red bold 52";
-          newNormal = "green bold";
-          newHighlight = "green bold 22";
-        };
-        "color \"diff\"" = {
-          meta = "11";
-          frag = "magenta bold";
-          func = "146 bold";
-          commit = "yellow bold";
-          old = "red bold";
-          new = "green bold";
-          whitespace = "red reverse";
-        };
+      transfer.fsckobjects = "true";
+      fetch.fsckobjects = "true";
+      receive.fsckobjects = "true";
+      "color \"diff-highlight\"" = {
+        oldNormal = "red bold";
+        oldHighlight = "red bold 52";
+        newNormal = "green bold";
+        newHighlight = "green bold 22";
+      };
+      "color \"diff\"" = {
+        meta = "11";
+        frag = "magenta bold";
+        func = "146 bold";
+        commit = "yellow bold";
+        old = "red bold";
+        new = "green bold";
+        whitespace = "red reverse";
+      };
     };
   };
 }
