@@ -19,13 +19,17 @@
     };
   };
   environment.systemPackages = with pkgs; [
+    calibre
+
     feishin
     spotify
     spotify-player
+
     telegram-desktop
     element-desktop
     signal-desktop
     discord
+
     rquickshare
     subsurface
     obsidian
