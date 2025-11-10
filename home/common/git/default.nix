@@ -57,7 +57,6 @@ in
         email = "23667494+LucasFA@users.noreply.github.com";
       };
       alias = gitAliases;
-      extraConfig = {
         safe.directory = "/home/lucasfa/.nixos";
         core = {
           autocrlf = "input";
@@ -120,7 +119,6 @@ in
           new = "green bold";
           whitespace = "red reverse";
         };
-      };
     };
   };
 }
