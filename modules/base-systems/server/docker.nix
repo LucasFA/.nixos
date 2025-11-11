@@ -18,6 +18,10 @@
 
   virtualisation.docker = {
     enable = true;
+    autoprune = {
+      enable = true;
+      flags = [ "--all" ];
+    };
     rootless = {
       enable = false;
       setSocketVariable = true;
