@@ -88,6 +88,9 @@ in
         "--cleanup-cache"
       ];
       backupJobTemplate = {
+        package = pkgs.writeShellScriptBin "restic" ''
+          exec /run/wrappers/bin/restic "$@"
+        '';
         paths = backupPaths;
         user = "lucasfa";
         exclude = excludeList;
@@ -150,9 +153,6 @@ in
           serverOverrides = {
             paths = [ "/mnt/WD_8tb/server/data/immich" ];
             user = "restic";
-            package = pkgs.writeShellScriptBin "restic" ''
-              exec /run/wrappers/bin/restic "$@"
-            '';
             extraBackupArgs = defaultExtraBackupArgs ++ [ "--tag immich" ];
           };
           laptopOverrides = {
@@ -180,7 +180,7 @@ in
       users.groups.restic = { };
 
       security.wrappers.restic = {
-        source = "${pkgs.restic.out}/bin/restic";
+        source = lib.getExe pkgs.restic;
         owner = "restic";
         group = "users";
         permissions = "u=rx,g=x,o=";
