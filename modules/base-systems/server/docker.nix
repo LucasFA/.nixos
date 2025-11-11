@@ -18,7 +18,7 @@
 
   virtualisation.docker = {
     enable = true;
-    autoprune = {
+    autoPrune = {
       enable = true;
       flags = [ "--all" ];
     };
