@@ -28,7 +28,19 @@ in
   ### IMPLEMENTATION
   config =
     let
-      backupPaths = [ "/home/lucasfa" ];
+      backupPaths = [
+        "/home"
+      ]
+      ++ [
+        "/etc/group"
+        "/etc/machine-id"
+        "/etc/NetworkManager/system-connections"
+        "/etc/passwd"
+        "/etc/subgid"
+        "/root"
+        "/var/lib"
+      ];
+
       excludeList = [
         # general caches
         "*/cache2" # firefox
@@ -41,6 +53,7 @@ in
 
         "/home/*/.direnv"
         "/home/*/.cache"
+        "/root/.cache"
         "/home/*/.cargo"
         "/home/*/.npm"
         "/home/*/.mozilla/firefox/*/storage"
