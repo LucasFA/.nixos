@@ -21,7 +21,7 @@
   environment.systemPackages = with pkgs; [
     calibre
 
-    feishin
+    # feishin
     spotify
     spotify-player
 

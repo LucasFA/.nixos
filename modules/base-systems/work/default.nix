@@ -19,7 +19,7 @@
   ];
   programs.evolution = {
     enable = true;
-    plugins = [ pkgs.evolution-ews ];
+    # plugins = [ pkgs.evolution-ews ];
   };
   environment.shellAliases = {
     "sf" = "npx @salesforce/cli";
