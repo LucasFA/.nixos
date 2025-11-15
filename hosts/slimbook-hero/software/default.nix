@@ -9,7 +9,6 @@
   imports = [
     ../../../modules/core
     ../../../modules/base-systems/personal
-    ../../../modules/base-systems/work
     ../../../modules/base-systems/gaming
     ../../../modules/base-systems/development
     ../../../modules/restic/client.nix

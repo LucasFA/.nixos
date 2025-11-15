@@ -12,6 +12,7 @@
     licensee
     fd
     bat
+    uv
     zed-editor-fhs
     helix
     ghostty
