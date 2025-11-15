@@ -48,6 +48,7 @@
 
       gnome-music
       epiphany # web browser
+      showtime
       # totem # video player and thumbnail generator
       geary # email reader
     ]
