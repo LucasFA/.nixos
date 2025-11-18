@@ -29,7 +29,7 @@
         "@wheel"
       ];
       #keep-outputs = false;
-      #keep-derivations = true;
+      keep-derivations = true;
       experimental-features = [
         "nix-command"
         "flakes"
