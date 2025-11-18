@@ -504,11 +504,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1762719180,
-        "narHash": "sha256-QhF9nf4GpN3VelefBGDPTAStZHkzz1qNZBKqgjTZgMg=",
+        "lastModified": 1763474617,
+        "narHash": "sha256-O6g5a8xWlSpvSY+j++6t0jorctZW/HOd16nEfVLfr1o=",
         "owner": "LucasFA",
         "repo": "srvos",
-        "rev": "aff79b6cd042a2539dcf3d7534f0555b60e11241",
+        "rev": "123a18108d19982762b89b0dbaf64ffff265e64f",
         "type": "github"
       },
       "original": {
