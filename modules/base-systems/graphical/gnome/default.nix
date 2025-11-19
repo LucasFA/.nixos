@@ -40,7 +40,6 @@
     ] ++
     lib.optionals config.services.desktopManager.gnome.enable [
       gnomeExtensions.gsconnect
-      gnomeExtensions.hide-top-bar
       libgsf
     ];
   environment.gnome.excludePackages = (
