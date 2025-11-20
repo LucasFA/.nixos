@@ -11,13 +11,9 @@ in
   programs.virt-manager.enable = lib.mkIf virtEnabled true;
   users.users.lucasfa.extraGroups = lib.mkIf virtEnabled [ "libvirtd" ];
   virtualisation.libvirtd = {
-    enable = false;
+    enable = true;
     qemu = {
       package = pkgs.qemu_kvm;
-      ovmf = {
-        enable = true;
-        packages = [ pkgs.OVMFFull.fd ];
-      };
       swtpm.enable = true;
     };
   };
@@ -31,7 +27,7 @@ in
       spice
       spice-gtk
       spice-protocol
-      win-virtio
+      virtio-win
       win-spice
       adwaita-icon-theme
     ];
