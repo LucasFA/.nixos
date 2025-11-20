@@ -8,7 +8,8 @@ let
   gitAliases = {
     ul = "!git add flake.lock && git commit -m 'update lockfile' && git push";
     sync = "!git pull --rebase && git push";
-    ovp = "!git commit --all --allow-empty-message -m '' && git sync";
+    ovp = "!git commit --all -m 'Edited in local machine' && git push";
+    ovs = "!git commit --all --allow-empty-message -m '' && git sync";
     lg = "lg1";
     lg1 = "lg1-specific --all -n 20";
     lg2 = "lg2-specific --all";
