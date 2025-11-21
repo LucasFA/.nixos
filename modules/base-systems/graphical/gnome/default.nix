@@ -37,8 +37,8 @@
     with pkgs;
     [
       ibus
-    ] ++
-    lib.optionals config.services.desktopManager.gnome.enable [
+    ]
+    ++ lib.optionals config.services.desktopManager.gnome.enable [
       gnomeExtensions.gsconnect
       libgsf
     ];

@@ -17,6 +17,6 @@ in
   };
 
   home.packages = with pkgs; [
-      gnomeExtensions.hide-top-bar
+    gnomeExtensions.hide-top-bar
   ];
 }
