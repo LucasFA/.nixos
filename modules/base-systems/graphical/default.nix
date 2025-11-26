@@ -3,12 +3,12 @@
   imports = [
     ./sound.nix
     ./gnome
-    ./hyprland.nix
+    #./hyprland.nix
   ];
 
   services.desktopManager.gnome.enable = true;
   programs.hyprland = {
-    enable = true;
+    enable = false;
     withUWSM = true;
     xwayland.enable = true;
   };
