@@ -8,15 +8,16 @@ let
   virtEnabled = config.virtualisation.libvirtd.enable;
 in
 {
-  programs.virt-manager.enable = lib.mkIf virtEnabled true;
-  users.users.lucasfa.extraGroups = lib.mkIf virtEnabled [ "libvirtd" ];
   virtualisation.libvirtd = {
-    enable = true;
+    enable = false;
     qemu = {
       package = pkgs.qemu_kvm;
       swtpm.enable = true;
     };
   };
+  programs.virt-manager.enable = lib.mkIf virtEnabled true;
+  users.users.lucasfa.extraGroups = lib.mkIf virtEnabled [ "libvirtd" ];
+
   environment.systemPackages =
     with pkgs;
     lib.mkIf virtEnabled [
