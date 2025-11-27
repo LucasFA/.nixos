@@ -57,6 +57,8 @@ in
         "/home/*/.cargo"
         "/home/*/.npm"
         "/home/*/.mozilla/firefox/*/storage"
+
+        "/var/lib/libvirt/images"
       ]
       ++ [
         # Home folder stuffs
@@ -65,6 +67,7 @@ in
         "/home/*/.local/share/Paradox Interactive/*/shadercache" # eg Victoria 3
         "/home/*/.config/rpcs3/*/caches" # I think shader caches
         "/home/*/.var" # flatpaks
+        "/home/*/.local/share/gnome-boxes/images"
         "/home/*/.local/share/Steam"
         "/home/*/torrents"
       ];
