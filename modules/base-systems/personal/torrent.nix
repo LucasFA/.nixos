@@ -7,7 +7,7 @@
 {
   environment.systemPackages = with pkgs; [
     qbittorrent
-    # protonvpn-gui
+    protonvpn-gui
   ];
   networking.firewall.allowedUDPPorts = [
     6882
