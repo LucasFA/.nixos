@@ -9,7 +9,7 @@ let
 in
 {
   virtualisation.libvirtd = {
-    enable = false;
+    enable = true;
     qemu = {
       package = pkgs.qemu_kvm;
       swtpm.enable = true;
