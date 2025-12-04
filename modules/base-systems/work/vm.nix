@@ -28,8 +28,6 @@ in
       spice
       spice-gtk
       spice-protocol
-      virtio-win
-      win-spice
       adwaita-icon-theme
     ];
 
