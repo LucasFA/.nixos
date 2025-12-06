@@ -14,8 +14,8 @@
 
   hardware.bluetooth.settings = {
     General = {
-      # Experimental = true;
-      Disable = "Handsfree";
+      Experimental = true;
+      # Disable = "Handsfree";
     };
   };
   environment.systemPackages = with pkgs; [
