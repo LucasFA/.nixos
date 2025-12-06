@@ -29,13 +29,12 @@
         "@wheel"
       ];
       #keep-outputs = false;
-      #keep-derivations = true;
+      keep-derivations = true;
       experimental-features = [
         "nix-command"
         "flakes"
         "ca-derivations"
       ];
-      nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
     };
     # registry.nixpkgs.flake = "nixpkgs";
     # srvos config disables channels. Reenable to fix DBI sqlite error on command-not-found

@@ -14,7 +14,7 @@
 
   environment.shellAliases = {
     nixos-rbb = "nixos-rebuild build --flake . && nvd diff /run/current-system result";
-    sunixos-rbs = "sudo nixos-rebuild switch --flake ~/.nixos";
+    sunixos-rbs = "nixos-rebuild switch --flake ~/.nixos --sudo";
     ".." = "cd ..";
     "..." = "cd ../..";
   };
