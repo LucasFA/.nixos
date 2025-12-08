@@ -81,7 +81,7 @@
           modules = [
             ./hosts/slimbook-hero
             nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
-            srvos.nixosModules.common
+            srvos.nixosModules.desktop
             srvos.nixosModules.mixins-systemd-boot
             agenix.nixosModules.default
             lanzaboote.nixosModules.lanzaboote
