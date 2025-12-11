@@ -6,7 +6,7 @@
 
 {
   services.mautrix-signal = {
-    enable = true;
+    enable = false;
   };
 
 }

@@ -10,7 +10,6 @@
     ./vm.nix
   ];
   environment.systemPackages = with pkgs; [
-    uv
     gnome-boxes
   ];
 }
