@@ -3,12 +3,12 @@
   imports = [
     ./sound.nix
     ./gnome
-    ./hyprland.nix
+    #./hyprland.nix
   ];
 
   services.desktopManager.gnome.enable = true;
   programs.hyprland = {
-    enable = true;
+    enable = false;
     withUWSM = true;
     xwayland.enable = true;
   };
@@ -18,6 +18,7 @@
   services.displayManager.defaultSession = "gnome";
 
   programs.firefox.enable = true;
+  programs.chromium.enable = true;
 
   environment.systemPackages = with pkgs; [
     wl-clipboard
@@ -25,7 +26,4 @@
   ];
 
   services.earlyoom.enable = true;
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true; # Yeah, no. Even using Wayland I need this. Just goes to TTY not an issue
 }

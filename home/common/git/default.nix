@@ -8,7 +8,8 @@ let
   gitAliases = {
     ul = "!git add flake.lock && git commit -m 'update lockfile' && git push";
     sync = "!git pull --rebase && git push";
-    ovp = "!git commit --all --allow-empty-message -m '' && git sync";
+    ovp = "!git commit --all -m 'Edited in local machine' && git push";
+    ovs = "!git commit --all --allow-empty-message -m '' && git sync";
     lg = "lg1";
     lg1 = "lg1-specific --all -n 20";
     lg2 = "lg2-specific --all";
@@ -40,20 +41,23 @@ in
     gapa = "git add --patch";
     gb = "git branch";
   };
+  programs.diff-so-fancy = {
+    enable = true;
+    settings.stripLeadingSymbols = false;
+    enableGitIntegration = true;
+  };
   programs.git = {
     enable = true;
-    userName = "LucasFA";
-    userEmail = "23667494+LucasFA@users.noreply.github.com";
-    diff-so-fancy = {
-      enable = true;
-      stripLeadingSymbols = false;
-    };
     signing = {
       signByDefault = false;
       key = null;
     };
-    aliases = gitAliases;
-    extraConfig = {
+    settings = {
+      user = {
+        name = "LucasFA";
+        email = "23667494+LucasFA@users.noreply.github.com";
+      };
+      alias = gitAliases;
       safe.directory = "/home/lucasfa/.nixos";
       core = {
         autocrlf = "input";

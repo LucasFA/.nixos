@@ -6,4 +6,10 @@
 }:
 
 {
+  imports = [
+    ./vm.nix
+  ];
+  environment.systemPackages = with pkgs; [
+    gnome-boxes
+  ];
 }

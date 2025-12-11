@@ -15,4 +15,8 @@ in
     package = pkgs.gnomeExtensions.gsconnect;
     indicator = true;
   };
+
+  home.packages = with pkgs; [
+    gnomeExtensions.hide-top-bar
+  ];
 }

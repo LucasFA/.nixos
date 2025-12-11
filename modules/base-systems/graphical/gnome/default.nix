@@ -35,7 +35,10 @@
     ];
   environment.systemPackages =
     with pkgs;
-    lib.mkIf config.services.desktopManager.gnome.enable [
+    [
+      ibus
+    ]
+    ++ lib.optionals config.services.desktopManager.gnome.enable [
       gnomeExtensions.gsconnect
       libgsf
     ];
