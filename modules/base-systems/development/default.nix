@@ -13,6 +13,7 @@
     fd
     bat
     uv
+    jq
     zed-editor-fhs
     helix
     ghostty
