@@ -23,6 +23,12 @@
         };
       in
       {
+        ftpd.bindings = [
+          {
+            address = "localhost";
+            port = 801;
+          }
+        ];
         httpd.bindings = [
           defaultOpts
         ];
