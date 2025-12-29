@@ -4,15 +4,14 @@
   ...
 }:
 {
-  programs.command-not-found.enable = true;
+  programs.nix-index.enable = true;
+  programs.command-not-found.enable = false;
   programs.nh = {
     enable = true;
     clean.enable = lib.mkDefault false;
     clean.extraArgs = "--keep-since 7d --keep 10";
     flake = lib.mkDefault "/home/lucasfa/.nixos";
   };
-  programs.nix-index.enable = true;
-  programs.command-not-found.enable = false;
   nix = {
     settings = {
       # See https://github.com/NixOS/nix/issues/11728
