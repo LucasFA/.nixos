@@ -92,6 +92,13 @@
           devices = [ "server-nuc1" ];
           path = "~/syncthing";
         };
+        "home/lucasfa/Documents" = {
+          label = "Documents";
+          id = "documents";
+          devices = [ "server-nuc1" ];
+          path = "~/Documents";
+          type = "sendonly";
+        };
       };
     };
   };
