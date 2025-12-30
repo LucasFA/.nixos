@@ -45,7 +45,7 @@
     kdeconnect.enable = true;
     nix-ld.enable = true;
     autofirma = {
-      enable = true;
+      enable = false;
       firefoxIntegration.enable = true; # Let Firefox use AutoFirma
     };
     configuradorfnmt = {
