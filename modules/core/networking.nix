@@ -19,8 +19,8 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
 
-  age.secrets.wirelessconf.file = self.outPath + "/secrets/wireless.conf.age";
-  networking.wireless.secretsFile = "/run/agenix/wireless.conf";
+  #age.secrets.wirelessconf.file = self.outPath + "/secrets/wireless.conf.age";
+  #networking.wireless.secretsFile = "/run/agenix/wireless.conf";
   networking.wireless.networks = {
   };
 
