@@ -18,6 +18,7 @@
   programs.nix-ld.enable = true;
   networking.networkmanager.ethernet.macAddress = "stable";
   networking.firewall.allowedTCPPorts = [
+    21 # ftp
     80
     443
   ];
