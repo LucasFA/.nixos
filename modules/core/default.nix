@@ -40,7 +40,7 @@
 
     # Nix utils
     nix-output-monitor
-    nixfmt-rfc-style
+    nixfmt
   ];
   fonts.packages =
     with pkgs.nerd-fonts;
