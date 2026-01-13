@@ -7,6 +7,7 @@ let
       #(self: super: {
       #stdenv = super.stdenvAdapters.impureUseNativeOptimizations super.stdenv;
       #})
+/*
       (self: super: {
         rpcs3 = super.rpcs3.overrideAttrs (old: {
           patches = (old.patches or [ ]) ++ [
@@ -22,6 +23,7 @@ let
           ];
         });
       })
+*/
     ];
   };
 in
@@ -61,6 +63,6 @@ in
       ckan
     ]
     ++ [
-      # patchedPkgs.rpcs3
+      patchedPkgs.rpcs3
     ];
 }
