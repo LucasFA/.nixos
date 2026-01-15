@@ -24,6 +24,7 @@
     wl-clipboard
     gparted
     chromium
+    libreoffice-qt
   ];
 
   services.earlyoom.enable = true;
