@@ -23,6 +23,7 @@
   environment.systemPackages = with pkgs; [
     wl-clipboard
     gparted
+    chromium
   ];
 
   services.earlyoom.enable = true;
