@@ -21,6 +21,7 @@
     rustup
     python3
     clang
+    elan
 
     hugo
   ];
