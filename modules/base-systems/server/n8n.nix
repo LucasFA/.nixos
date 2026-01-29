@@ -6,7 +6,7 @@
 
 {
   services.n8n = {
-    enable = true;
+    enable = false;
     openFirewall = false;
     environment.WEBHOOK_URL = "https://n8n.lucasfa.com/";
   };
