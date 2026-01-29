@@ -107,6 +107,7 @@
             nixos-hardware.nixosModules.intel-nuc-5i5ryb
             srvos.nixosModules.common
             srvos.nixosModules.server
+            { srvos.boot.consoles = nixpkgs-stable.lib.mkDefault [ ]; }
             # srvos.nixosModules.mixins-systemd-boot
             agenix.nixosModules.default
             home-manager-stable.nixosModules.home-manager
