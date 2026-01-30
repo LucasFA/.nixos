@@ -46,19 +46,32 @@ in
         "*/cache2" # firefox
         "*/Cache"
         ".config/Code/CachedData"
-        ".npm/_cacache"
-        "*/cache/_cacache"
-        "*/node_modules"
-        "*.pyc"
 
         "/home/*/.direnv"
         "/home/*/.cache"
+
         "/root/.cache"
         "/home/*/.cargo"
         "/home/*/.npm"
         "/home/*/.mozilla/firefox/*/storage"
 
         "/var/lib/libvirt/images"
+      ]
+      ++ [
+        # Programming languages
+        # lean4
+        "/home/*/.elan"
+        "/home/**/.lake/packages"
+
+        # rustup
+        "/home/*/.rustup/toolchains"
+
+        # npm
+        ".npm/_cacache"
+        "*/cache/_cacache"
+        "*/node_modules"
+        # python
+        "*.pyc"
       ]
       ++ [
         # Home folder stuffs
