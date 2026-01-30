@@ -17,7 +17,8 @@
     options = [
       "nofail"
       "lazytime"
-      "x-systemd.device-timeout=15s"
+      "x-systemd.device-timeout=30s"
+      "x-systemd.before=docker.service"
       "autodefrag"
     ];
   };
