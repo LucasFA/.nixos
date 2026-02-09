@@ -29,7 +29,6 @@
     speedtest-cli
     zip
     unzip
-    unrar
     vifm
 
     # management

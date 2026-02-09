@@ -34,6 +34,7 @@
     subsurface
     obsidian
     jellyfin-media-player # reinstall when EOL qt5 resolved
+    unrar
   ];
 
   services = {
