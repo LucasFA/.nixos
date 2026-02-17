@@ -9,6 +9,7 @@
     git = true;
   };
   programs.yazi.enable = true;
+  programs.yazi.shellWrapperName = "y";
 
   programs.neovim = {
     enable = true;
