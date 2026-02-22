@@ -31,7 +31,8 @@ in
   programs = {
     steam = {
       enable = true;
-      gamescopeSession.enable = true;
+      gamescopeSession.enable = false;
+      localNetworkGameTransfers.openFirewall = true;
 
       package = pkgs.steam.override {
         extraPkgs =
