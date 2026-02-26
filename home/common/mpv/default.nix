@@ -9,7 +9,7 @@
     mpv = {
       enable = true;
       scripts = with pkgs.mpvScripts; [
-        mpv-cheatsheet # Show some simple mappings on '?'
+        # mpv-cheatsheet-ng # Show some simple mappings on '?' # re-add when possible
         uosc # Nicer UI
         thumbfast
       ];
