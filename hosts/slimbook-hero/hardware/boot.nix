@@ -8,7 +8,7 @@ let
   confLimit = 10;
 in
 {
-  boot.kernelPackages = pkgs.linuxPackages_6_12;
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
   boot.extraModulePackages = with config.boot.kernelPackages; [ qc71_slimbook_laptop ];
   boot.kernelModules = [ "qc71_laptop" ];
 
