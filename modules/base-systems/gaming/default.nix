@@ -33,6 +33,7 @@ let
   };
 in
 {
+  users.users.lucasfa.extraGroups = lib.mkIf config.programs.gamemode.enable [ "gamemode" ];
   programs = {
     steam = {
       enable = true;
@@ -40,6 +41,9 @@ in
       localNetworkGameTransfers.openFirewall = true;
 
       package = pkgs.steam.override {
+        extraEnv = {
+          GAMEMODERUN = "1";
+        };
         extraPkgs =
           pkgs: with pkgs; [
             libXcursor
