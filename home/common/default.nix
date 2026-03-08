@@ -21,7 +21,7 @@
   home.packages = with pkgs; [
     # system utilities
     htop
-    neofetch
+    fastfetch
     file
     which
     # user utilities
