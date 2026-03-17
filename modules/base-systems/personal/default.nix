@@ -35,7 +35,7 @@
     rquickshare
     subsurface
     obsidian
-    jellyfin-media-player # reinstall when EOL qt5 resolved
+    jellyfin-media-player
     unrar
   ];
 
