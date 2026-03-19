@@ -76,7 +76,6 @@
     {
       nixosConfigurations = {
         slimbook = lib.nixosSystem {
-          inherit system;
           specialArgs = { inherit inputs system self; };
           modules = [
             ./hosts/slimbook-hero
