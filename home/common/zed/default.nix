@@ -2,7 +2,7 @@
 {
   programs.zed-editor = {
     # enable = true;
-    extensions = [ "nix" ];
+    extensions = [ ];
     userSettings = {
       vim_mode = true;
       ui_font_size = 16;
