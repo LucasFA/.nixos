@@ -22,6 +22,8 @@
       "unrar"
       "hplip"
       "obsidian"
+      "code"
+      "vscode"
       "n8n"
       "sftpgo"
     ];
