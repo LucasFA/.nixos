@@ -2,6 +2,7 @@
 {
   xdg.userDirs.enable = true;
   xdg.userDirs.createDirectories = true;
+  xdg.userDirs.setSessionVariables = true;
   xdg.userDirs.music = "${config.home.homeDirectory}/xdg/Music";
   xdg.userDirs.desktop = "${config.home.homeDirectory}/xdg/Desktop";
   xdg.userDirs.pictures = "${config.home.homeDirectory}/xdg/Pictures";
