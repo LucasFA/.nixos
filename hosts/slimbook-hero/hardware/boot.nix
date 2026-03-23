@@ -8,7 +8,7 @@ let
   confLimit = 10;
 in
 {
-  boot.kernelPackages = pkgs.linuxPackages_6_12;
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
   boot.extraModulePackages = with config.boot.kernelPackages; [ qc71_slimbook_laptop ];
   boot.kernelModules = [ "qc71_laptop" ];
 
@@ -23,8 +23,6 @@ in
     configurationLimit = confLimit;
   };
 
-  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  #boot.kernelPackages = pkgs.linuxKernel_latest;
   boot.kernel.sysctl."kernel.sysrq" = 1;
 
   boot.kernelParams = [ ];
