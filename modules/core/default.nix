@@ -14,7 +14,6 @@
     ./utils.nix
     ./nixpkgs.nix
     ./agenix
-    ./zram
     ./hardening.nix
   ];
 
