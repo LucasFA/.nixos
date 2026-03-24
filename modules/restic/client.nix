@@ -42,6 +42,7 @@ in
       ];
 
       excludeList = [
+        "/var/lib/swapfile"
         # general caches
         "*/cache2" # firefox
         "*/Cache"

@@ -9,10 +9,17 @@
   imports = [
     ./hardware-configuration.nix
   ];
+
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024; # 16 GiB
+    }
+  ];
+
   hardware.intelgpu.vaapiDriver = "intel-media-driver";
   security.tpm2.enable = true;
   security.tpm2.pkcs11.enable = true;
-
 
   services.upower = {
     enable = true;
@@ -20,7 +27,6 @@
     percentageAction = 10;
     criticalPowerAction = "PowerOff";
   };
-
 
   ######################## BOOT ########################
 
