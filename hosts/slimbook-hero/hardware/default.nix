@@ -17,6 +17,15 @@
     }
   ];
 
+  boot.kernelParams = [
+    "zswap.enabled=1"
+    "zswap.shrinker_enabled=1" # whether to shrink the pool proactively on high memory pressure
+
+    # defaults:
+    # "zswap.compressor=zstd"
+    # "zswap.max_pool_percent=20" # maximum percentage of RAM that zswap is allowed to use
+  ];
+
   hardware.intelgpu.vaapiDriver = "intel-media-driver";
   security.tpm2.enable = true;
   security.tpm2.pkcs11.enable = true;
@@ -46,7 +55,6 @@
   };
 
   boot.kernel.sysctl."kernel.sysrq" = 1;
-  boot.kernelParams = [ ];
 
   ######################## NVIDIA ########################
 
