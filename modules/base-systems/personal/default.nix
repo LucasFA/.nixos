@@ -20,7 +20,7 @@
   };
   environment.systemPackages = with pkgs; [
     octave
-    protonvpn-gui
+    proton-vpn
     # calibre
 
     # feishin
