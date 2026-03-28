@@ -13,7 +13,6 @@
     ../../../modules/base-systems/gaming
     ../../../modules/base-systems/development
     ../../../modules/restic/client.nix
-    ../../../modules/misc.nix
     ./secureboot.nix
   ];
   lfa.backups.personalLaptop.enable = true;

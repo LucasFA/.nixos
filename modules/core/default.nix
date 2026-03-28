@@ -66,6 +66,7 @@
     # Nix utils
     nix-output-monitor
     nixfmt
+
     # other utils
     dig
     dust
@@ -73,6 +74,9 @@
     smartmontools
     cryptsetup
     bc
+    # misc
+    dmidecode
+    lshw
   ];
 
   ################## fonts ############
