@@ -87,6 +87,9 @@
         server-nuc1 = {
           id = "3Q24ZE2-QVV66XD-AVEDCYP-STB76EP-Q3AVWLJ-KS7PA2L-SMOOTGJ-SVYQPQ3";
         };
+        phone = {
+          id = "3BV6NRS-HRXZ7BI-SUZD7TW-W7AQW6D-ZLBRL37-QO2RPKP-FOYPXNL-OZ62HAT";
+        };
       };
       settings.folders = {
         "home/lucasfa/syncthing" = {
@@ -101,6 +104,15 @@
           devices = [ "server-nuc1" ];
           path = "~/Documents";
           type = "sendonly";
+        };
+        "home/lucasfa/obsidian" = {
+          label = "Obsidian vault";
+          id = "obsidian-vault";
+          devices = [
+            "server-nuc1"
+            "phone"
+          ];
+          path = "~/obsidian";
         };
       };
     };
