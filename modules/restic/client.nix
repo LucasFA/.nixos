@@ -9,10 +9,8 @@ let
   cfg = config.lfa.backups;
   mkEnableOptionDes =
     des:
-    lib.mkOption {
+    lib.mkEnableOption {
       description = des;
-      type = lib.types.bool;
-      default = false;
     };
 in
 {

@@ -3,7 +3,7 @@
 }:
 {
   services.forgejo = {
-    enable = true;
+    enable = false;
     stateDir = "/mnt/WD_8tb/server/data/forgejo";
     useWizard = false;
     settings = {
