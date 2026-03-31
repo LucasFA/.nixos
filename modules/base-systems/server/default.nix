@@ -12,7 +12,6 @@
     ./docker.nix
     ./n8n.nix
     ./sftpgo.nix
-    ./mautrix.nix
   ];
 
   programs.nix-ld.enable = true;
