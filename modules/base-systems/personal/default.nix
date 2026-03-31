@@ -8,9 +8,11 @@
 {
   imports = [
     ../graphical
-    ./torrent.nix
-    ./printer.nix
   ];
+
+  services.printing = {
+    drivers = with pkgs; [ hplipWithPlugin ];
+  };
 
   hardware.bluetooth.settings = {
     General = {
@@ -25,14 +27,14 @@
 
     # feishin
     spotify
-    spotify-player
+    # spotify-player
 
     telegram-desktop
     element-desktop
     signal-desktop
     discord
 
-    rquickshare
+    # rquickshare
     subsurface
     obsidian
     jellyfin-media-player
