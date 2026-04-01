@@ -51,5 +51,20 @@
       gh
       chezmoi
     ];
+
+    # XDG Base Directory specification environment variables
+    home.sessionVariables = rec {
+      XDG_CONFIG_HOME = "$HOME/.config";
+      XDG_CACHE_HOME = "$HOME/.cache";
+      XDG_DATA_HOME = "$HOME/.local/share";
+      XDG_STATE_HOME = "$HOME/.local/state";
+      # Not officially in the spec but useful
+      XDG_BIN_HOME = "$HOME/.local/bin";
+    };
+
+    # Shell aliases
+    home.shellAliases = {
+      nvidia-settings = "nvidia-settings --config=\"$XDG_CONFIG_HOME\"/nvidia/settings";
+    };
   };
 }

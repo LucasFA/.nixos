@@ -12,7 +12,7 @@
   lfa.home = {
     gnome.enable = true;
     vscode.enable = true;
-    mangohud.enable = false; # Can be toggled as needed
+    mangohud.enable = true;
     mpv.enable = true;
     work.enable = false;
     zed.enable = true;
