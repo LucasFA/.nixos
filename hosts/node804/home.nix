@@ -14,7 +14,6 @@
     vscode.enable = false;
     mangohud.enable = false;
     mpv.enable = false;
-    work.enable = false;
   };
 
   home.username = "lucasfa";

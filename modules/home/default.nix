@@ -7,16 +7,12 @@
 
 {
   imports = [
-    ./audio.nix
     ./devtools.nix
     ./git.nix
-    ./shell.nix
-    ./xdg-user.nix
     ./gnome.nix
     ./mangohud/default.nix
     ./mpv/default.nix
-    ./vscode/default.nix
-    ./work.nix
+    ./vscode.nix
     ./zed.nix
   ];
 
@@ -25,7 +21,6 @@
     vscode.enable = lib.mkEnableOption "VS Code editor";
     mangohud.enable = lib.mkEnableOption "MangoHUD GPU overlay";
     mpv.enable = lib.mkEnableOption "MPV media player";
-    work.enable = lib.mkEnableOption "Work-related tools";
     zed.enable = lib.mkEnableOption "Zed editor";
   };
 
@@ -34,6 +29,22 @@
     programs.home-manager.enable = false;
 
     home.stateVersion = "24.05";
+
+    # Programs
+    programs = {
+      bash.enable = true;
+      fish.enable = true;
+    };
+
+    # XDG user directories
+    xdg.userDirs.enable = true;
+    xdg.userDirs.createDirectories = true;
+    xdg.userDirs.music = "${config.home.homeDirectory}/xdg/Music";
+    xdg.userDirs.desktop = "${config.home.homeDirectory}/xdg/Desktop";
+    xdg.userDirs.pictures = "${config.home.homeDirectory}/xdg/Pictures";
+    xdg.userDirs.publicShare = "${config.home.homeDirectory}/xdg/Public";
+    xdg.userDirs.templates = "${config.home.homeDirectory}/xdg/Templates";
+    xdg.userDirs.videos = "${config.home.homeDirectory}/xdg/Videos";
 
     home.packages = with pkgs; [
       # system utilities

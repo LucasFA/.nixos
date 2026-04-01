@@ -14,7 +14,6 @@
     vscode.enable = true;
     mangohud.enable = true;
     mpv.enable = true;
-    work.enable = false;
     zed.enable = true;
   };
 
