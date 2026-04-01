@@ -5,17 +5,14 @@
   ...
 }:
 
+let
+  profiles = (import ../../modules/home/profiles.nix).profiles;
+in
 {
   imports = [ ../../modules/home ];
 
   # Home configuration composed for desktop use
-  lfa.home = {
-    gnome.enable = true;
-    vscode.enable = true;
-    mangohud.enable = true;
-    mpv.enable = true;
-    zed.enable = true;
-  };
+  lfa.home = profiles.desktop;
 
   home.username = "lucasfa";
   home.homeDirectory = "/home/lucasfa";
