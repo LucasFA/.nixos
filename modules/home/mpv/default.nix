@@ -15,6 +15,7 @@
       mpv = {
         enable = true;
         scripts = with pkgs.mpvScripts; [
+          mpv-cheatsheet-ng
           uosc # Nicer UI
           thumbfast
         ];
