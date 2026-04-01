@@ -90,7 +90,7 @@
               home-manager = {
                 extraSpecialArgs = { inherit self; };
                 useGlobalPkgs = true;
-                users.lucasfa = import ./home;
+                users.lucasfa = import ./hosts/slimbook-hero/home.nix;
                 sharedModules = [
                   inputs.agenix.homeManagerModules.default
                 ];
@@ -112,7 +112,7 @@
             home-manager-stable.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
-              home-manager.users.lucasfa = import ./home;
+              home-manager.users.lucasfa = import ./hosts/nuc1/home.nix;
             }
           ];
         };
@@ -129,7 +129,7 @@
             home-manager-stable.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
-              home-manager.users.lucasfa = import ./home;
+              home-manager.users.lucasfa = import ./hosts/hp-omen/home.nix;
             }
           ];
         };
@@ -146,7 +146,7 @@
             home-manager-stable.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
-              home-manager.users.lucasfa = import ./home;
+              home-manager.users.lucasfa = import ./hosts/node804/home.nix;
             }
           ];
         };
