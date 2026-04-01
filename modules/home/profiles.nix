@@ -1,24 +1,32 @@
 {
   # Profile definitions for home configuration
-  # Each profile specifies which optional modules to enable
+  # Each profile specifies which optional modules to enable plus common home settings
 
   profiles = {
     # Desktop profile: Full featured with GUI tools, editors, media players
     desktop = {
-      gnome.enable = true;
-      vscode.enable = true;
-      mangohud.enable = true;
-      mpv.enable = true;
-      zed.enable = true;
+      home.username = "lucasfa";
+      home.homeDirectory = "/home/lucasfa";
+      lfa.home = {
+        gnome.enable = true;
+        vscode.enable = true;
+        mangohud.enable = true;
+        mpv.enable = true;
+        zed.enable = true;
+      };
     };
 
     # Server profile: Minimal, no GUI applications
     server = {
-      gnome.enable = false;
-      vscode.enable = false;
-      mangohud.enable = false;
-      mpv.enable = false;
-      zed.enable = false;
+      home.username = "lucasfa";
+      home.homeDirectory = "/home/lucasfa";
+      lfa.home = {
+        gnome.enable = false;
+        vscode.enable = false;
+        mangohud.enable = false;
+        mpv.enable = false;
+        zed.enable = false;
+      };
     };
   };
 }

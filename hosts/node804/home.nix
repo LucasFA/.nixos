@@ -1,6 +1,4 @@
 {
-  lib,
-  config,
   inputs,
   ...
 }:
@@ -10,10 +8,5 @@ let
 in
 {
   imports = [ ../../modules/home ];
-
-  # Minimal home configuration for server use
-  lfa.home = profiles.server;
-
-  home.username = "lucasfa";
-  home.homeDirectory = "/home/lucasfa";
 }
+// profiles.server
