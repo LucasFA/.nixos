@@ -63,6 +63,7 @@ in
       gpg.format = "ssh";
       commit = {
         verbose = true;
+        # gpgSign = true;
       };
       color.ui = "true";
       init.defaultBranch = "main";
@@ -78,6 +79,7 @@ in
       branch.sort = "committerdate";
       "url \"ssh://git@github.com:\"" = {
         insteadOf = "https://github.com";
+        # insteadOf = "gh:";
       };
       "url \"git@github.com:\"" = {
         insteadOf = "gh:";
