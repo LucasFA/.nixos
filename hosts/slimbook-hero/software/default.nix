@@ -1,4 +1,5 @@
 {
+  hostRole,
   pkgs,
   lib,
   config,
@@ -15,6 +16,7 @@
     ../../../modules/restic/client.nix
     ./secureboot.nix
   ];
+  lfa.hostRole = hostRole;
   lfa.backups.personalLaptop.enable = true;
 
   networking.hostName = "slimbook";

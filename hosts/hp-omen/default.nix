@@ -1,5 +1,6 @@
 {
   inputs,
+  hostRole,
   pkgs,
   lib,
   ...
@@ -14,6 +15,7 @@
     ./configuration.nix
     ./wol.nix
   ];
+  lfa.hostRole = hostRole;
   services.hdapsd.enable = false;
   systemd.sleep.extraConfig = lib.mkForce ''
     AllowSuspend=yes

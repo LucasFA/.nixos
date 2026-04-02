@@ -72,11 +72,22 @@
 
       # Eval the treefmt modules from ./modules/treefmt/default.nix
       treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./modules/treefmt);
+
+      # Single source of truth for host roles
+      hostRoles = {
+        slimbook = "desktop";
+        server-nuc1 = "server";
+        server-hp-omen = "server";
+        server-node804 = "server";
+      };
     in
     {
       nixosConfigurations = {
         slimbook = lib.nixosSystem {
-          specialArgs = { inherit inputs system self; };
+          specialArgs = {
+            inherit inputs system self;
+            hostRole = hostRoles.slimbook;
+          };
           modules = [
             ./hosts/slimbook-hero
             nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
@@ -88,7 +99,10 @@
             home-manager.nixosModules.home-manager
             {
               home-manager = {
-                extraSpecialArgs = { inherit self; };
+                extraSpecialArgs = {
+                  inherit self;
+                  hostRole = hostRoles.slimbook;
+                };
                 useGlobalPkgs = true;
                 users.lucasfa = import ./hosts/slimbook-hero/home.nix;
                 sharedModules = [
@@ -99,7 +113,10 @@
           ];
         };
         server-nuc1 = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = { inherit inputs system self; };
+          specialArgs = {
+            inherit inputs system self;
+            hostRole = hostRoles.server-nuc1;
+          };
           modules = [
             ./hosts/nuc1
             # /home/lucasfa/server/compose.nix
@@ -111,13 +128,22 @@
             agenix.nixosModules.default
             home-manager-stable.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.users.lucasfa = import ./hosts/nuc1/home.nix;
+              home-manager = {
+                extraSpecialArgs = {
+                  inherit self;
+                  hostRole = hostRoles.server-nuc1;
+                };
+                useGlobalPkgs = true;
+                users.lucasfa = import ./hosts/nuc1/home.nix;
+              };
             }
           ];
         };
         server-hp-omen = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = { inherit inputs system self; };
+          specialArgs = {
+            inherit inputs system self;
+            hostRole = hostRoles.server-hp-omen;
+          };
           modules = [
             ./hosts/hp-omen
             # /home/lucasfa/server/compose.nix
@@ -128,13 +154,22 @@
             agenix.nixosModules.default
             home-manager-stable.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.users.lucasfa = import ./hosts/hp-omen/home.nix;
+              home-manager = {
+                extraSpecialArgs = {
+                  inherit self;
+                  hostRole = hostRoles.server-hp-omen;
+                };
+                useGlobalPkgs = true;
+                users.lucasfa = import ./hosts/hp-omen/home.nix;
+              };
             }
           ];
         };
         server-node804 = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = { inherit inputs system self; };
+          specialArgs = {
+            inherit inputs system self;
+            hostRole = hostRoles.server-node804;
+          };
           modules = [
             ./hosts/node804
             # /home/lucasfa/server/compose.nix
@@ -145,8 +180,14 @@
             agenix.nixosModules.default
             home-manager-stable.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.users.lucasfa = import ./hosts/node804/home.nix;
+              home-manager = {
+                extraSpecialArgs = {
+                  inherit self;
+                  hostRole = hostRoles.server-node804;
+                };
+                useGlobalPkgs = true;
+                users.lucasfa = import ./hosts/node804/home.nix;
+              };
             }
           ];
         };

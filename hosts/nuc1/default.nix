@@ -1,6 +1,7 @@
 {
   self,
   inputs,
+  hostRole,
   pkgs,
   lib,
   config,
@@ -19,6 +20,7 @@ in
     ../../modules/restic/server.nix
     ../../modules/restic/client.nix
   ];
+  lfa.hostRole = hostRole;
   lfa.backups.immich.enable = true;
   lfa.backups.desktopNotification.enable = false;
   environment.systemPackages = [

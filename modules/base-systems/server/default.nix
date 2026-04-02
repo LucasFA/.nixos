@@ -8,7 +8,6 @@
   imports = [
     # ../../forgejo
     ./ssh.nix
-    ./dns.nix
     ./docker.nix
     ./n8n.nix
     ./sftpgo.nix
@@ -22,4 +21,9 @@
     443
   ];
 
+  # https://hub.docker.com/r/adguard/adguardhome#resolved-daemon
+  services.resolved.extraConfig = "[Resolve]
+DNS=127.0.0.1
+DNSStubListener=no
+";
 }

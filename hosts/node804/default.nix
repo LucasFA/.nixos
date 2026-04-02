@@ -1,6 +1,7 @@
 {
   self,
   inputs,
+  hostRole,
   pkgs,
   lib,
   config,
@@ -18,6 +19,7 @@ in
     ../../modules/base-systems/server
     #../../modules/restic/server.nix
   ];
+  lfa.hostRole = hostRole;
 
   environment.systemPackages = [
     #dduper

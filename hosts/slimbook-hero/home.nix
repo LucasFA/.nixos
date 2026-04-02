@@ -1,6 +1,4 @@
-{
-  ...
-}:
+{ hostRole, ... }:
 
 let
   profiles = (import ../../modules/home/profiles.nix).profiles;
@@ -8,9 +6,9 @@ in
 {
   imports = [ ../../modules/home ];
 }
-// profiles.desktop
+// profiles.${hostRole}
 // {
-  lfa.home = profiles.desktop.lfa.home // {
+  lfa.home = profiles.${hostRole}.lfa.home // {
     mangohud.enable = false;
   };
 }
