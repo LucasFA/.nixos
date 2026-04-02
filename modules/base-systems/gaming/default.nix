@@ -34,6 +34,8 @@ let
 in
 {
   users.users.lucasfa.extraGroups = lib.mkIf config.programs.gamemode.enable [ "gamemode" ];
+  boot.kernelModules = [ "ntsync" ];
+
   programs = {
     steam = {
       enable = true;
