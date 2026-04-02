@@ -9,4 +9,9 @@ in
 {
   imports = [ ../../modules/home ];
 }
-// profiles.desktop // { lfa.home.mangohud.enable = false; }
+// profiles.desktop
+// {
+  lfa.home = (profiles.desktop.lfa.home or { }) // {
+    mangohud.enable = false;
+  };
+}
