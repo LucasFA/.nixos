@@ -9,7 +9,6 @@
 
   imports = [
     ../../modules/core
-    ../../modules/base-systems/server
     ./hardware
     ./hardware-configuration.nix
     ./configuration.nix

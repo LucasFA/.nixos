@@ -9,15 +9,25 @@
 {
   imports = [
     ../../../modules/core
-    ../../../modules/base-systems/personal
-    ../../../modules/base-systems/work
-    ../../../modules/base-systems/gaming
-    ../../../modules/base-systems/development
     ../../../modules/restic/client.nix
     ./secureboot.nix
   ];
   lfa.hostRole = hostRole;
   lfa.backups.personalLaptop.enable = true;
+
+  # Slimbook-specific Spanish government authentication
+  programs.autofirma = {
+    enable = false;
+    firefoxIntegration.enable = true;
+  };
+  programs.configuradorfnmt = {
+    enable = true;
+    firefoxIntegration.enable = true;
+  };
+  programs.firefox.policies.SecurityDevices = {
+    "OpenSC PKCS#11" = "${pkgs.opensc}/lib/opensc-pkcs11.so";
+    "DNIeRemote" = "${config.programs.dnieremote.finalPackage}/lib/libdnieremotepkcs11.so";
+  };
 
   networking.hostName = "slimbook";
 

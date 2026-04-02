@@ -16,7 +16,6 @@ in
     ./configuration.nix
     #../../modules/WD_8tb
     ../../modules/core
-    ../../modules/base-systems/server
     #../../modules/restic/server.nix
   ];
   lfa.hostRole = hostRole;

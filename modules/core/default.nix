@@ -10,6 +10,8 @@
     ./nixpkgs.nix
     ./agenix
     ./hardening.nix
+    ../roles/desktop
+    ../roles/server
   ];
 
   options.lfa.hostRole = lib.mkOption {
@@ -21,6 +23,8 @@
     description = "System role: desktop or server";
   };
   config = {
+    lfa.roles.desktop.enable = config.lfa.hostRole == "desktop";
+    lfa.roles.server.enable = config.lfa.hostRole == "server";
     services.thermald.enable = true;
     services.xserver = {
       # Configure keymap in X11
