@@ -1,5 +1,4 @@
 {
-  inputs,
   ...
 }:
 
@@ -11,7 +10,7 @@ in
 }
 // profiles.desktop
 // {
-  lfa.home = (profiles.desktop.lfa.home or { }) // {
+  lfa.home = profiles.desktop.lfa.home // {
     mangohud.enable = false;
   };
 }
