@@ -43,9 +43,6 @@ in
       localNetworkGameTransfers.openFirewall = true;
 
       package = pkgs.steam.override {
-        extraEnv = {
-          GAMEMODERUN = "1";
-        };
         extraPkgs =
           pkgs: with pkgs; [
             libXcursor
