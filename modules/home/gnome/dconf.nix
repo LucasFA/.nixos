@@ -59,7 +59,7 @@ with lib.hm.gvariant;
 
     "org/gnome/desktop/peripherals/mouse" = {
       natural-scroll = false;
-      speed = 0.5338345864661653;
+      # speed = 0.5338345864661653;
     };
 
     "org/gnome/desktop/peripherals/touchpad" = {
