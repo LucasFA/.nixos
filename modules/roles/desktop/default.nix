@@ -19,6 +19,7 @@
     services.printing = {
       drivers = with pkgs; [ hplipWithPlugin ];
     };
+    programs.nix-ld.enable = true;
 
     hardware.bluetooth.settings = {
       General = {
