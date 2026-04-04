@@ -40,13 +40,13 @@
       "locked": {
         "lastModified": 1772367791,
         "narHash": "sha256-epzY7ULGzuRsVWtZWr3uOQPilKbwEqFFUnVupADh0nM=",
-        "owner": "nix-community",
+        "owner": "LucasFA",
         "repo": "autofirma-nix",
         "rev": "36e976efa8a91d2bd70cb34837ddc563859754da",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "LucasFA",
         "repo": "autofirma-nix",
         "type": "github"
       }

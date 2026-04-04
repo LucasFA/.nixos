@@ -20,7 +20,8 @@
     };
     autofirma-nix = {
       # url = "github:nix-community/autofirma-nix/release-24.11";
-      url = "github:nix-community/autofirma-nix";
+      # url = "github:nix-community/autofirma-nix";
+      url = "github:LucasFA/autofirma-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lucasfa-nur = {
