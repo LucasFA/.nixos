@@ -51,7 +51,10 @@
         localAnnounceEnabled = false;
         globalAnnounceEnabled = false;
         natEnabled = false;
-        minHomeDiskFree = 5;
+        minHomeDiskFree = {
+          value = 5;
+          unit = "%";
+        };
       };
       settings.devices = {
         server-nuc1 = {
@@ -60,7 +63,7 @@
         };
         phone = {
           id = "3BV6NRS-HRXZ7BI-SUZD7TW-W7AQW6D-ZLBRL37-QO2RPKP-FOYPXNL-OZ62HAT";
-          addresses = "tcp://100.97.237.13:22000";
+          addresses = "tcp://100.97.237.14:22000";
         };
       };
       settings.folders = {
