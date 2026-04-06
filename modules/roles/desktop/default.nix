@@ -56,16 +56,31 @@
           unit = "%";
         };
       };
-      settings.devices = {
-        server-nuc1 = {
-          id = "3Q24ZE2-QVV66XD-AVEDCYP-STB76EP-Q3AVWLJ-KS7PA2L-SMOOTGJ-SVYQPQ3";
-          addresses = "tcp://100.109.201.11:22000";
+      settings.devices =
+        let
+          bothTcpQuic = ipPort: [
+            "tcp://${ipPort}"
+            "quic://${ipPort}"
+          ];
+        in
+        {
+          server-nuc1 = {
+            id = "3Q24ZE2-QVV66XD-AVEDCYP-STB76EP-Q3AVWLJ-KS7PA2L-SMOOTGJ-SVYQPQ3";
+            addresses =
+              let
+                IP = "100.109.201.11:22000";
+              in
+              bothTcpQuic IP;
+          };
+          phone = {
+            id = "3BV6NRS-HRXZ7BI-SUZD7TW-W7AQW6D-ZLBRL37-QO2RPKP-FOYPXNL-OZ62HAT";
+            addresses =
+              let
+                IP = "100.97.237.14";
+              in
+              bothTcpQuic IP;
+          };
         };
-        phone = {
-          id = "3BV6NRS-HRXZ7BI-SUZD7TW-W7AQW6D-ZLBRL37-QO2RPKP-FOYPXNL-OZ62HAT";
-          addresses = "tcp://100.97.237.14:22000";
-        };
-      };
       settings.folders = {
         "home/lucasfa/syncthing" = {
           label = "Server inbox";
