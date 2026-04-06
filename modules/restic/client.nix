@@ -41,6 +41,8 @@ in
 
       excludeList = [
         "/var/lib/swapfile"
+        "/var/lib/flatpak"
+
         # general caches
         "*/cache2" # firefox
         "*/Cache"
