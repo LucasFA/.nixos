@@ -7,6 +7,7 @@
 {
   imports = [
     ./graphical.nix
+    ./development.nix
   ];
 
   options.lfa.roles.desktop.enable =
@@ -154,23 +155,10 @@
       protonup-qt
       pcsx2
       ckan
-      nixd
-      nixfmt
-      nixfmt-tree
-      distrobox
-      licensee
       fd
       bat
       uv
       jq
-      zed-editor-fhs
-      helix
-      ghostty
-      rustup
-      python3
-      clang
-      elan
-      hugo
     ];
   };
 }
