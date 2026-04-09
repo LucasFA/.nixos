@@ -4,24 +4,31 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.lfa.roles.desktop;
+in
 {
+  config = lib.mkIf cfg.enable {
+    virtualisation.docker.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    nixd
-    nixfmt
-    nixfmt-tree
-    distrobox
-    licensee
-
-    zed-editor-fhs
-    helix
-    ghostty
-    rustup
-    python3
-    clang
-    elan
-    hugo
-    pi-coding-agent
-    opencode
-  ];
+    environment.systemPackages = with pkgs; [
+      nixd
+      nixfmt
+      nixfmt-tree
+      distrobox
+      licensee
+      zed-editor-fhs
+      helix
+      ghostty
+      rustup
+      python3
+      clang
+      elan
+      hugo
+      pi-coding-agent
+      opencode
+      octave
+      uv
+    ];
+  };
 }
