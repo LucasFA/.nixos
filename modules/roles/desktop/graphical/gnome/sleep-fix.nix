@@ -1,5 +1,7 @@
 {
   pkgs,
+  config,
+  lib,
   ...
 }:
 # This fixes https://github.com/NixOS/nixpkgs/issues/336723
