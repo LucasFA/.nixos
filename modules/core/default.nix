@@ -112,7 +112,8 @@
     programs.nh = {
       enable = true;
       clean.enable = lib.mkDefault false;
-      clean.extraArgs = "--keep-since 7d --keep 10";
+      clean.dates = lib.mkDefault "monthly";
+      clean.extraArgs = lib.mkDefault "--keep-since 7d --keep 10";
       flake = lib.mkDefault "/home/lucasfa/.nixos";
     };
     nix = {
@@ -132,7 +133,7 @@
           "root"
           "@wheel"
         ];
-        #keep-outputs = false;
+        # keep-outputs = false;
         # keep-derivations = true;
         experimental-features = [
           "nix-command"
