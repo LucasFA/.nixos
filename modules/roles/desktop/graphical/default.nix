@@ -4,8 +4,8 @@ let
 in
 {
   imports = [
-    ../../base-systems/graphical/sound.nix
-    ../../base-systems/graphical/gnome
+    ./sound.nix
+    ./gnome
   ];
 
   config = lib.mkIf cfg.enable {

@@ -9,7 +9,7 @@ let
 in
 {
   imports = [
-    ./graphical.nix
+    ./graphical
     ./development.nix
     ./gaming.nix
     ./personal.nix
