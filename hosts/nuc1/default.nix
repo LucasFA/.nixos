@@ -14,7 +14,6 @@ in
   imports = [
     ./hardware-configuration.nix
     ./configuration.nix
-    ../../modules/WD_8tb
     ../../modules/core
     ../../modules/restic/server.nix
     ../../modules/restic/client.nix

@@ -3,11 +3,16 @@
   config,
   ...
 }:
-
+let
+  cfg = config.lfa.roles.server;
+in
 {
+  imports = [
+    ./WD_8tb.nix
+  ];
   options.lfa.roles.server.enable = lib.mkEnableOption "server role (ssh, docker, sftpgo, etc.)";
 
-  config = lib.mkIf config.lfa.roles.server.enable {
+  config = lib.mkIf cfg.enable {
     programs.nix-ld.enable = true;
     networking.networkmanager.ethernet.macAddress = "stable";
     networking.firewall.allowedTCPPorts = [

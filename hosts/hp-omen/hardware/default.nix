@@ -10,7 +10,7 @@
 
 {
   imports = [
-    ../../../modules/WD_8tb
+    # ../../../modules/WD_8tb
   ];
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/e9407266-6514-4e96-8797-1667f344023c";
