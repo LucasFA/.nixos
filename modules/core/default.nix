@@ -133,6 +133,10 @@
           "root"
           "@wheel"
         ];
+        allowed-users = [
+          "root"
+          "@wheel"
+        ];
         # keep-outputs = false;
         # keep-derivations = true;
         experimental-features = [
