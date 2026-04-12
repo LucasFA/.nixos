@@ -109,6 +109,7 @@
   };
   fileSystems."/home/lucasfa/games" = {
     mountPoint = "/home/lucasfa/games";
+    fsType = "auto";
     device = "/mnt/data/games";
     options = [
       "bind"
