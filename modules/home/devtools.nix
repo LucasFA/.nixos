@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   home.packages = with pkgs; [
     shellcheck
@@ -12,8 +12,8 @@
   programs.yazi.shellWrapperName = "y";
 
   programs.neovim = {
-    enable = true;
-    defaultEditor = true;
+    # enable = true;
+    defaultEditor = config.programs.neovim.enable;
     withNodeJs = true;
     withPython3 = true;
     plugins = with pkgs.vimPlugins; [
