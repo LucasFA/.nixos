@@ -45,6 +45,7 @@ in
   programs.git = {
     enable = true;
     signing = {
+      format = "ssh";
       signByDefault = false;
       key = null;
     };
