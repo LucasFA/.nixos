@@ -9,7 +9,7 @@
   imports = [
     ./devtools.nix
     ./git.nix
-    ./gnome.nix
+    ./gnome
     ./mangohud/default.nix
     ./mpv/default.nix
     ./vscode.nix

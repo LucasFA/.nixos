@@ -5,7 +5,7 @@
   ...
 }:
 {
-  imports = [ ./gnome/dconf.nix ];
+  imports = [ ./dconf.nix ];
 
   config = lib.mkIf config.lfa.home.gnome.enable {
     services.caffeine.enable = true;
