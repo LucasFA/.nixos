@@ -28,6 +28,7 @@ in
     gsh = "git show";
     grs = "git restore";
     gd = "git diff";
+    gds = "git diff --staged";
     gc = "git commit";
     gco = "git checkout";
     gp = "git push";
