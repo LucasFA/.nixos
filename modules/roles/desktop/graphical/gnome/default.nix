@@ -9,7 +9,6 @@ let
 in
 {
   imports = [
-    ./sleep-fix.nix
     ./fix-vid-properties.nix
     ./keyring.nix
   ];
