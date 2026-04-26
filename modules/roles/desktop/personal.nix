@@ -33,9 +33,9 @@ in
       settings.options = {
         urAccepted = 3;
         relaysEnabled = false;
-        localAnnounceEnabled = false;
+        localAnnounceEnabled = true;
         globalAnnounceEnabled = false;
-        natEnabled = false;
+        natEnabled = true;
         minHomeDiskFree = {
           value = 5;
           unit = "%";
