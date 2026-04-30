@@ -6,43 +6,48 @@
 }:
 let
   cfg = config.lfa.roles.desktop;
+  ctl = "${pkgs.power-profiles-daemon}/bin/powerprofilesctl";
+  acFile = "/sys/class/power_supply/AC0/online";
 in
 {
   config = lib.mkIf cfg.enable {
-    systemd.services =
-      let
-        defaultService = {
-          enable = true;
-          description = "Update the power-profiles-daemon perf mode on boot";
-          after = [ "multi-user.target" ];
-          wantedBy = [ "multi-user.target" ];
-          serviceConfig = {
-            Type = "oneshot";
-            User = config.users.users.lucasfa.name;
-          };
-          script = ''
-            	AC_PATH="/sys/class/power_supply/AC/online"
-            	AC_STATE=$(cat "/sys/class/power_supply/AC0/online")
-                case $AC_STATE in
-                    "1")
-                        "${pkgs.power-profiles-daemon}/bin/powerprofilesctl set performance"
-                        ;;
-                    "0")
-                        "${pkgs.power-profiles-daemon}/bin/powerprofilesctl set power-saver"
-                        ;;
-                esac
-          '';
-        };
-      in
-      {
-        "set-ppd-profile-on-boot" = defaultService;
+    systemd.services.set-ppd-profile = {
+      enable = true;
+      description = "Update the power-profiles-daemon perf mode on boot";
+
+      after = [
+        "multi-user.target"
+        "power-profiles-daemon.service"
+      ];
+      wants = [ "power-profiles-daemon.service" ];
+
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        # User = config.users.users.lucasfa.name;
       };
-    # stolen from https://github.com/Straffern/config/blob/a1013f58375ea49529660a970c5d8b22f78b5272/modules/nixos/system/battery/default.nix#L74
-    services.udev.extraRules = lib.mkIf config.services.power-profiles-daemon.enable ''
-      # When AC adapter is plugged in - switch to performance
-      SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="1", RUN+="${pkgs.power-profiles-daemon}/bin/powerprofilesctl set performance"
-      # When AC adapter is unplugged - switch to power-saver
-      SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="0", RUN+="${pkgs.power-profiles-daemon}/bin/powerprofilesctl set power-saver"
-    '';
+      script = ''
+        STATE=$(cat ${acFile})
+        case $STATE in
+            "1")
+                ${ctl} set performance
+                ;;
+            "0")
+                ${ctl} set power-saver
+                ;;
+        esac
+      '';
+    };
+
+    systemd.paths.set-ppd-profile = {
+      description = "Watch AC adapter state";
+
+      wantedBy = [ "multi-user.target" ];
+
+      pathConfig = {
+        PathChanged = acFile;
+        Unit = "set-ppd-profile.service";
+      };
+    };
   };
 }
