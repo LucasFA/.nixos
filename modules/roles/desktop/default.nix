@@ -13,6 +13,7 @@ in
     ./development.nix
     ./gaming.nix
     ./personal.nix
+    ./laptop.nix
   ];
 
   options.lfa.roles.desktop.enable =
