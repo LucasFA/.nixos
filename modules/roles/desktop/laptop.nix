@@ -11,12 +11,14 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    services.udev.extraRules = ''
+      SUBSYSTEM=="power_supply", KERNEL=="AC0", TAG+="systemd", ENV{SYSTEMD_WANTS}+="set-ppd-profile.service"
+    '';
     systemd.services.set-ppd-profile = {
       enable = true;
-      description = "Update the power-profiles-daemon perf mode on boot";
+      description = "Update the power-profiles-daemon perf mode";
 
       after = [
-        "multi-user.target"
         "power-profiles-daemon.service"
       ];
       wants = [ "power-profiles-daemon.service" ];
@@ -37,17 +39,6 @@ in
                 ;;
         esac
       '';
-    };
-
-    systemd.paths.set-ppd-profile = {
-      description = "Watch AC adapter state";
-
-      wantedBy = [ "multi-user.target" ];
-
-      pathConfig = {
-        PathChanged = acFile;
-        Unit = "set-ppd-profile.service";
-      };
     };
   };
 }
