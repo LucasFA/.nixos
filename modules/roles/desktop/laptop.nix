@@ -23,7 +23,7 @@ in
       ];
       wants = [ "power-profiles-daemon.service" ];
 
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = [ "graphical.target" ];
       serviceConfig = {
         Type = "oneshot";
         # User = config.users.users.lucasfa.name;
