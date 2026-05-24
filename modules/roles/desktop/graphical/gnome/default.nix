@@ -17,7 +17,6 @@ in
     services = {
       displayManager.gdm = {
         enable = lib.mkDefault true;
-        wayland = lib.mkDefault true;
       };
       desktopManager = {
         gnome.enable = lib.mkDefault true;
