@@ -27,7 +27,12 @@ in
       hugo
       pi-coding-agent
       opencode
-      octave
+
+      octaveFull
+      ghostscript
+      inkscape
+      librsvg
+      
       uv
     ];
   };
