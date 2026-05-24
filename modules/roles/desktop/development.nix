@@ -34,6 +34,9 @@ in
       librsvg
       
       uv
+      # quartz, cloudflare pages deployment of obsidian vault
+      nodejs_22
+      wrangler
     ];
   };
 }
