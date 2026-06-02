@@ -34,7 +34,7 @@ in
         urAccepted = 3;
         relaysEnabled = true;
         localAnnounceEnabled = true;
-        globalAnnounceEnabled = false;
+        globalAnnounceEnabled = true;
         natEnabled = true;
         minHomeDiskFree = {
           value = 5;
