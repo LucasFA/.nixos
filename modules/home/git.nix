@@ -92,7 +92,6 @@ in
       };
 
       fetch.prune = "true";
-      fetch.prunetags = "true";
 
       transfer.fsckobjects = "true";
       fetch.fsckobjects = "true";
