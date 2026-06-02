@@ -32,7 +32,7 @@ in
       guiAddress = "127.0.0.1:8384";
       settings.options = {
         urAccepted = 3;
-        relaysEnabled = false;
+        relaysEnabled = true;
         localAnnounceEnabled = true;
         globalAnnounceEnabled = false;
         natEnabled = true;
@@ -63,7 +63,7 @@ in
               let
                 IP = "100.97.237.14";
               in
-              bothTcpQuic IP;
+              bothTcpQuic IP ++ ["dynamic"];
           };
         };
       settings.folders = {
