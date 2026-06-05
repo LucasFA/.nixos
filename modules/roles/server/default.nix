@@ -92,10 +92,10 @@ in
     };
 
     # DNS (AdGuardHome) - disabled
-    services.resolved.extraConfig = "[Resolve]
-DNS=127.0.0.1
-DNSStubListener=no
-";
+    services.resolved.settings.Resolve = {
+      DNS = [ "127.0.0.1" ] ++ config.networking.nameservers;
+      DNSStubListener = "no";
+    };
 
     # n8n - disabled
     services.n8n = {
