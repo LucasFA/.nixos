@@ -63,7 +63,7 @@ in
               let
                 IP = "100.97.237.14";
               in
-              bothTcpQuic IP ++ ["dynamic"];
+              bothTcpQuic IP ++ [ "dynamic" ];
           };
         };
       settings.folders = {

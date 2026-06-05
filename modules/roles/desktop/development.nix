@@ -32,7 +32,7 @@ in
       ghostscript
       inkscape
       librsvg
-      
+
       uv
       # quartz, cloudflare pages deployment of obsidian vault
       nodejs_22
