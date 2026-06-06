@@ -104,5 +104,10 @@ in
       environment.WEBHOOK_URL = "https://n8n.lucasfa.com/";
     };
     systemd.services.n8n.environment.N8N_LISTEN_ADDRESS = "127.0.0.1";
+    boot.kernelModules = [ "tcp_bbr" ];
+    boot.kernel.sysctl = {
+      "net.ipv4.tcp_congestion_control" = "bbr";
+      "net.core.default_qdisc" = "fq";
+    };
   };
 }
