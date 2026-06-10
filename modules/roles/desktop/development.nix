@@ -12,22 +12,32 @@ in
     virtualisation.docker.enable = true;
 
     environment.systemPackages = with pkgs; [
+      # Nix
       nixd
       nixfmt
       nixfmt-tree
+
       distrobox
       licensee
+      
+      # editors
       zed-editor-fhs
       helix
+      # terminals
+      # editors
       ghostty
+      # 
+      # languages 
       rustup
       python3
       clang
       elan
       hugo
+      # LLMs AI 
       pi-coding-agent
       opencode
 
+      # octave in particular
       octaveFull
       ghostscript
       inkscape
