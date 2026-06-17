@@ -1,0 +1,207 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  "share": "disabled",
+  "snapshot": false,
+  "autoupdate": false,
+
+  "tool_output": {
+    "max_lines": 2000,
+    "max_bytes": 51200
+  },
+  "attachment": {
+    "image": {
+      "max_width": 2048,
+      "max_height": 2048
+    }
+  },
+
+  "permission": {
+    "*": "ask",
+
+    "todowrite": "allow",
+    "question": "allow",
+
+    "read": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.pem": "deny",
+      "*.key": "deny",
+      "**/.ssh/**": "deny",
+      "**/.gnupg/**": "deny",
+      "**/id_rsa*": "deny",
+      "**/id_ed25519*": "deny",
+      "**/credentials*": "deny"
+    },
+
+    "edit": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.pem": "deny",
+      "*.key": "deny",
+      "**/.ssh/**": "deny",
+      "**/.gnupg/**": "deny",
+      "**/secrets/**": "deny"
+    },
+
+    "glob": "allow",
+    "grep": "allow",
+    "list": "allow",
+
+    "lsp": "ask",
+    "skill": "ask",
+    "task": "ask",
+
+    "webfetch": "allow",
+    "websearch": "allow",
+
+    "external_directory": "deny",
+    "doom_loop": "deny",
+
+    "bash": {
+      "*": "ask",
+
+      "ls *": "allow",
+      "ls": "allow",
+      "cat *": "allow",
+      "head *": "allow",
+      "tail *": "allow",
+      "wc *": "allow",
+      "file *": "allow",
+      "pwd": "allow",
+      "whoami": "allow",
+      "date *": "allow",
+      "which *": "allow",
+      "echo *": "allow",
+      "tree *": "allow",
+      "jq *": "allow",
+      "stat *": "allow",
+      "du *": "allow",
+      "df *": "allow",
+      "uname *": "allow",
+
+      "find *": "allow",
+      "fd *": "allow",
+      "grep *": "allow",
+      "rg *": "allow",
+      "ag *": "allow",
+
+      "git status *": "allow",
+      "git log *": "allow",
+      "git diff *": "allow",
+      "git show *": "allow",
+      "git branch *": "allow",
+      "git remote *": "allow",
+      "git fetch *": "allow",
+      "git stash *": "allow",
+      "git add *": "allow",
+      "git commit *": "allow",
+      "git push *": "allow",
+      "git pull *": "allow",
+      "git checkout *": "allow",
+      "git switch *": "allow",
+      "git merge *": "allow",
+      "git rebase *": "allow",
+      "git tag *": "allow",
+      "git init *": "allow",
+      "git clone *": "ask",
+
+      "node *": "allow",
+      "npm *": "allow",
+      "pnpm *": "allow",
+      "yarn *": "allow",
+      "bun *": "allow",
+      "npx *": "allow",
+      "deno *": "allow",
+      "tsx *": "allow",
+      "tsc *": "allow",
+
+      "python *": "allow",
+      "python3 *": "allow",
+      "pip *": "allow",
+      "pip3 *": "allow",
+      "uv *": "allow",
+      "poetry *": "allow",
+      "ruff *": "allow",
+      "mypy *": "allow",
+      "pytest *": "allow",
+
+      "cargo *": "allow",
+      "rustc *": "allow",
+      "go *": "allow",
+      "make *": "allow",
+      "cmake *": "allow",
+      "gcc *": "allow",
+      "g++ *": "allow",
+      "clang *": "allow",
+      "docker *": "ask",
+      "podman *": "ask",
+
+      "mkdir *": "allow",
+      "touch *": "allow",
+      "cp *": "ask",
+      "mv *": "ask",
+      "rm *": "ask",
+      "rm -rf *": "deny",
+      "chmod *": "ask",
+      "chown *": "deny",
+      "ln *": "ask",
+      "sudo *": "deny",
+      "su *": "deny",
+      "doas *": "deny",
+      "dd *": "deny",
+      "mkfs *": "deny",
+      "mount *": "deny",
+      "umount *": "deny",
+      "fdisk *": "deny",
+      "shutdown *": "deny",
+      "reboot *": "deny",
+      "halt *": "deny",
+      "poweroff *": "deny",
+      "systemctl *": "ask",
+      "service *": "ask",
+
+      "curl *": "ask",
+      "wget *": "ask",
+      "ssh *": "ask",
+      "scp *": "ask",
+      "rsync *": "ask",
+      "nc *": "deny",
+      "ncat *": "deny",
+      "socat *": "deny",
+
+      "kill *": "ask",
+      "pkill *": "ask",
+      "killall *": "ask",
+
+      "opencode *": "allow"
+    }
+  },
+
+  "plugin": [
+    "./plugins/ssrf-block.js",
+    "./plugins/env-scrub.js",
+    "./plugins/secret-redact.js"
+  ],
+
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "steps": 50
+    },
+    "plan": {
+      "mode": "primary",
+      "permission": {
+        "edit": "deny",
+        "bash": "ask"
+      }
+    }
+  },
+
+  "server": {
+    "mdns": false,
+    "cors": []
+  }
+}

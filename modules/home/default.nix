@@ -12,6 +12,7 @@
     ./gnome
     ./mangohud/default.nix
     ./mpv/default.nix
+    ./opencode/default.nix
     ./vscode.nix
     ./zed.nix
   ];

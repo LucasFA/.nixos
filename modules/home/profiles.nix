@@ -12,6 +12,7 @@
         vscode.enable = true;
         mangohud.enable = true;
         mpv.enable = true;
+        opencode.enable = true;
         zed.enable = true;
       };
     };
@@ -25,6 +26,7 @@
         vscode.enable = false;
         mangohud.enable = false;
         mpv.enable = false;
+        opencode.enable = false;
         zed.enable = false;
       };
     };

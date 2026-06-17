@@ -19,21 +19,21 @@ in
 
       distrobox
       licensee
-      
+
       # editors
       zed-editor-fhs
       helix
       # terminals
       # editors
       ghostty
-      # 
-      # languages 
+      #
+      # languages
       rustup
       python3
       clang
       elan
       hugo
-      # LLMs AI 
+      # LLMs AI
       pi-coding-agent
       opencode
 
