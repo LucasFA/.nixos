@@ -24,7 +24,6 @@ in
       zed-editor-fhs
       helix
       # terminals
-      # editors
       ghostty
       #
       # languages
@@ -33,6 +32,7 @@ in
       clang
       elan
       hugo
+      uv
       # LLMs AI
       pi-coding-agent
       opencode
@@ -43,7 +43,6 @@ in
       inkscape
       librsvg
 
-      uv
       # quartz, cloudflare pages deployment of obsidian vault
       nodejs_22
       wrangler
