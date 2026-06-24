@@ -6,12 +6,6 @@
 }:
 let
   cfg = config.lfa.roles.desktop;
-  rWithPkgs = pkgs.rWrapper.override {
-    packages = with pkgs.rPackages; [
-      knitr
-      ggdag
-    ];
-  };
 in
 {
   config = lib.mkIf cfg.enable {
@@ -42,8 +36,6 @@ in
       # LLMs AI
       pi-coding-agent
       opencode
-
-      rWithPkgs
 
       # octave in particular
       octaveFull
