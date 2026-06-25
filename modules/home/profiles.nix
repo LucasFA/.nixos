@@ -9,7 +9,7 @@
       home.homeDirectory = "/home/lucasfa";
       lfa.home = {
         gnome.enable = true;
-        vscode.enable = true;
+        vscode.enable = false;
         mangohud.enable = true;
         mpv.enable = true;
         opencode.enable = true;
