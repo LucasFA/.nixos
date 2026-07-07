@@ -39,7 +39,7 @@
 
   ######################## BOOT ########################
 
-  boot.kernelPackages = pkgs.linuxPackages_6_18;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModulePackages = with config.boot.kernelPackages; [ qc71_slimbook_laptop ];
   boot.kernelModules = [ "qc71_laptop" ];
 
