@@ -93,7 +93,7 @@ in
     };
 
     environment.systemPackages = with pkgs; [
-      proton-vpn
+      calibre
       spotify
       telegram-desktop
       element-desktop
