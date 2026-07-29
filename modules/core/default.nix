@@ -88,6 +88,7 @@
       smartmontools
       cryptsetup
       bc
+      tmux
       # misc
       dmidecode
       lshw
