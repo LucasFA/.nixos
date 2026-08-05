@@ -102,7 +102,7 @@
         ubuntu
       ]
       ++ [
-        pkgs.ubuntu-themes
+        # pkgs.ubuntu-themes
         pkgs.ubuntu-sans
       ];
 
