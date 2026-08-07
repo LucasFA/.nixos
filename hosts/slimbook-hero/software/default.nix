@@ -17,7 +17,7 @@
 
   # Slimbook-specific Spanish government authentication
   programs.autofirma = {
-    enable = false;
+    enable = true;
     firefoxIntegration.enable = true;
   };
   programs.configuradorfnmt = {
