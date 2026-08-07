@@ -38,15 +38,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1784711043,
-        "narHash": "sha256-e9BpQuMP/YrxAGD5NVYY1fb3Z4KDBKRaAl0k4HGqKQM=",
-        "owner": "LucasFA",
+        "lastModified": 1784826025,
+        "narHash": "sha256-zUZgqVbEq+1ey6jpD2BgIsVx+3LpsBDc68mNdLSVppY=",
+        "owner": "nix-community",
         "repo": "autofirma-nix",
-        "rev": "d959be35db1d65ddd6dc5a1c4dacb9a74de8cd81",
+        "rev": "b968112b796b2e00426ac16a450bcb5a40e863a8",
         "type": "github"
       },
       "original": {
-        "owner": "LucasFA",
+        "owner": "nix-community",
+        "ref": "develop",
         "repo": "autofirma-nix",
         "type": "github"
       }
@@ -54,16 +55,16 @@
     "autofirma-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1747811913,
-        "narHash": "sha256-vk0I2wpaiwC5kY8R36i/1CLHGCtsl3scDcJ6qg1p50k=",
+        "lastModified": 1777469866,
+        "narHash": "sha256-76fimsQ/jV15pN+Kd/zBNt6gxKYkmGjcEBb8+XB0q7I=",
         "owner": "ctt-gob-es",
         "repo": "clienteafirma",
-        "rev": "1f29aa7a2aae8eda40a70fed79b0428153c78df8",
+        "rev": "b21246a85243571ac262a76d4d575c0e359a839c",
         "type": "github"
       },
       "original": {
         "owner": "ctt-gob-es",
-        "ref": "v1.9",
+        "ref": "v1.9.1",
         "repo": "clienteafirma",
         "type": "github"
       }
@@ -71,16 +72,16 @@
     "clienteafirma-external-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1753702371,
-        "narHash": "sha256-3bXdZ6fQAId6nHqiJ60BDBhFI9cosN7jtI0soggcO9Q=",
+        "lastModified": 1771341316,
+        "narHash": "sha256-zJc4Kd1fGvY0nKb0QAbHxHaZGn223RxyRG5eEWLVZKc=",
         "owner": "ctt-gob-es",
         "repo": "clienteafirma-external",
-        "rev": "d3792cc3816906da7fff652f9bd122f84b29b5c7",
+        "rev": "1c663c52e4161a48cae9187d02607c65a0b72831",
         "type": "github"
       },
       "original": {
         "owner": "ctt-gob-es",
-        "ref": "v1.0.6",
+        "ref": "v1.0.7",
         "repo": "clienteafirma-external",
         "type": "github"
       }
@@ -183,17 +184,14 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": [
-          "autofirma-nix",
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1784129366,
-        "narHash": "sha256-N5JiyICSeQF14x+OQebNyPpYowOT9Rs1iKyeCylSzOA=",
+        "lastModified": 1784789275,
+        "narHash": "sha256-cgRTWuG+u1tBPhm01JrId2k0Bni09phVJ1Q0BZlRd7M=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "165228b0efefc3e635e5174020c40ea64271dc25",
+        "rev": "3b0e6bbd65869af1beadf5963a99befc179d209f",
         "type": "github"
       },
       "original": {
@@ -246,16 +244,16 @@
     "jmulticard-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1753703143,
-        "narHash": "sha256-XHX9MwWQe9BIjEfrrquU9gtzx3x6leGBhWjMPmVtALE=",
+        "lastModified": 1777459913,
+        "narHash": "sha256-TQ0spXElU3SVTk5bdChj2gz+w1iwyxG8VF+gEjcnOvE=",
         "owner": "ctt-gob-es",
         "repo": "jmulticard",
-        "rev": "2550e7eab43b9089673d0989959894846425f499",
+        "rev": "4ec9494f181a2e94d4aeaf62b63a30bcd98f4624",
         "type": "github"
       },
       "original": {
         "owner": "ctt-gob-es",
-        "ref": "v2.0",
+        "ref": "v2.1",
         "repo": "jmulticard",
         "type": "github"
       }
@@ -329,10 +327,7 @@
     "nix-unit": {
       "inputs": {
         "nix-github-actions": "nix-github-actions",
-        "nixpkgs": [
-          "autofirma-nix",
-          "nixpkgs"
-        ],
+        "nixpkgs": "nixpkgs_2",
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
@@ -371,16 +366,18 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1785828668,
-        "narHash": "sha256-VFlH/0nM6kkWQox9IaTqx2eCT3pmkr8bB7iVZ1bkaLs=",
-        "rev": "e72e4f299401a3689d4b3d5fc6496b11db7064eb",
-        "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1047536.e72e4f299401/nixexprs.tar.xz"
+        "lastModified": 1783604885,
+        "narHash": "sha256-tzMgSkV7kljEkqIjlgV6F+n+xD+/a35Db8bs7a4BFAo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "767b0d3ec98a143ad9ed7dfc0d5553510ac27133",
+        "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-unstable",
-        "type": "indirect"
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs-stable": {
@@ -394,6 +391,36 @@
       "original": {
         "id": "nixpkgs",
         "ref": "nixos-26.05",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1783279667,
+        "narHash": "sha256-/NAkDSsve+GNM0Bt6tleJdCGfsTlK89nPjkVOzZMo0s=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "f205b5574fd0cb7da5b702a2da51507b7f4fdd1b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1785828668,
+        "narHash": "sha256-VFlH/0nM6kkWQox9IaTqx2eCT3pmkr8bB7iVZ1bkaLs=",
+        "rev": "e72e4f299401a3689d4b3d5fc6496b11db7064eb",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1047536.e72e4f299401/nixexprs.tar.xz"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
         "type": "indirect"
       }
     },
@@ -429,7 +456,7 @@
         "lanzaboote": "lanzaboote",
         "lucasfa-nur": "lucasfa-nur",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable",
         "srvos": "srvos",
         "systems": "systems_2",

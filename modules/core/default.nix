@@ -117,6 +117,14 @@
       clean.extraArgs = lib.mkDefault "--keep-since 7d --keep 10";
       flake = lib.mkDefault "/home/lucasfa/.nixos";
     };
+    nixConfig = {
+      extra-substituters = [
+          "https://nix-community.cachix.org"
+	];
+        extra-trusted-public-keys = [
+      	  "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+];
+    };
     nix = {
       settings = {
         # See https://github.com/NixOS/nix/issues/11728
@@ -126,6 +134,7 @@
           # "https://nix-community.cachix.org"
         ];
         extra-trusted-public-keys = [
+      	  "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           # "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
           # "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         ];
