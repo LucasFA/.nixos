@@ -19,6 +19,7 @@
       "nvidia-settings"
       "spotify"
       "discord"
+      "discord-unwrapped"
       "unrar"
       "hplip"
       "obsidian"
