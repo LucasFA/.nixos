@@ -32,7 +32,7 @@ in
         STATE=$(cat ${acFile})
         case $STATE in
             "1")
-                ${ctl} set performance
+                ${ctl} set balanced
                 ;;
             "0")
                 ${ctl} set power-saver

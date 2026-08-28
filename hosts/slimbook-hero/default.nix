@@ -14,4 +14,6 @@
   time.timeZone = lib.mkForce null; # set by user
 
   systemd.sleep.settings.Sleep.MemorySleepMode = "deep";
+  systemd.sleep.settings.Sleep.HibernateDelaySec = "30m";
+  # SuspendState=mem
 }
