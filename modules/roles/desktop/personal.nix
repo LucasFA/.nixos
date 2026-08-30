@@ -103,6 +103,14 @@ in
       obsidian
       jellyfin-media-player
       unrar
+      qbittorrent
+    ];
+    networking.firewall.allowedUDPPorts = [
+      6882
+      6771
+    ];
+    networking.firewall.allowedTCPPorts = [
+      6882
     ];
   };
 }
