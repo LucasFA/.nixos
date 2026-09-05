@@ -22,7 +22,10 @@ let
         temperature=$(printf '%s' "$smart_json" | jq -r '
           [.ata_smart_attributes.table[]? |
             select(.id == 190 or .id == 194) |
-            .raw.value] | first // empty
+            .raw.string? |
+            strings |
+            capture("(?<temperature>[0-9]+)") |
+            .temperature | tonumber] | first // empty
         ' 2>/dev/null || true)
 
         if [[ "$temperature" =~ ^[0-9]+$ ]]; then
