@@ -76,8 +76,8 @@ in
           port = 8765;
         }
       ];
-      locations."/smart-temperature.json" = {
-        root = "/run/smart-temperature";
+      locations."= /smart-temperature.json" = {
+        alias = "/run/smart-temperature/status.json";
         extraConfig = ''
           default_type application/json;
         '';
