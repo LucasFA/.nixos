@@ -14,6 +14,8 @@ in
   imports = [
     ./hardware-configuration.nix
     ./configuration.nix
+    ./mqtt.nix
+    ./smart-temperature.nix
     #../../modules/WD_8tb
     ../../modules/core
     #../../modules/restic/server.nix
