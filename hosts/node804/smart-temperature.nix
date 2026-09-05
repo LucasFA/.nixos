@@ -49,7 +49,7 @@ let
         discovery="$3"
         state_topic="$base_topic/$id/temperature"
         availability_topic="$base_topic/$id/availability"
-        discovery_topic="homeassistant/sensor/server_node804_$id_temperature/config"
+        discovery_topic="homeassistant/sensor/server_node804_''${id}_temperature/config"
 
         discovery=$(printf '%s' "$discovery" | sed \
           -e "s|PLACEHOLDER_AVAILABILITY|$availability_topic|" \
