@@ -14,6 +14,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ./configuration.nix
+    ./mqtt.nix
     ../../modules/core
     ../../modules/restic/server.nix
     ../../modules/restic/client.nix

@@ -35,7 +35,7 @@ let
     text = ''
       set -u
 
-      broker="127.0.0.1"
+      broker="server-nuc1"
       base_topic="server-node804/storage"
 
       publish() {
@@ -86,14 +86,8 @@ in
 {
   systemd.services.smart-temperature = {
     description = "Publish HDD SMART temperatures to MQTT";
-    wants = [
-      "network-online.target"
-      "mosquitto.service"
-    ];
-    after = [
-      "network-online.target"
-      "mosquitto.service"
-    ];
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = lib.getExe smartTemperature;
