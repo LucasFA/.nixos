@@ -10,6 +10,8 @@ in
 {
   imports = [
     ./WD_8tb.nix
+    ./mergerfs.nix
+    ./snapraid.nix
   ];
   options.lfa.roles.server.enable = lib.mkEnableOption "server role (ssh, docker, sftpgo, etc.)";
 
