@@ -2,8 +2,8 @@
   description = "My first flake!";
 
   inputs = {
-    nixpkgs-stable.url = "nixpkgs/nixos-26.05";
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "https://channels.nixos.org/nixos-26.05/nixexprs.tar.zst";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
