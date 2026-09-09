@@ -70,7 +70,10 @@ in
         ".recycle/"
       ];
       extraConfig = "
-autosave 250
+extra boot /
+
+autosave 1000
+
 temp_limit 48
 temp_sleep 10
 ";
