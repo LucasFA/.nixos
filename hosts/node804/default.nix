@@ -17,6 +17,7 @@
     #../../modules/restic/server.nix
   ];
   lfa.hostRole = hostRole;
+  lfa.roles.server.disk_pool.enable = true;
 
   services.udisks2.enable = true;
   # As there is no DE, this has to be manually set in order to install intel-media-driver et al

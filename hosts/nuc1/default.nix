@@ -19,6 +19,7 @@ in
     ../../modules/restic/client.nix
   ];
   lfa.hostRole = hostRole;
+  lfa.roles.server.WD_8tb.enable = true;
   lfa.backups.immich.enable = true;
   lfa.backups.desktopNotification.enable = false;
   environment.systemPackages = [

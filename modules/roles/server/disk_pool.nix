@@ -16,6 +16,9 @@ let
 in
 {
   config = lib.mkIf (cfg.enable && cfg.disk_pool.enable) {
+
+    ########## mergerfs ##########
+
     environment.systemPackages = [ pkgs.mergerfs ];
     fileSystems = {
       "/mnt/disk_1" = {
@@ -34,6 +37,7 @@ in
       "/mnt/pool" = {
         mountPoint = "/mnt/pool";
         fsType = "mergerfs";
+        noCheck = true;
         device = "/mnt/disk_*";
         options = [
           "lazytime"
@@ -43,5 +47,20 @@ in
       };
     };
 
+    ########## snapraid ##########
+    services.snapraid = {
+      enable = false;
+      dataDisks = {
+        d1 = "/mnt/disk_1";
+      };
+      parityFiles = [ "mnt/parity_1/snapraid.parity" ];
+      contentFiles = [
+        "/var/snapraid.content"
+        "/mnt/disk_1/snapraid.content"
+        "/mnt/parity_1/snapraid.content"
+      ];
+      extraConfig = "";
+      scrub.olderThan = 30; # days
+    };
   };
 }
