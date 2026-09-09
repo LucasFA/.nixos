@@ -16,9 +16,7 @@
   ];
   lfa.hostRole = hostRole;
   services.hdapsd.enable = false;
-  systemd.sleep.extraConfig = lib.mkForce ''
-    AllowSuspend=yes
-  '';
+  systemd.sleep.settings.Sleep.AllowSuspend = lib.mkForce "yes";
   system.autoUpgrade.enable = false;
 
   boot.kernel.sysctl = {
