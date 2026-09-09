@@ -16,6 +16,11 @@ let
 in
 {
   config = lib.mkIf (cfg.enable && cfg.disk_pool.enable) {
+    nixpkgs.overlays = [
+      (final: _prev: {
+        snapraid = final.callPackage ./snapraid.nix { };
+      })
+    ];
 
     ########## mergerfs ##########
 
