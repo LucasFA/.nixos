@@ -7,40 +7,32 @@ let
   hp-omen = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDSEUv/KiQ7b5JMCzL/muEYlSB5NB2+jb4mG1pDrikad"; # also on github.com/lucasfa.keys
   server-nuc1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINk6Enh1qpGbOCCH71KHVDiutXYGtra9SVKbaQbY86ZL"; # /etc/ssh/ssh_host_ed25519
 
-  backupKeys = [
-    # slimbook
-    server-nuc1
-    lucasfaKey
-  ];
-  allUsers = [
-    lucasfaKey
-    lucasfa-slimbook
-    lucasfa-server-nuc1
-  ];
-  workstations = [
-    lucasfaKey
-    lucasfa-slimbook
-  ];
-  servers = [
-    lucasfaKey
-    lucasfa-slimbook
-    lucasfa-server-nuc1
-    lucasfa-server-node804
-  ];
+  keys = {
+    # Keep the Bitwarden key in every recipient group as the recovery key.
+    bitwarden = [ lucasfaKey ];
+    slimbook = [ lucasfa-slimbook ];
+    serverNuc1 = [
+      lucasfa-server-nuc1
+      server-nuc1
+    ];
+    serverNode804 = [ lucasfa-server-node804 ];
+  };
+
+  recipients = {
+    desktop = keys.bitwarden ++ keys.slimbook;
+    restic = keys.bitwarden ++ keys.slimbook ++ keys.serverNuc1 ++ keys.serverNode804;
+    gmail = keys.bitwarden ++ keys.slimbook ++ keys.serverNuc1 ++ keys.serverNode804;
+    protonVPN = keys.bitwarden ++ keys.slimbook ++ keys.serverNuc1 ++ keys.serverNode804;
+  };
 in
 {
-  "gmailAddress.age".publicKeys = allUsers;
-  "protonVPNPrivateKeyFile.age".publicKeys = [
-    server-nuc1
-    lucasfa-server-nuc1
-    lucasfa-slimbook
-  ];
-  "wireless.conf.age".publicKeys = allUsers;
+  "gmailAddress.age".publicKeys = recipients.gmail;
+  "protonVPNPrivateKeyFile.age".publicKeys = recipients.protonVPN;
+  "wireless.conf.age".publicKeys = recipients.desktop;
 
-  "restic/htpasswd.age".publicKeys = servers;
-
-  "restic/passwordFile.age".publicKeys = allUsers;
-  "restic/environmentFile.age".publicKeys = allUsers;
-  "restic/backblazeCredentials.age".publicKeys = allUsers;
+  "restic/htpasswd.age".publicKeys = recipients.restic;
+  "restic/passwordFile.age".publicKeys = recipients.restic;
+  "restic/environmentFile.age".publicKeys = recipients.restic;
+  "restic/backblazeCredentials.age".publicKeys = recipients.restic;
 
 }
