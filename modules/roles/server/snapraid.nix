@@ -21,7 +21,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   # snapraid only looks for smartctl in a few fixed system paths
   postPatch = lib.optionalString stdenv.hostPlatform.isLinux ''
-    substituteInPlace cmdline/unixpp.c \
+    substituteInPlace cmdline/unix.c \
       --replace-fail '"/usr/sbin/smartctl"' '"${lib.getExe' smartmontools "smartctl"}"'
   '';
 
