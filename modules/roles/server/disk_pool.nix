@@ -8,7 +8,7 @@ let
   cfg = config.lfa.roles.server;
   mountOpts = [
     "nofail"
-    "errors=remount-ro"
+    # "errors=remount-ro"
     "lazytime"
     "x-systemd.device-timeout=30s"
     "x-systemd.before=docker.service"
@@ -49,17 +49,27 @@ in
 
     ########## snapraid ##########
     services.snapraid = {
-      enable = false;
+      enable = true;
       dataDisks = {
         d1 = "/mnt/disk_1";
       };
-      parityFiles = [ "mnt/parity_1/snapraid.parity" ];
+      parityFiles = [ "/mnt/parity_1/snapraid.parity" ];
       contentFiles = [
         "/var/snapraid.content"
         "/mnt/disk_1/snapraid.content"
         "/mnt/parity_1/snapraid.content"
       ];
-      extraConfig = "";
+      exclude = [
+        "/lost+found/"
+        ".Trash-*/"
+        ".recycle/"
+      ];
+      extraConfig = "
+autosave 250
+temp_limit 48
+temp_sleep 10
+";
+
       scrub.olderThan = 30; # days
     };
   };
