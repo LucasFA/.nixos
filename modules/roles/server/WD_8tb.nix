@@ -7,7 +7,7 @@ let
   cfg = config.lfa.roles.server;
 in
 {
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (cfg.enable && cfg.WD_8tb.enable) {
     services.btrfs.autoScrub = {
       enable = true;
       fileSystems = [

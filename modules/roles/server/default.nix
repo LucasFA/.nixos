@@ -14,6 +14,9 @@ in
     ./snapraid.nix
   ];
   options.lfa.roles.server.enable = lib.mkEnableOption "server role (ssh, docker, sftpgo, etc.)";
+  options.lfa.roles.server.disk_pool.enable =
+    lib.mkEnableOption "Whether to use the mergerfs disk pool";
+  options.lfa.roles.server.WD_8tb.enable = lib.mkEnableOption "Mount the WD_8tb disk or not";
 
   config = lib.mkIf cfg.enable {
     programs.nix-ld.enable = true;
