@@ -88,7 +88,7 @@ in
     };
   };
 
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 8765 ];
+  networking.firewall.allowedTCPPorts = [ 8765 ];
 
   systemd.services.smart-temperature = {
     description = "Update HDD SMART temperatures";

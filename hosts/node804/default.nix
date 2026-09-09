@@ -18,6 +18,7 @@
   ];
   lfa.hostRole = hostRole;
   lfa.roles.server.disk_pool.enable = true;
+  lfa.roles.server.WD_8tb.enable = true;
 
   services.udisks2.enable = true;
   # As there is no DE, this has to be manually set in order to install intel-media-driver et al
