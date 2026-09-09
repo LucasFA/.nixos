@@ -12,9 +12,8 @@
     ./hardware-configuration.nix
     ./configuration.nix
     ./smart-temperature.nix
-    #../../modules/WD_8tb
     ../../modules/core
-    #../../modules/restic/server.nix
+    ../../modules/restic/server.nix
   ];
   lfa.hostRole = hostRole;
   lfa.roles.server.disk_pool.enable = true;
