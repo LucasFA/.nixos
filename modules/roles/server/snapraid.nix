@@ -10,7 +10,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     services.snapraid = {
-      enable = true;
+      enable = false;
 
     };
   };
