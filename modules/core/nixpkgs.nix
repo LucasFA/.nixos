@@ -26,6 +26,5 @@
       "code"
       "vscode"
       "n8n"
-      "sftpgo"
     ];
 }

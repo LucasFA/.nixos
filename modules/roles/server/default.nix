@@ -12,8 +12,7 @@ in
     ./WD_8tb.nix
     ./disk_pool.nix
   ];
-  options.lfa.roles.server.enable = lib.mkEnableOption "server role (ssh, docker, sftpgo, etc.)";
-  options.lfa.roles.server.sftpgo.enable = lib.mkEnableOption "sftpgo";
+  options.lfa.roles.server.enable = lib.mkEnableOption "server role (ssh, docker, etc.)";
   options.lfa.roles.server.disk_pool.enable =
     lib.mkEnableOption "Whether to use the mergerfs disk pool";
   options.lfa.roles.server.WD_8tb.enable = lib.mkEnableOption "Mount the WD_8tb disk or not";
@@ -69,33 +68,8 @@ in
       };
     };
 
-    # SFTPGo
     users.groups.mediacenter = {
       gid = 13000;
-      members = [ "sftpgo" ];
-    };
-    services.sftpgo = {
-      enable = cfg.sftpgo.enable;
-      group = "mediacenter";
-      dataDir = "/mnt/WD_8tb/server/data/sftpgo";
-      settings =
-        let
-          defaultOpts = {
-            address = "localhost";
-            port = 800;
-          };
-        in
-        {
-          ftpd.bindings = [
-            {
-              address = "localhost";
-              port = 801;
-            }
-          ];
-          httpd.bindings = [
-            defaultOpts
-          ];
-        };
     };
 
     # DNS (AdGuardHome) - disabled
