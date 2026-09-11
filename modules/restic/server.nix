@@ -5,11 +5,13 @@
   lib,
   ...
 }:
+let backupsPath = "/mnt/pool/backups";
+in
 {
   age.secrets = {
     "restic/htpasswd" = {
       file = self.outPath + "/secrets/restic/htpasswd.age";
-      path = "/mnt/WD_8tb/backups/.htpasswd";
+      path = backupsPath + ".htpasswd";
       owner = "restic";
       group = "restic";
     };
@@ -18,7 +20,7 @@
     enable = true;
     privateRepos = true;
     htpasswd-file = config.age.secrets."restic/htpasswd".path;
-    dataDir = "/mnt/WD_8tb/backups";
+    dataDir = backupsPath;
     listenAddress = "8000";
   };
 }

@@ -170,7 +170,7 @@ in
       services.restic.backups =
         let
           serverOverrides = {
-            paths = [ "/mnt/WD_8tb/server/data/immich" ];
+            paths = [ "/mnt/pool/server/data/immich" ];
             user = "restic";
             extraBackupArgs = defaultExtraBackupArgs ++ [ "--tag immich" ];
           };
