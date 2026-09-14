@@ -5,7 +5,8 @@
   lib,
   ...
 }:
-let backupsPath = "/mnt/pool/backups";
+let
+  backupsPath = "/mnt/pool/backups";
 in
 {
   age.secrets = {
