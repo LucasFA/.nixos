@@ -6,6 +6,15 @@
 }:
 let
   cfg = config.lfa.roles.desktop;
+  jellyfin-desktop = pkgs.symlinkJoin {
+    name = "jellyfin-desktop";
+    paths = [ pkgs.jellyfin-media-player ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/jellyfin-desktop \
+        --set LIBGL_ALWAYS_SOFTWARE 1
+    '';
+  };
 in
 {
   config = lib.mkIf cfg.enable {
@@ -101,7 +110,7 @@ in
       discord
       subsurface
       obsidian
-      jellyfin-media-player
+      jellyfin-desktop
       unrar
       qbittorrent
     ];
