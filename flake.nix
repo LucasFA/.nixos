@@ -26,6 +26,8 @@
       url = "github:nix-community/autofirma-nix/develop";
       # url = "github:LucasFA/autofirma-nix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nix-unit.inputs.nixpkgs.follows = "nixpkgs";
     };
     lucasfa-nur = {
       url = "github:LucasFA/nur-packages";
