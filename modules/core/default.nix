@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 {
@@ -80,6 +81,7 @@
       # Nix utils
       nix-output-monitor
       nixfmt
+      inputs.colmena.packages.${pkgs.system}.colmena
 
       # other utils
       dig

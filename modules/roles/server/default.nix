@@ -28,6 +28,7 @@ in
     ];
 
     # SSH
+    # security.sudo.wheelNeedsPassword = false;
     services.tailscale.enable = lib.mkForce true;
     users.allowNoPasswordLogin = true;
     services.tailscale.openFirewall = true;
