@@ -108,7 +108,7 @@ in
       element-desktop
       signal-desktop
       discord
-      subsurface
+      # subsurface
       obsidian
       jellyfin-desktop
       unrar
