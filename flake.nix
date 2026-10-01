@@ -19,7 +19,6 @@
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
     };
     autofirma-nix = {
       # url = "github:nix-community/autofirma-nix/release-24.11";
