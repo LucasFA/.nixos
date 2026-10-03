@@ -51,6 +51,9 @@ in
     };
 
     programs.gamemode.enable = true;
+    users.users.lucasfa = {
+      extraGroups = [ "gamemode" ];
+    };
 
     programs.gamescope = {
       enable = false;
