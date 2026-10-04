@@ -34,6 +34,7 @@ in
       fd
       bat
       jq
+      powertop
     ];
   };
 }
