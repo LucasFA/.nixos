@@ -16,6 +16,7 @@
       "steam"
       "steam-unwrapped"
       "nvidia-x11"
+      "nvidia-kernel-modules"
       "nvidia-settings"
       "spotify"
       "discord"
