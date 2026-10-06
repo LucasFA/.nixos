@@ -61,7 +61,6 @@
       vifm
       # management
       gh
-      chezmoi
     ];
 
     # XDG Base Directory specification environment variables
