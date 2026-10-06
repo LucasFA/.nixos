@@ -123,11 +123,11 @@ in
       };
 
       mkMonthlyCheckJob =
-        job:
+        job: percent:
         job
         // {
           timerConfig = monthlyTimer;
-          checkOpts = [ "--read-data" ];
+          checkOpts = [ ("--read-data-subset " + percent) ];
         };
 
       backblazeBackupJob = backupJobTemplate // {
@@ -181,14 +181,14 @@ in
         lib.mkMerge [
           (lib.mkIf cfg.personalLaptop.enable {
             backblaze = backblazeBackupJob // laptopOverrides;
-            backblaze-check = mkMonthlyCheckJob backblazeBackupJob // laptopOverrides;
+            backblaze-check = mkMonthlyCheckJob backblazeBackupJob "10%" // laptopOverrides;
             nuc1 = (nuc1BackupJob "slimbook-laptop") // laptopOverrides;
-            nuc1-check = mkMonthlyCheckJob (nuc1BackupJob "slimbook-laptop") // laptopOverrides;
+            nuc1-check = mkMonthlyCheckJob (nuc1BackupJob "slimbook-laptop") "50%" // laptopOverrides;
           })
           (lib.mkIf cfg.immich.enable {
             backblaze-immich = backblazeBackupJob // serverOverrides;
             nuc1-immich = (nuc1BackupJob "immich") // serverOverrides;
-            nuc1-immich-check = mkMonthlyCheckJob (nuc1BackupJob "immich") // serverOverrides;
+            nuc1-immich-check = mkMonthlyCheckJob (nuc1BackupJob "immich") "10%" // serverOverrides;
           })
         ];
 
