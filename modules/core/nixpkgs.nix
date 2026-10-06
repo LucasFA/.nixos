@@ -26,5 +26,6 @@
       "code"
       "vscode"
       "n8n"
+      "claude-code"
     ];
 }

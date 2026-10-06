@@ -47,6 +47,7 @@ in
       # quartz, cloudflare pages deployment of obsidian vault
       nodejs_22
       wrangler
+      claude-code
     ];
   };
 }

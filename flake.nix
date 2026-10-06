@@ -2,6 +2,7 @@
   description = "My first flake!";
 
   inputs = {
+    # llm-agents.url = "github:numtide/llm-agents.nix";
     nixpkgs-stable.url = "https://channels.nixos.org/nixos-26.05/nixexprs.tar.zst";
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
     home-manager = {
