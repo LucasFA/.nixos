@@ -11,6 +11,7 @@ in
   imports = [
     ./graphical
     ./development.nix
+    ./claude.nix
     ./gaming.nix
     ./personal.nix
     ./laptop.nix
