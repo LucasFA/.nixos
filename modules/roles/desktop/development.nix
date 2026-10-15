@@ -23,7 +23,7 @@ in
 
       # editors
       zed-editor-fhs
-      helix
+      # helix
       # terminals
       ghostty
       #
