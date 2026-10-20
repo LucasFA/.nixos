@@ -1,8 +1,8 @@
-Issues:
+Technical debt:
 
-- [x] getty log messages
-- [x] gtk (or at least firefox, gtk3) not getting diacritics
-      issues is probably related to gtk/mutter, possibly ibus
-      Solution: new firefox profile
-- [x] crash dump at shutdown related to GPU
-      Solution: later released nvidia driver update 595
+- [ ] revert eMudhra CA blocklist (`security.pki.caCertificateBlacklist` in
+      `modules/core/hardening.nix`, added 2026-10-20)
+      Workaround for https://emudhra.we-have-a-problem.com/ ; also distrusts
+      legitimate emSign certificates. Remove once nixpkgs' cacert/NSS update
+      (NSS >= 3.131.1) reaches both nixos-unstable and nixos-26.05.
+      Check: `curl https://dv-g3b-emudhra.we-have-a-problem.com/` fails without it.
