@@ -19,7 +19,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     services.printing = {
-      drivers = with pkgs; [ hplipWithPlugin ];
+      # drivers = with pkgs; [ hplipWithPlugin ];
     };
 
     hardware.bluetooth.settings = {
@@ -102,7 +102,7 @@ in
     };
 
     environment.systemPackages = with pkgs; [
-      calibre
+      # calibre
       spotify
       telegram-desktop
       element-desktop
