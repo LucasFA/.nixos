@@ -12,6 +12,15 @@ in
     # virtualisation.docker.enable = true;
     programs.direnv.enable = true;
 
+    # Workaround: systemd >= 262 refuses ghostty's Type=notify-reload unit (it signals
+    # READY before installing its SIGUSR2 handler), so D-Bus activation from GNOME
+    # often fails. https://github.com/ghostty-org/ghostty/issues/14398 (fixed in 1.4.0)
+    systemd.user.services."app-com.mitchellh.ghostty" = {
+      overrideStrategy = "asDropin";
+      enableDefaultPath = false; # don't clobber the session PATH inside terminals
+      serviceConfig.Type = "dbus";
+    };
+
     environment.systemPackages = with pkgs; [
       # Nix
       nixd
