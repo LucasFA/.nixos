@@ -45,6 +45,9 @@
     nix-output-monitor
     nixfmt
 
+    # so ssh from ghostty (TERM=xterm-ghostty) works on every host and VM
+    ghostty.terminfo
+
     # other utils
     dig
     dust

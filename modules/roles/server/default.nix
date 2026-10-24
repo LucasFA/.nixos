@@ -19,7 +19,6 @@ in
 
   config = lib.mkIf cfg.enable {
     programs.nix-ld.enable = true;
-    environment.systemPackages = [ pkgs.ghostty.terminfo ];
     networking.networkmanager.ethernet.macAddress = "stable";
     networking.firewall.allowedTCPPorts = [
       21 # ftp
