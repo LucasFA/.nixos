@@ -13,3 +13,15 @@ Technical debt:
       refuses the `Type=notify-reload` unit: "lacks handler for reload signal USR2").
       Remove once nixpkgs ships ghostty >= 1.4.0 (or a backport of ghostty PR #14399).
       Check: `nix eval nixpkgs#ghostty.version`.
+
+- [ ] clean up the old restic htpasswd symlinks once a server is up again
+      (`modules/restic/server.nix`, changed 2026-10-24 in 366994b)
+      The secret moved from `/mnt/pool/backups.htpasswd` to agenix's default
+      `/run/agenix/restic/htpasswd`. After `nixos-rebuild switch` on server-node804
+      (server-nuc1 imports the module too, where /mnt/pool is just the root fs):
+      - `systemctl status restic-rest-server`, and check that a client still
+        authenticates (e.g. `restic-nuc1 snapshots` on slimbook)
+      - `rm /mnt/pool/backups.htpasswd` (the stale link, physically on /mnt/disk_1)
+      - a second link may be hidden on the root fs under the pool mountpoint:
+        `mkdir /tmp/rootfs && mount --bind / /tmp/rootfs`, remove
+        `/tmp/rootfs/mnt/pool/backups.htpasswd`, then `umount /tmp/rootfs`
