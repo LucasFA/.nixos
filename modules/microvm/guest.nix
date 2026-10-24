@@ -12,11 +12,15 @@ let
   hostSecrets = "/run/host-secrets";
 
   # Log in with the shared token from the host instead of per-VM OAuth.
+  # The scrub keeps the token (and other credentials) out of the environment
+  # of the commands claude runs, and runs Bash commands in a PID namespace so
+  # they can't read it from claude's own environment through /proc.
   claude = pkgs.writeShellScriptBin "claude" ''
     if [ -r ${hostSecrets}/claude-oauth-token ]; then
       CLAUDE_CODE_OAUTH_TOKEN=$(< ${hostSecrets}/claude-oauth-token)
       export CLAUDE_CODE_OAUTH_TOKEN
     fi
+    export CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1
     exec ${lib.getExe pkgs.claude-code} "$@"
   '';
 
@@ -57,6 +61,9 @@ in
   microvm = {
     hypervisor = "cloud-hypervisor";
     inherit (vm) vcpu mem;
+    # Free page reporting: memory the guest frees goes back to the host, so
+    # `mem` is a ceiling rather than a reservation.
+    balloon = true;
     # For systemd-notify readiness towards the host's microvm@ unit.
     vsock.cid = vm.cid;
 

@@ -97,9 +97,11 @@ in
               };
               mem = lib.mkOption {
                 type = lib.types.ints.positive;
-                # Builds run on the host's nix-daemon, not in the VM.
-                default = 3072;
-                description = "RAM in MiB.";
+                # A ceiling, not a reservation: with ballooning (see ./guest.nix)
+                # the guest hands freed memory back to the host. Builds run on
+                # the host, but evaluation runs in the VM and can take a few GiB.
+                default = 6144;
+                description = "Maximum RAM in MiB.";
               };
             };
           }
@@ -174,6 +176,8 @@ in
         iptables -w -t mangle -N microvm-egress 2>/dev/null || iptables -w -t mangle -F microvm-egress
         # Replies to connections the host opened (e.g. ssh into the VM).
         iptables -w -t mangle -A microvm-egress -m conntrack --ctstate ESTABLISHED,RELATED -j RETURN
+        # The host itself, on any address (e.g. a public one on some networks).
+        iptables -w -t mangle -A microvm-egress -m addrtype --dst-type LOCAL -j DROP
         ${lib.concatMapStrings (net: ''
           iptables -w -t mangle -A microvm-egress -d ${net} -j DROP
         '') blockedNets}
@@ -182,11 +186,26 @@ in
         # The VMs are IPv4-only; this also stops them reaching the host via link-local.
         ip6tables -w -t mangle -C PREROUTING -i ${bridge} -j DROP 2>/dev/null \
           || ip6tables -w -t mangle -I PREROUTING -i ${bridge} -j DROP
+
+        # networking.nat turns on forwarding for all interfaces, and the
+        # iptables firewall can't filter it (filterForward needs nftables).
+        # Forward only VM traffic, so others on the network can't use the
+        # laptop as a router. Anything else that forwards (docker, tailscale
+        # subnet routing) would need an exception here.
+        iptables -w -t mangle -N microvm-forward 2>/dev/null || iptables -w -t mangle -F microvm-forward
+        iptables -w -t mangle -A microvm-forward -i ${bridge} -j RETURN
+        iptables -w -t mangle -A microvm-forward -o ${bridge} -m conntrack --ctstate ESTABLISHED,RELATED -j RETURN
+        iptables -w -t mangle -A microvm-forward -j DROP
+        iptables -w -t mangle -C FORWARD -j microvm-forward 2>/dev/null \
+          || iptables -w -t mangle -I FORWARD -j microvm-forward
       '';
       networking.firewall.extraStopCommands = ''
         iptables -w -t mangle -D PREROUTING -i ${bridge} -j microvm-egress 2>/dev/null || true
         iptables -w -t mangle -F microvm-egress 2>/dev/null || true
         iptables -w -t mangle -X microvm-egress 2>/dev/null || true
+        iptables -w -t mangle -D FORWARD -j microvm-forward 2>/dev/null || true
+        iptables -w -t mangle -F microvm-forward 2>/dev/null || true
+        iptables -w -t mangle -X microvm-forward 2>/dev/null || true
         ip6tables -w -t mangle -D PREROUTING -i ${bridge} -j DROP 2>/dev/null || true
       '';
 
