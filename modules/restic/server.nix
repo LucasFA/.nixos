@@ -24,4 +24,6 @@ in
     dataDir = backupsPath;
     listenAddress = "8000";
   };
+  # The pool is nofail, so local-fs.target doesn't wait for it
+  systemd.services.restic-rest-server.unitConfig.RequiresMountsFor = [ backupsPath ];
 }

@@ -45,6 +45,14 @@ in
         noCheck = true;
         device = "/mnt/disk_*";
         options = [
+          # The /mnt/disk_* glob hides the dependency from systemd: without this
+          # the pool can mount over the empty mountpoint dirs on the root fs.
+          "x-systemd.requires-mounts-for=/mnt/disk_1"
+          # Branches are nofail, so the pool must be too, or a dead disk drops
+          # boot into emergency mode. That takes it out of local-fs.target, so
+          # order it before docker like the branches.
+          "nofail"
+          "x-systemd.before=docker.service"
           "lazytime"
           "cache.files=off,category.create=pfrd,func.getattr=newest,dropcacheonclose=false"
           "minfreespace=50G"
