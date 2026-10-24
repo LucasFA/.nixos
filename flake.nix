@@ -45,6 +45,10 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    microvm = {
+      url = "github:microvm-nix/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # use the following for unstable:
     # nixpkgs.url = "nixpkgs/nixos-unstable";
@@ -64,6 +68,7 @@
       lanzaboote,
       agenix,
       autofirma-nix,
+      microvm,
       systems,
       treefmt-nix,
       ...
@@ -101,6 +106,7 @@
             srvos.nixosModules.mixins-systemd-boot
             agenix.nixosModules.default
             lanzaboote.nixosModules.lanzaboote
+            microvm.nixosModules.host
             autofirma-nix.nixosModules.default
             home-manager.nixosModules.home-manager
             {

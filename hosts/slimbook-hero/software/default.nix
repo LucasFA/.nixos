@@ -10,10 +10,20 @@
   imports = [
     ../../../modules/core
     ../../../modules/restic/client.nix
+    ../../../modules/microvm
     ./secureboot.nix
   ];
   lfa.hostRole = hostRole;
   lfa.backups.personalLaptop.enable = true;
+
+  # Coding-agent VMs: `sudo systemctl start microvm@tfg`, then `ssh tfg`
+  lfa.microvm = {
+    enable = true;
+    vms.tfg = {
+      index = 1;
+      workspace = "${config.users.users.lucasfa.home}/dev/02_tfg";
+    };
+  };
 
   # Slimbook-specific Spanish government authentication
   programs.autofirma = {

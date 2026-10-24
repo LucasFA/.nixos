@@ -30,5 +30,19 @@
         zed.enable = false;
       };
     };
+
+    # Agent microVM profile (modules/microvm): headless, like a server
+    microvm = {
+      home.username = "lucasfa";
+      home.homeDirectory = "/home/lucasfa";
+      lfa.home = {
+        gnome.enable = false;
+        vscode.enable = false;
+        mangohud.enable = false;
+        mpv.enable = false;
+        opencode.enable = false;
+        zed.enable = false;
+      };
+    };
   };
 }

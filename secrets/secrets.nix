@@ -29,6 +29,7 @@ in
   "gmailAddress.age".publicKeys = recipients.gmail;
   "protonVPNPrivateKeyFile.age".publicKeys = recipients.protonVPN;
   "wireless.conf.age".publicKeys = recipients.desktop;
+  "claude-oauth-token.age".publicKeys = recipients.desktop;
 
   "restic/htpasswd.age".publicKeys = recipients.restic;
   "restic/passwordFile.age".publicKeys = recipients.restic;
