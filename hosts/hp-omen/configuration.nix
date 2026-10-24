@@ -18,15 +18,9 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the XFCE Desktop Environment.
-  #services.xserver.displayManager.lightdm.enable = true;
-  #services.xserver.desktopManager.xfce.enable = true;
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # No X11 on this server, so enable graphics explicitly: the NVIDIA driver
+  # for nvidia-container-toolkit still needs it.
+  hardware.graphics.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

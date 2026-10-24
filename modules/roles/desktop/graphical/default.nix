@@ -28,7 +28,25 @@ in
     programs.firefox.enable = true;
     programs.chromium.enable = true;
 
+    # Configure keymap in X11
+    services.xserver.xkb = {
+      layout = "us";
+      variant = "";
+    };
+
+    fonts.packages =
+      with pkgs.nerd-fonts;
+      [
+        jetbrains-mono
+        ubuntu
+      ]
+      ++ [
+        # pkgs.ubuntu-themes
+        pkgs.ubuntu-sans
+      ];
+
     environment.systemPackages = with pkgs; [
+      dconf
       wl-clipboard
       gparted
       chromium

@@ -18,7 +18,9 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    # Enable CUPS to print documents.
     services.printing = {
+      enable = true;
       # drivers = with pkgs; [ hplipWithPlugin ];
     };
 
