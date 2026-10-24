@@ -148,6 +148,7 @@
                   hostRole = role;
                 };
                 useGlobalPkgs = true;
+                useUserPackages = true;
                 users.lucasfa = import ./hosts/${dir}/home.nix;
                 sharedModules = hmSharedModules;
               };
