@@ -12,7 +12,6 @@ in
   age.secrets = {
     "restic/htpasswd" = {
       file = self.outPath + "/secrets/restic/htpasswd.age";
-      path = backupsPath + ".htpasswd";
       owner = "restic";
       group = "restic";
     };
