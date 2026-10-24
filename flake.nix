@@ -76,145 +76,108 @@
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
-      pkgs = nixpkgs.legacyPackages.${system};
-      pkgs-stable = nixpkgs-stable.legacyPackages.${system};
       # Small tool to iterate over each systems
       eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
 
       # Eval the treefmt modules from ./modules/treefmt/default.nix
       treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./modules/treefmt);
 
-      # Single source of truth for host roles
-      hostRoles = {
-        slimbook = "desktop";
-        server-nuc1 = "server";
-        server-hp-omen = "server";
-        server-node804 = "server";
-      };
-    in
-    {
-      nixosConfigurations = {
-        slimbook = lib.nixosSystem {
-          specialArgs = {
-            inherit inputs system self;
-            hostRole = hostRoles.slimbook;
-          };
+      # Single source of truth for hosts. `role` also picks the channel
+      # (servers on stable, desktop on unstable) and the srvos base profile.
+      hosts = {
+        slimbook = {
+          dir = "slimbook-hero";
+          role = "desktop";
           modules = [
-            ./hosts/slimbook-hero
             nixos-hardware.nixosModules.slimbook-hero-rpl-rtx
-            srvos.nixosModules.desktop
             srvos.nixosModules.mixins-systemd-boot
-            agenix.nixosModules.default
             lanzaboote.nixosModules.lanzaboote
             microvm.nixosModules.host
             autofirma-nix.nixosModules.default
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                extraSpecialArgs = {
-                  inherit self;
-                  hostRole = hostRoles.slimbook;
-                };
-                useGlobalPkgs = true;
-                users.lucasfa = import ./hosts/slimbook-hero/home.nix;
-                sharedModules = [
-                  inputs.agenix.homeManagerModules.default
-                ];
-              };
-            }
           ];
+          hmSharedModules = [ agenix.homeManagerModules.default ];
         };
-        server-nuc1 = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs system self;
-            hostRole = hostRoles.server-nuc1;
-          };
+        server-nuc1 = {
+          dir = "nuc1";
+          role = "server";
           modules = [
-            ./hosts/nuc1
-            # /home/lucasfa/server/compose.nix
             nixos-hardware.nixosModules.intel-nuc-5i5ryb
-            srvos.nixosModules.common
-            srvos.nixosModules.server
             { srvos.boot.consoles = nixpkgs-stable.lib.mkDefault [ ]; }
-            # srvos.nixosModules.mixins-systemd-boot
-            agenix.nixosModules.default
-            home-manager-stable.nixosModules.home-manager
-            {
-              home-manager = {
-                extraSpecialArgs = {
-                  inherit self;
-                  hostRole = hostRoles.server-nuc1;
-                };
-                useGlobalPkgs = true;
-                users.lucasfa = import ./hosts/nuc1/home.nix;
-              };
-            }
           ];
         };
-        server-hp-omen = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs system self;
-            hostRole = hostRoles.server-hp-omen;
-          };
+        server-hp-omen = {
+          dir = "hp-omen";
+          role = "server";
           modules = [
-            ./hosts/hp-omen
-            # /home/lucasfa/server/compose.nix
             nixos-hardware.nixosModules.omen-15-ce002ns
-            srvos.nixosModules.common
-            srvos.nixosModules.server
             srvos.nixosModules.mixins-systemd-boot
-            agenix.nixosModules.default
-            home-manager-stable.nixosModules.home-manager
-            {
-              home-manager = {
-                extraSpecialArgs = {
-                  inherit self;
-                  hostRole = hostRoles.server-hp-omen;
-                };
-                useGlobalPkgs = true;
-                users.lucasfa = import ./hosts/hp-omen/home.nix;
-              };
-            }
           ];
         };
-        server-node804 = nixpkgs-stable.lib.nixosSystem {
+        server-node804 = {
+          dir = "node804";
+          role = "server";
+          modules = [ srvos.nixosModules.mixins-systemd-boot ];
+        };
+      };
+
+      mkHost =
+        {
+          dir,
+          role,
+          modules ? [ ],
+          hmSharedModules ? [ ],
+        }:
+        let
+          isServer = role == "server";
+          nixpkgs' = if isServer then nixpkgs-stable else nixpkgs;
+          home-manager' = if isServer then home-manager-stable else home-manager;
+        in
+        nixpkgs'.lib.nixosSystem {
           specialArgs = {
             inherit inputs system self;
-            hostRole = hostRoles.server-node804;
+            hostRole = role;
           };
           modules = [
-            ./hosts/node804
-            # /home/lucasfa/server/compose.nix
-            # nixos-hardware.nixosModules.omen-15-ce002ns
-            srvos.nixosModules.common
-            srvos.nixosModules.server
-            srvos.nixosModules.mixins-systemd-boot
+            ./hosts/${dir}
             agenix.nixosModules.default
-            home-manager-stable.nixosModules.home-manager
+            home-manager'.nixosModules.home-manager
             {
               home-manager = {
                 extraSpecialArgs = {
                   inherit self;
-                  hostRole = hostRoles.server-node804;
+                  hostRole = role;
                 };
                 useGlobalPkgs = true;
-                users.lucasfa = import ./hosts/node804/home.nix;
+                users.lucasfa = import ./hosts/${dir}/home.nix;
+                sharedModules = hmSharedModules;
               };
             }
-          ];
+          ]
+          ++ (
+            if isServer then
+              [
+                srvos.nixosModules.common
+                srvos.nixosModules.server
+              ]
+            else
+              [ srvos.nixosModules.desktop ]
+          )
+          ++ modules;
         };
-        # live = nixpkgs-stable.lib.nixosSystem {
-        # # build ISO with `nix build .#nixosConfigurations.live.config.system.build.isoImage`
-        # specialArgs = { inherit inputs system self; };
-        # system = "x86_64-linux";
-        # modules = [
-        # (nixpkgs-stable + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
-        # (nixpkgs-stable + "/nixos/modules/installer/cd-dvd/channel.nix")
-        # ./hosts/live
-        # agenix.nixosModules.default
-        # ];
-        # };
-      };
+    in
+    {
+      nixosConfigurations = lib.mapAttrs (_: mkHost) hosts;
+      # live = nixpkgs-stable.lib.nixosSystem {
+      # # build ISO with `nix build .#nixosConfigurations.live.config.system.build.isoImage`
+      # specialArgs = { inherit inputs system self; };
+      # system = "x86_64-linux";
+      # modules = [
+      # (nixpkgs-stable + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+      # (nixpkgs-stable + "/nixos/modules/installer/cd-dvd/channel.nix")
+      # ./hosts/live
+      # agenix.nixosModules.default
+      # ];
+      # };
       homeConfigurations = {
         # "lucasfa@slimbook" = home-manager.lib.homeManagerConfiguration {
         # inherit pkgs;
