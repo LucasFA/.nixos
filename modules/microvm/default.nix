@@ -70,13 +70,125 @@ let
     nixDaemonSocket = "${stateDir}/${name}/notify.vsock_${toString nixDaemonVsockPort}";
   };
   vms = lib.mapAttrs mkVm cfg.vms;
+
+  # Pinned by ssh for every VM, see the ssh host key service below.
+  knownHostsFile = name: "${stateDir}/${name}/known_hosts";
+
+  # `vm [NAME]`: start the VM (no sudo, see the polkit rule) and run claude in
+  # it, in the same directory as on the host when inside its workspace.
+  vmCommand = pkgs.writeShellApplication {
+    name = "vm";
+    runtimeInputs = [
+      config.systemd.package
+      config.programs.ssh.package
+    ];
+    text = ''
+      names=(${lib.escapeShellArgs (lib.attrNames vms)})
+      declare -A workspaces=(
+      ${
+        lib.concatStrings (
+          lib.mapAttrsToList (
+            name: vm: "  [${lib.escapeShellArg name}]=${lib.escapeShellArg vm.workspace}\n"
+          ) vms
+        )
+      })
+
+      usage() {
+        cat >&2 <<EOF
+      usage: vm [NAME] [-- CLAUDE_ARGS...]  start NAME and run claude in it
+             vm shell [NAME]                start NAME and open a shell in it
+             vm stop [NAME]
+             vm status
+      NAME defaults to the VM whose workspace contains the current directory.
+      VMs: ''${names[*]}
+      EOF
+        exit 2
+      }
+
+      in_workspace() {
+        [[ $PWD == "$1" || $PWD == "$1"/* ]]
+      }
+
+      cmd=claude
+      case ''${1-} in
+        shell | stop | status)
+          cmd=$1
+          shift
+          ;;
+        -h | --help) usage ;;
+      esac
+
+      if [ "$cmd" = status ]; then
+        for n in "''${names[@]}"; do
+          printf '%s\t%s\t%s\n' "$n" "$(systemctl is-active "microvm@$n.service" || true)" "''${workspaces[$n]}"
+        done
+        exit 0
+      fi
+
+      name=""
+      if [ $# -gt 0 ] && [ "$1" != -- ]; then
+        name=$1
+        shift
+      fi
+      if [ "''${1-}" = -- ]; then
+        shift
+      fi
+      if [ "$cmd" != claude ] && [ $# -gt 0 ]; then
+        usage
+      fi
+
+      if [ -z "$name" ]; then
+        # The innermost workspace wins if they nest.
+        best=""
+        for n in "''${names[@]}"; do
+          ws=''${workspaces[$n]}
+          if in_workspace "$ws" && [ ''${#ws} -gt ''${#best} ]; then
+            name=$n
+            best=$ws
+          fi
+        done
+        if [ -z "$name" ]; then
+          echo "vm: $PWD is not in any VM's workspace, pass a NAME" >&2
+          usage
+        fi
+      elif [ -z "''${workspaces[$name]+x}" ]; then
+        echo "vm: unknown VM: $name" >&2
+        usage
+      fi
+
+      ws=''${workspaces[$name]}
+      # The workspace is mounted at the same path in the VM.
+      dir=$ws
+      if in_workspace "$ws"; then
+        dir=$PWD
+      fi
+
+      unit="microvm@$name.service"
+      if [ "$cmd" = stop ]; then
+        exec systemctl stop "$unit"
+      fi
+      # A no-op if it is running; otherwise blocks until the guest has booted.
+      if ! systemctl is-active -q "$unit"; then
+        echo "vm: starting $name..." >&2
+      fi
+      systemctl start "$unit"
+
+      # Runs under the guest's bash -c, so bash quoting is right.
+      if [ "$cmd" = shell ]; then
+        remote="cd ''${dir@Q} && exec bash -l"
+      else
+        remote="cd ''${dir@Q} && exec claude ''${*@Q}"
+      fi
+      exec ssh -t -o ConnectionAttempts=10 "$name" "$remote"
+    '';
+  };
 in
 {
   options.lfa.microvm = {
     enable = lib.mkEnableOption "coding-agent microVMs";
     vms = lib.mkOption {
       default = { };
-      description = "Agent microVMs. Start one with `sudo systemctl start microvm@<name>`.";
+      description = "Agent microVMs. Start one and run claude in it with `vm <name>`.";
       type = lib.types.attrsOf (
         lib.types.submodule (
           { name, ... }:
@@ -129,6 +241,11 @@ in
         owner = user.name;
         mode = "0400";
       };
+
+      # Every VM runs cloud-hypervisor with a vsock CID (see ./guest.nix), which
+      # reports readiness: `systemctl start microvm@<name>` then returns only
+      # once the guest has booted.
+      microvm.host.useNotifySockets = true;
 
       microvm.vms = lib.mapAttrs (name: vm: {
         autostart = false;
@@ -211,6 +328,31 @@ in
 
       networking.hosts = lib.mapAttrs' (name: vm: lib.nameValuePair vm.ip [ name ]) vms;
 
+      # Trust only the pinned key: no first-connection prompt, and stale
+      # entries in ~/.ssh/known_hosts can't get in the way.
+      programs.ssh.extraConfig = lib.concatStrings (
+        lib.mapAttrsToList (name: vm: ''
+          Host ${name} ${vm.ip}
+            UserKnownHostsFile ${knownHostsFile name}
+            StrictHostKeyChecking yes
+        '') vms
+      );
+
+      environment.systemPackages = [ vmCommand ];
+
+      # Lets `vm` start and stop the VMs without sudo.
+      security.polkit.extraConfig = ''
+        polkit.addRule(function(action, subject) {
+          var units = ${builtins.toJSON (lib.mapAttrsToList (name: _: "microvm@${name}.service") vms)};
+          if (action.id == "org.freedesktop.systemd1.manage-units" &&
+              subject.user == "${user.name}" &&
+              units.indexOf(action.lookup("unit")) >= 0 &&
+              ["start", "stop", "restart"].indexOf(action.lookup("verb")) >= 0) {
+            return polkit.Result.YES;
+          }
+        });
+      '';
+
       ################## per-VM state ##################
       # Sorts before microvm.nix's own "10-microvm" rules for the same paths,
       # so these owners and modes win.
@@ -263,6 +405,7 @@ in
 
       systemd.services = lib.mkMerge [
         # Stable SSH host keys, generated once on the host and shared read-only.
+        # Runs on every start to (re)write the known_hosts entry ssh pins.
         (lib.mapAttrs' (
           name: vm:
           lib.nameValuePair "microvm-ssh-host-key-${name}" {
@@ -272,12 +415,15 @@ in
               "microvm-virtiofsd@${name}.service"
               "microvm@${name}.service"
             ];
-            unitConfig.ConditionPathExists = "!${vm.sshHostKeyDir}/ssh_host_ed25519_key";
             serviceConfig.Type = "oneshot";
             script = ''
-              install -d -m 0700 ${vm.sshHostKeyDir}
-              ${lib.getExe' pkgs.openssh "ssh-keygen"} -q -t ed25519 -N "" -C ${name} \
-                -f ${vm.sshHostKeyDir}/ssh_host_ed25519_key
+              key=${vm.sshHostKeyDir}/ssh_host_ed25519_key
+              if [ ! -e "$key" ]; then
+                install -d -m 0700 ${vm.sshHostKeyDir}
+                ${lib.getExe' pkgs.openssh "ssh-keygen"} -q -t ed25519 -N "" -C ${name} -f "$key"
+              fi
+              read -r type pub _ < "$key.pub"
+              echo "${name},${vm.ip} $type $pub" > ${knownHostsFile name}
             '';
           }
         ) vms)

@@ -16,7 +16,7 @@
   lfa.hostRole = hostRole;
   lfa.backups.personalLaptop.enable = true;
 
-  # Coding-agent VMs: `sudo systemctl start microvm@tfg`, then `ssh tfg`
+  # Coding-agent VMs: `vm tfg` (or just `vm` inside the workspace)
   lfa.microvm = {
     enable = true;
     vms.tfg = {

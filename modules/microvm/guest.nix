@@ -208,6 +208,13 @@ in
     users.lucasfa = ./home.nix;
   };
 
+  # A plain `ssh <vm>` starts in the workspace (`vm` cds on its own).
+  programs.fish.loginShellInit = ''
+    if test "$PWD" = "$HOME"
+      cd ${lib.escapeShellArg vm.workspace}
+    end
+  '';
+
   ################## tools ##################
   # Anything else: `nix shell nixpkgs#...` (see claudeMd).
   environment.systemPackages = [ claude ];
