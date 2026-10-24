@@ -25,7 +25,11 @@
       # url = "github:nix-community/autofirma-nix/release-24.11";
       url = "github:nix-community/autofirma-nix/develop";
       # url = "github:LucasFA/autofirma-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # Not following nixpkgs: its maven dependency FODs were made with maven 3.9 and fail
+      # offline under nixpkgs' maven 3.10 (missing maven-resources-plugin 3.5.0). Tracked in TODO.md.
+      # Pinned to the last nixos-unstable with maven 3.9.16.
+      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.url = "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1097682.02c087f3fe67/nixexprs.tar.zst";
       inputs.home-manager.follows = "home-manager";
       inputs.nix-unit.inputs.nixpkgs.follows = "nixpkgs";
     };

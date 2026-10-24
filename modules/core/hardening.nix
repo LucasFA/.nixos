@@ -1,4 +1,6 @@
 {
+  lib,
+  pkgs,
   ...
 }:
 {
@@ -34,8 +36,8 @@
 
   # eMudhra intermediate CA key compromise (2026-10-20): https://emudhra.we-have-a-problem.com/
   # Remove once nixpkgs' cacert drops/blocks the affected intermediates (tracked in TODO.md).
-  security.pki.caCertificateBlacklist = [
-    "emSign ECC Root CA - G3"
-    "Comodo AAA Services root"
-  ];
+  # cacert >= 3.131.1 already dropped emSign, and its build fails on blacklist entries it doesn't contain.
+  security.pki.caCertificateBlacklist =
+    lib.optional (lib.versionOlder pkgs.cacert.version "3.131.1") "emSign ECC Root CA - G3"
+    ++ [ "Comodo AAA Services root" ];
 }
