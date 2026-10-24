@@ -90,7 +90,7 @@
         dates = "*-*-01 20:00:00";
         persistent = true;
         randomizedDelaySec = "30min";
-        options = "--delete-older-than 14d --max-jobs 2";
+        options = "--delete-older-than 14d";
       };
       optimise = {
         automatic = true;
