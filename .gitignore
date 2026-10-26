@@ -1,3 +1,7 @@
 .*.swp
 result
 *.log
+# .claude is ignored globally (modules/home/git.nix); keep only the skills
+!/.claude/
+/.claude/*
+!/.claude/skills/
