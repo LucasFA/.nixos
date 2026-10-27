@@ -53,23 +53,87 @@ let
     "240.0.0.0/4"
   ];
 
+  # The host blocks private addresses, so the LAN resolver is unreachable.
+  nameservers = [
+    "9.9.9.9"
+    "1.1.1.1"
+  ];
+
   mkVm = name: vmCfg: rec {
     inherit name;
     inherit (vmCfg) vcpu mem workspace;
     ip = "${subnet}.${toString (10 + vmCfg.index)}";
     mac = "02:00:00:00:53:${lib.fixedWidthString 2 "0" (lib.toHexString vmCfg.index)}";
+    tap = "vm-${name}";
     # vsock CIDs 0-2 are reserved.
     cid = 2 + vmCfg.index;
-    gateway = hostAddress;
     # Per-VM claude state, owned by lucasfa on the host.
     dataDir = "${user.home}/vms/${name}";
     # Infrastructure state, root-only on the host.
     sshHostKeyDir = "${stateDir}/${name}/ssh-host-keys";
-    inherit secretsDir nixDaemonVsockPort;
     # microvm.nix's cloud-hypervisor runner uses notify.vsock in the state dir.
     nixDaemonSocket = "${stateDir}/${name}/notify.vsock_${toString nixDaemonVsockPort}";
+    # Read at boot by the shared guest, see ./guest.nix.
+    vmKernelParams = [
+      "systemd.hostname=${name}"
+      "ifname=uplink:${mac}"
+      "ip=${ip}::${hostAddress}:255.255.255.0::uplink:off"
+      "systemd.mount-extra=workspace:${workspace}:virtiofs"
+      "lfa.workspace=${workspace}"
+    ]
+    ++ map (ns: "nameserver=${ns}") nameservers;
   };
   vms = lib.mapAttrs mkVm cfg.vms;
+
+  # One guest system for every VM, so a VM adds no NixOS evaluation (about
+  # 10s and 1GB each otherwise) and they share one toplevel and initrd.
+  # Evaluated like microvm.nix does for microvm.vms.<name>.config.
+  guest = import "${pkgs.path}/nixos/lib/eval-config.nix" {
+    inherit pkgs;
+    inherit (pkgs.stdenv.hostPlatform) system;
+    modules = [
+      inputs.microvm.nixosModules.microvm
+      ./guest.nix
+    ];
+    specialArgs = {
+      inherit inputs self;
+      shared = { inherit secretsDir nixDaemonVsockPort; };
+    };
+  };
+
+  # A VM's runner: the shared guest, with this VM's devices and kernel command
+  # line. Overrides every microvm option that differs between VMs or whose
+  # default derives from the guest's (empty) hostname.
+  mkRunner =
+    vm:
+    inputs.microvm.lib.buildRunner {
+      inherit pkgs;
+      inherit (guest.config.system.build) toplevel;
+      microvmConfig = guest.config.microvm // {
+        hostName = vm.name;
+        machineId = null; # derived from hostName by buildRunner then
+        socket = "${vm.name}.sock";
+        inherit (vm) vcpu mem;
+        interfaces = map (
+          iface:
+          iface
+          // {
+            id = vm.tap;
+            inherit (vm) mac;
+          }
+        ) guest.config.microvm.interfaces;
+        vsock = guest.config.microvm.vsock // {
+          inherit (vm) cid;
+        };
+        kernelParams = guest.config.microvm.kernelParams ++ vm.vmKernelParams;
+        # tap-up would create the guest's placeholder tap; the taps are networkd
+        # netdevs instead (see below).
+        binScripts = removeAttrs guest.config.microvm.binScripts [
+          "tap-up"
+          "tap-down"
+        ];
+      };
+    };
 
   # Pinned by ssh for every VM, see the ssh host key service below.
   knownHostsFile = name: "${stateDir}/${name}/known_hosts";
@@ -230,6 +294,12 @@ in
           assertion = lib.allUnique (lib.mapAttrsToList (_: v: v.index) cfg.vms);
           message = "lfa.microvm.vms: every VM needs a unique index";
         }
+        {
+          assertion = lib.all (v: builtins.match "/[^[:space:]:\"']*" v.workspace != null) (
+            lib.attrValues cfg.vms
+          );
+          message = "lfa.microvm.vms: a workspace must be an absolute path without whitespace, colons or quotes (it goes on the guest's kernel command line)";
+        }
       ];
 
       # Long-lived token from `claude setup-token`, used by every VM instead of
@@ -247,18 +317,45 @@ in
       # once the guest has booted.
       microvm.host.useNotifySockets = true;
 
-      microvm.vms = lib.mapAttrs (name: vm: {
+      microvm.vms = lib.mapAttrs (_: vm: {
         autostart = false;
-        specialArgs = { inherit inputs self vm; };
-        config = ./guest.nix;
+        # Just what microvm.nix's host module reads from a VM's config.
+        evaluatedConfig.config = {
+          microvm = {
+            declaredRunner = mkRunner vm;
+            # Only used for tmpfiles rules creating the share sources; ours
+            # below create them instead.
+            shares = [ ];
+          };
+          system.build.toplevel = guest.config.system.build.toplevel;
+        };
       }) vms;
 
       ################## networking ##################
       systemd.network = {
-        netdevs."20-${bridge}".netdevConfig = {
-          Kind = "bridge";
-          Name = bridge;
-        };
+        netdevs = {
+          "20-${bridge}".netdevConfig = {
+            Kind = "bridge";
+            Name = bridge;
+          };
+        }
+        # A persistent tap per VM, for cloud-hypervisor (which runs as microvm).
+        // lib.mapAttrs' (
+          _: vm:
+          lib.nameValuePair "21-${vm.tap}" {
+            netdevConfig = {
+              Kind = "tap";
+              Name = vm.tap;
+            };
+            tapConfig = {
+              User = "microvm";
+              Group = "kvm";
+              VNetHeader = true;
+              # cloud-hypervisor opens it multi-queue with more than one vCPU.
+              MultiQueue = vm.vcpu > 1;
+            };
+          }
+        ) vms;
         networks."20-${bridge}" = {
           matchConfig.Name = bridge;
           addresses = [ { Address = "${hostAddress}/24"; } ];
@@ -268,7 +365,6 @@ in
           };
           linkConfig.RequiredForOnline = "no";
         };
-        # microvm.nix creates the tap devices; attach them to the bridge.
         networks."21-microvm-tap" = {
           matchConfig.Name = "vm-*";
           networkConfig.Bridge = bridge;
@@ -400,6 +496,9 @@ in
             group = "root";
             mode = "0700";
           };
+          # Targets of the guest's relative share sources (see ./guest.nix).
+          "${stateDir}/${vm.name}/workspace"."L+".argument = vm.workspace;
+          "${stateDir}/${vm.name}/claude"."L+".argument = "${vm.dataDir}/claude";
         }) vms
       );
 

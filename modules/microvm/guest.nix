@@ -3,10 +3,13 @@
   pkgs,
   inputs,
   self,
-  vm,
+  shared,
   ...
 }:
-# Guest side of an agent microVM. `vm` comes from ./default.nix (mkVm).
+# Guest side of the agent microVMs: one system, evaluated once and booted by
+# every VM. `shared` comes from ./default.nix. What differs per VM is set
+# there, in mkRunner: devices on the runner, and hostname, address and
+# workspace on the kernel command line (vmKernelParams).
 let
   home = "/home/lucasfa";
   hostSecrets = "/run/host-secrets";
@@ -27,9 +30,9 @@ let
   claudeMd = ''
     # This machine: an isolated NixOS microVM
 
-    You run inside a disposable microVM on the user's laptop. Only
-    `${vm.workspace}` is shared with the host (it is the user's real
-    checkout, live). There are no git credentials; the user pushes from
+    You run inside a disposable microVM on the user's laptop. Only the
+    workspace (the directory you were started in) is shared with the host
+    (it is the user's real checkout, live). There are no git credentials; the user pushes from
     the host. You have internet access, but no access to the LAN, the
     tailnet or the host. There is no sudo.
 
@@ -60,60 +63,74 @@ in
 
   microvm = {
     hypervisor = "cloud-hypervisor";
-    inherit (vm) vcpu mem;
+    # vcpu, mem and the vsock CID (for systemd-notify readiness towards the
+    # host's microvm@ unit) are set per VM, in mkRunner.
     # Free page reporting: memory the guest frees goes back to the host, so
     # `mem` is a ceiling rather than a reservation.
     balloon = true;
-    # For systemd-notify readiness towards the host's microvm@ unit.
-    vsock.cid = vm.cid;
 
+    # Placeholders: mkRunner sets each VM's tap and MAC.
     interfaces = [
       {
         type = "tap";
-        id = "vm-${vm.name}";
-        inherit (vm) mac;
+        id = "vm-template";
+        mac = "02:00:00:00:53:00";
       }
     ];
 
-    shares = [
-      {
-        proto = "virtiofs";
-        tag = "ro-store";
-        source = "/nix/store";
-        mountPoint = "/nix/.ro-store";
-        # Enforced by virtiofsd on the host, so even root in the VM can't
-        # remount it writable and tamper with the host's store.
-        readOnly = true;
-      }
-      {
-        proto = "virtiofs";
-        tag = "workspace";
-        source = vm.workspace;
-        mountPoint = vm.workspace;
-      }
-      {
-        proto = "virtiofs";
-        tag = "claude";
-        source = "${vm.dataDir}/claude";
-        mountPoint = "${home}/.claude";
-      }
-      {
-        proto = "virtiofs";
-        tag = "ssh-host-keys";
-        source = vm.sshHostKeyDir;
-        mountPoint = "/etc/ssh/host-keys";
-        readOnly = true;
-      }
-      {
-        proto = "virtiofs";
-        tag = "host-secrets";
-        source = vm.secretsDir;
-        mountPoint = hostSecrets;
-        readOnly = true;
-      }
-    ];
+    # Relative sources are in the VM's state dir on the host, where virtiofsd
+    # runs; ./default.nix links them to that VM's directories. The trailing
+    # slash makes virtiofsd follow the link, which it refuses as the shared
+    # dir itself.
+    shares =
+      map
+        (
+          share:
+          {
+            proto = "virtiofs";
+            # The default is derived from the hostname, which is set at boot.
+            socket = "virtiofs-${share.tag}.sock";
+          }
+          // share
+        )
+        [
+          {
+            tag = "ro-store";
+            source = "/nix/store";
+            mountPoint = "/nix/.ro-store";
+            # Enforced by virtiofsd on the host, so even root in the VM can't
+            # remount it writable and tamper with the host's store.
+            readOnly = true;
+          }
+          {
+            tag = "workspace";
+            source = "workspace/";
+            # Not mounted here: the workspace goes at the same path as on the
+            # host, which comes from the kernel command line
+            # (systemd.mount-extra=, see vmKernelParams).
+            mountPoint = "/mnt/workspace";
+          }
+          {
+            tag = "claude";
+            source = "claude/";
+            mountPoint = "${home}/.claude";
+          }
+          {
+            tag = "ssh-host-keys";
+            source = "ssh-host-keys";
+            mountPoint = "/etc/ssh/host-keys";
+            readOnly = true;
+          }
+          {
+            tag = "host-secrets";
+            source = shared.secretsDir;
+            mountPoint = hostSecrets;
+            readOnly = true;
+          }
+        ];
     # No volumes: the VM is stateless; everything that persists is a share.
   };
+  fileSystems."/mnt/workspace".options = [ "noauto" ];
 
   ################## nix: client of the host's daemon ##################
   # /nix/store is the host's (read-only share). Builds and downloads are done
@@ -133,7 +150,7 @@ in
   systemd.services."host-nix-daemon@" = {
     description = "Host nix-daemon connection (via vsock)";
     serviceConfig = {
-      ExecStart = "${lib.getExe pkgs.socat} STDIO VSOCK-CONNECT:2:${toString vm.nixDaemonVsockPort}";
+      ExecStart = "${lib.getExe pkgs.socat} STDIO VSOCK-CONNECT:2:${toString shared.nixDaemonVsockPort}";
       StandardInput = "socket";
       DynamicUser = true;
     };
@@ -149,21 +166,18 @@ in
   nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
   ################## networking ##################
+  # Both from the kernel command line: the hostname via systemd.hostname=, and
+  # the address, gateway and DNS via systemd-network-generator's ifname=, ip=
+  # and nameserver=. An empty hostName also keeps the initrd the same for
+  # every VM.
+  networking.hostName = "";
   networking.useNetworkd = true;
   networking.useDHCP = false;
   networking.enableIPv6 = false;
-  systemd.network.networks."10-uplink" = {
-    matchConfig.MACAddress = vm.mac;
-    address = [ "${vm.ip}/24" ];
-    gateway = [ vm.gateway ];
-    # The host blocks private addresses, so the LAN resolver is unreachable.
-    dns = [
-      "9.9.9.9"
-      "1.1.1.1"
-    ];
-    networkConfig.LinkLocalAddressing = "no";
-  };
   services.resolved.enable = true;
+  # NixOS only enables it in a systemd initrd.
+  systemd.additionalUpstreamSystemUnits = [ "systemd-network-generator.service" ];
+  systemd.services.systemd-network-generator.wantedBy = [ "sysinit.target" ];
 
   services.openssh = {
     enable = true;
@@ -211,7 +225,8 @@ in
   # A plain `ssh <vm>` starts in the workspace (`vm` cds on its own).
   programs.fish.loginShellInit = ''
     if test "$PWD" = "$HOME"
-      cd ${lib.escapeShellArg vm.workspace}
+      set -l ws (string match -rg '\blfa\.workspace=(\S+)' < /proc/cmdline)
+      and cd $ws
     end
   '';
 
