@@ -40,6 +40,13 @@ let
     projects.${vm.workspace}.hasTrustDialogAccepted = true;
   };
 
+  # Seed for each VM's ~/.claude/settings.json (user settings, so /model and
+  # /effort can still change them; managed-settings would pin them instead).
+  claudeSettings = {
+    model = "opus";
+    effortLevel = "high";
+  };
+
   # Destinations a VM may not reach: everything that isn't the public internet.
   blockedNets = [
     "0.0.0.0/8"
@@ -490,6 +497,12 @@ in
             inherit (user) group;
             mode = "0600";
             argument = builtins.toJSON (claudeState vm);
+          };
+          "${vm.dataDir}/claude/settings.json".f = {
+            user = user.name;
+            inherit (user) group;
+            mode = "0600";
+            argument = builtins.toJSON claudeSettings;
           };
           "${vm.sshHostKeyDir}".d = {
             user = "root";
