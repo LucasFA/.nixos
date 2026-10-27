@@ -16,7 +16,8 @@ existing entries. The module derives everything else from it, so leave
     };
 ```
 
-- **name**: given, or from the basename (`02_tfg` → `tfg`): lowercase
+- **name**: given, or from the basename (`02_tfg` → `tfg`, `.nixos` →
+  `nixos`): lowercase
   `[a-z0-9-]`, starts with a letter, ≤ 12 chars (the tap is `vm-<name>`,
   and Linux caps interface names at 15). It becomes an `/etc/hosts` entry and
   an ssh `Host`, so it can't clash with another VM or a real host (`slimbook`,
@@ -28,6 +29,11 @@ existing entries. The module derives everything else from it, so leave
   otherwise ask for a dir if none was given.
   - Refuse `~` and anything containing `~/vms`, which holds every VM's claude
     state.
+  - No whitespace, `:` or quotes anywhere in the path: all VMs boot one shared
+    guest system, and it gets its workspace from the kernel command line
+    (`systemd.mount-extra=`, which splits on `:`). An assertion fails the
+    build otherwise; catch it first and suggest renaming the dir, since a
+    symlinked path would break `vm`'s `$PWD` match.
   - Flag overlap with another VM's workspace (both write the same files;
     `vm` picks the innermost), and warn if it is or contains this repo (the
     agent could edit the host's config).
