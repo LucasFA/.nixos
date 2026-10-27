@@ -27,6 +27,10 @@
       index = 2;
       workspace = "${config.users.users.lucasfa.home}/dev/vscode-octave";
     };
+    vms.nixos = {
+      index = 3;
+      workspace = "${config.users.users.lucasfa.home}/.nixos";
+    };
   };
 
   # Slimbook-specific Spanish government authentication
