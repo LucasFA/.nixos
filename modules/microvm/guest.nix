@@ -12,15 +12,15 @@ let
   hostSecrets = "/run/host-secrets";
 
   # Log in with the shared token from the host instead of per-VM OAuth.
-  # The scrub keeps the token (and other credentials) out of the environment
-  # of the commands claude runs, and runs Bash commands in a PID namespace so
-  # they can't read it from claude's own environment through /proc.
+  # Passed as a file descriptor rather than CLAUDE_CODE_OAUTH_TOKEN, so the
+  # token isn't in the environment of the commands claude runs (where an
+  # `env` dump could leak it). Not CLAUDE_CODE_SUBPROCESS_ENV_SCRUB: that
+  # forces the permission mode to default, overriding bypassPermissions below.
   claude = pkgs.writeShellScriptBin "claude" ''
     if [ -r ${hostSecrets}/claude-oauth-token ]; then
-      CLAUDE_CODE_OAUTH_TOKEN=$(< ${hostSecrets}/claude-oauth-token)
-      export CLAUDE_CODE_OAUTH_TOKEN
+      exec 3<${hostSecrets}/claude-oauth-token
+      export CLAUDE_CODE_OAUTH_TOKEN_FILE_DESCRIPTOR=3
     fi
-    export CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1
     exec ${lib.getExe pkgs.claude-code} "$@"
   '';
 

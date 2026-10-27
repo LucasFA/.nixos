@@ -23,6 +23,10 @@
       index = 1;
       workspace = "${config.users.users.lucasfa.home}/dev/02_tfg";
     };
+    vms.octave = {
+      index = 2;
+      workspace = "${config.users.users.lucasfa.home}/dev/vscode-octave";
+    };
   };
 
   # Slimbook-specific Spanish government authentication
