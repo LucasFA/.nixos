@@ -442,11 +442,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791772131,
-        "narHash": "sha256-tZXVWKw6apA2cTnQGaxAlCSjHaqI2gBAm7HeAxS9Gn4=",
+        "lastModified": 1793241018,
+        "narHash": "sha256-gu/ctomCxRP0x4fSxjkC1AMFPjUBekRIe8pT/Jpb8yo=",
         "owner": "LucasFA",
         "repo": "srvos",
-        "rev": "2b29c54422fcb3ea1d653dfaafc4d8ad6a34dbdc",
+        "rev": "824ecec2a0a5a504a5f73d8e7a259c8d09d117b6",
         "type": "github"
       },
       "original": {
