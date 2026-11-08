@@ -45,7 +45,7 @@ in
       uv
       # LLMs AI
       pi-coding-agent
-      opencode
+      # opencode
 
       # octave in particular
       octaveFull
