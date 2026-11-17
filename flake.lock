@@ -140,11 +140,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794715309,
-        "narHash": "sha256-awkBBs5ctFKgEYjpNGpi3t/VqF589n5EWfdinRb2gNI=",
+        "lastModified": 1794865930,
+        "narHash": "sha256-a3My+u9CEwEFmuGXb3PV9COj7Gd8o28b19TvtDiKPfg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "a1293da7dd8e497e08d26173f97e2976b36a31ea",
+        "rev": "9d7ba6bef3904a018d38b92f83132eaf01eb8ef3",
         "type": "github"
       },
       "original": {
@@ -335,11 +335,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1794552581,
-        "narHash": "sha256-C0bP9ShRkxihpkAiWel93+JypO7ls9usnHRtK2VLvWA=",
-        "rev": "f1e5c356f35d07e7b71a6b5e6c9338e0b029e0c0",
+        "lastModified": 1794756927,
+        "narHash": "sha256-gMyd1bZoTbvrap9NEM2ZIy/7Qfhd54segpSkHPB2vfE=",
+        "rev": "b349185bb79c7cf7ad8ea8c097931730bf473c71",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.14234.f1e5c356f35d/nixexprs.tar.zst"
+        "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.14561.b349185bb79c/nixexprs.tar.zst"
       },
       "original": {
         "type": "tarball",
