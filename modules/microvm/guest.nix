@@ -112,7 +112,7 @@ in
             mountPoint = "/mnt/workspace";
           }
           {
-            # Written by the host's microvm-workspace-<name> before each
+            # Written by the host's microvm-prepare-<name> before each
             # start: `workspace` holds the workspace's path.
             tag = "meta";
             source = "meta";

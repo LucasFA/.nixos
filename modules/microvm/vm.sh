@@ -1,7 +1,9 @@
 # The `vm` command. ./default.nix prepends the definitions of:
-#   names   the VM instances (array)
-#   home    the user's home directory
-#   runDir  where `vm` and the host services exchange workspace paths
+#   names     the VM instances (array)
+#   home      the user's home directory
+#   runDir    where `vm` leaves its workspace requests and the lock
+#   stateDir  the VMs' state on the host (microvm-prepare-<name> writes the
+#             workspace to <name>/meta/workspace)
 # shellcheck shell=bash disable=SC2154
 
 usage() {
@@ -18,18 +20,14 @@ EOF
   exit 2
 }
 
-unit() {
-  echo "microvm@$1.service"
-}
-
 state() {
-  systemctl is-active "$(unit "$1")" || true
+  systemctl is-active "microvm@$1.service" || true
 }
 
 # The workspace of a running (or booting) VM; empty if it is stopped.
 workspace_of() {
   case $(state "$1") in
-    active | activating | reloading) cat "$runDir/$1.current" 2>/dev/null || true ;;
+    active | activating | reloading) cat "$stateDir/$1/meta/workspace" 2>/dev/null || true ;;
   esac
 }
 
@@ -38,6 +36,7 @@ find_vm() {
   local n ws found="" best=""
   for n in "${names[@]}"; do
     ws=$(workspace_of "$n")
+    # An empty ws (stopped VM) must not match: "$ws"/* would be /*.
     if [ -n "$ws" ] && [[ $dir == "$ws" || $dir == "$ws"/* ]] && [ ${#ws} -gt ${#best} ]; then
       found=$n
       best=$ws
@@ -75,32 +74,21 @@ fi
 dir=$(pwd -P)
 
 if [ "$cmd" = stop ]; then
-  if [ $# -gt 0 ]; then
-    [ $# -eq 1 ] || usage
-    name=$1
-    if [[ " ${names[*]} " != *" $name "* ]]; then
-      echo "vm: unknown VM: $name" >&2
-      usage
-    fi
-  else
-    name=$(find_vm)
-    if [ -z "$name" ]; then
-      echo "vm: no running VM has $dir in its workspace" >&2
-      exit 1
-    fi
+  [ $# -le 1 ] || usage
+  name=${1-$(find_vm)}
+  if [ -z "$name" ]; then
+    echo "vm: no running VM has $dir in its workspace" >&2
+    exit 1
   fi
-  exec systemctl stop "$(unit "$name")"
+  exec systemctl stop "microvm@$name.service"
 fi
 
 if [ "$cmd" = shell ] && [ $# -gt 0 ]; then
   usage
 fi
+# The host service checks this too, but not before a VM is taken.
 if [[ $dir != "$home"/* ]]; then
   echo "vm: $dir is not under $home" >&2
-  exit 1
-fi
-if [[ $dir == *$'\n'* ]]; then
-  echo "vm: the path contains a newline" >&2
   exit 1
 fi
 
@@ -125,29 +113,26 @@ if [ -z "$name" ]; then
     status >&2
     exit 1
   fi
-  # Read by microvm-workspace-$name, which checks it and shares it.
+  # Read by microvm-prepare-$name, which checks it and shares it.
   printf '%s' "$dir" >"$runDir/$name.request"
   echo "vm: starting $name for $dir..." >&2
 fi
 
 # A no-op if it is running; otherwise blocks until the guest has booted.
-if ! systemctl start "$(unit "$name")"; then
-  echo "vm: $name failed to start, see: journalctl -u microvm-workspace-$name -u $(unit "$name")" >&2
+if ! systemctl start "microvm@$name.service"; then
+  echo "vm: $name failed to start, see: journalctl -u microvm-prepare-$name -u microvm@$name" >&2
   exit 1
 fi
 exec 9>&-
 
-# Runs under the guest's bash -c, so bash quoting is right.
+# Runs under the guest's bash -c, so bash quoting is right. A terminal only
+# when there is one, so `claude -p ... | jq` and `echo ... | claude -p` get
+# clean pipes (no pty CRLFs); ssh relays the exit status either way.
+tty=-T
+[ -t 0 ] && [ -t 1 ] && tty=-t
 if [ "$cmd" = shell ]; then
   remote="cd ${dir@Q} && exec bash -l"
 else
   remote="cd ${dir@Q} && exec claude ${*@Q}"
-fi
-# A terminal only when there is one, so `claude -p ... | jq` and
-# `echo ... | claude -p` get clean pipes (no pty CRLFs) and ssh relays the exit
-# status either way.
-tty=-T
-if [ -t 0 ] && [ -t 1 ]; then
-  tty=-t
 fi
 exec ssh "$tty" -o ConnectionAttempts=10 "$name" "$remote"

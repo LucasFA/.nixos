@@ -11,7 +11,7 @@
 #
 # A pool of identical VMs (agent1, agent2, ...). Each one shares one host
 # directory, its workspace, which is picked at start: `vm` asks for the
-# current directory, and microvm-workspace-<name> checks it and points the
+# current directory, and microvm-prepare-<name> checks it and points the
 # VM's share at it (see below).
 #
 # Each VM shares the host's /nix/store read-only and uses the host's
@@ -34,8 +34,7 @@ let
   secretsDir = "/run/microvm-secrets";
 
   # Where `vm` asks for a VM's workspace (<name>.request, written by the
-  # user) and reads it back (<name>.current, written by root once checked).
-  # Not shared into any VM, so a VM can't pick its next workspace.
+  # user). Not shared into any VM, so a VM can't pick its next workspace.
   runDir = "/run/lfa-microvm";
 
   # claude's state (history, settings, trust), shared by every VM. claude
@@ -104,13 +103,7 @@ let
     ++ map (ns: "nameserver=${ns}") nameservers;
   };
   vms = lib.listToAttrs (
-    map (
-      i:
-      let
-        vm = mkVm i;
-      in
-      lib.nameValuePair vm.name vm
-    ) (lib.range 1 cfg.instances)
+    map (vm: lib.nameValuePair vm.name vm) (map mkVm (lib.range 1 cfg.instances))
   );
 
   # One guest system for every VM, so a VM adds no NixOS evaluation (about
@@ -180,6 +173,7 @@ let
       names=(${lib.escapeShellArgs (lib.attrNames vms)})
       home=${lib.escapeShellArg user.home}
       runDir=${lib.escapeShellArg runDir}
+      stateDir=${lib.escapeShellArg stateDir}
     ''
     + builtins.readFile ./vm.sh;
   };
@@ -256,7 +250,7 @@ in
           microvm = {
             declaredRunner = mkRunner vm;
             # Only used for tmpfiles rules creating the share sources; ours
-            # below and microvm-workspace-<name> create them instead.
+            # below and microvm-prepare-<name> create them instead.
             shares = [ ];
           };
           system.build.toplevel = guest.config.system.build.toplevel;
@@ -445,19 +439,21 @@ in
             mode = "0700";
           };
           # Target of the guest's relative "claude/" share source (see
-          # ./guest.nix). "workspace" is linked by microvm-workspace-<name>.
+          # ./guest.nix). "workspace" is linked by microvm-prepare-<name>.
           "${stateDir}/${vm.name}/claude"."L+".argument = claudeDir;
         }) vms
       );
 
       systemd.services = lib.mkMerge [
-        # Points the VM's workspace share at the directory `vm` asked for,
-        # once it has checked it, and tells the guest where to mount it.
-        # Runs as root on every start, before virtiofsd (also root) opens it.
+        # Runs as root on every start, before virtiofsd (also root) opens the
+        # shares. Points the VM's workspace share at the directory `vm` asked
+        # for, once it has checked it, and tells the guest where to mount it.
+        # Also keeps the stable SSH host key, generated once on the host and
+        # shared read-only, and rewrites the known_hosts entry ssh pins.
         (lib.mapAttrs' (
-          name: _:
-          lib.nameValuePair "microvm-workspace-${name}" {
-            description = "Set the workspace of MicroVM '${name}'";
+          name: vm:
+          lib.nameValuePair "microvm-prepare-${name}" {
+            description = "Prepare MicroVM '${name}'";
             requiredBy = [ "microvm@${name}.service" ];
             before = [
               "microvm-virtiofsd@${name}.service"
@@ -493,25 +489,8 @@ in
               ln -sfnT -- "$dir" workspace
               install -d -m 0755 meta
               printf '%s\n' "$dir" > meta/workspace
-              printf '%s\n' "$dir" > ${runDir}/${name}.current
               echo "workspace: $dir"
-            '';
-          }
-        ) vms)
 
-        # Stable SSH host keys, generated once on the host and shared read-only.
-        # Runs on every start to (re)write the known_hosts entry ssh pins.
-        (lib.mapAttrs' (
-          name: vm:
-          lib.nameValuePair "microvm-ssh-host-key-${name}" {
-            description = "Generate SSH host key for MicroVM '${name}'";
-            requiredBy = [ "microvm@${name}.service" ];
-            before = [
-              "microvm-virtiofsd@${name}.service"
-              "microvm@${name}.service"
-            ];
-            serviceConfig.Type = "oneshot";
-            script = ''
               key=${vm.sshHostKeyDir}/ssh_host_ed25519_key
               if [ ! -e "$key" ]; then
                 install -d -m 0700 ${vm.sshHostKeyDir}
