@@ -8,11 +8,13 @@
 }:
 # Guest side of the agent microVMs: one system, evaluated once and booted by
 # every VM. `shared` comes from ./default.nix. What differs per VM is set
-# there, in mkRunner: devices on the runner, and hostname, address and
-# workspace on the kernel command line (vmKernelParams).
+# there, in mkRunner: devices on the runner, and hostname and address on the
+# kernel command line (vmKernelParams). The workspace differs per start, and
+# comes from the "meta" share.
 let
   home = "/home/lucasfa";
   hostSecrets = "/run/host-secrets";
+  meta = "/run/host-meta";
 
   # Log in with the shared token from the host instead of per-VM OAuth.
   # Passed as a file descriptor rather than CLAUDE_CODE_OAUTH_TOKEN, so the
@@ -106,9 +108,16 @@ in
             tag = "workspace";
             source = "workspace/";
             # Not mounted here: the workspace goes at the same path as on the
-            # host, which comes from the kernel command line
-            # (systemd.mount-extra=, see vmKernelParams).
+            # host, which is only known at boot (see workspace-mount below).
             mountPoint = "/mnt/workspace";
+          }
+          {
+            # Written by the host's microvm-workspace-<name> before each
+            # start: `workspace` holds the workspace's path.
+            tag = "meta";
+            source = "meta";
+            mountPoint = meta;
+            readOnly = true;
           }
           {
             tag = "claude";
@@ -131,6 +140,26 @@ in
     # No volumes: the VM is stateless; everything that persists is a share.
   };
   fileSystems."/mnt/workspace".options = [ "noauto" ];
+
+  # The workspace at the same path as on the host, which changes from one
+  # start to the next, so it can't be on the kernel command line (fixed in the
+  # runner) or in fileSystems. Before sshd, so `vm` lands in it.
+  systemd.services.workspace-mount = {
+    description = "Mount the workspace at its host path";
+    wantedBy = [ "multi-user.target" ];
+    before = [ "sshd.service" ];
+    unitConfig.RequiresMountsFor = meta;
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    path = [ pkgs.util-linux ];
+    script = ''
+      dir=$(cat ${meta}/workspace)
+      mkdir -p "$dir"
+      mount -t virtiofs workspace "$dir"
+    '';
+  };
 
   ################## nix: client of the host's daemon ##################
   # /nix/store is the host's (read-only share). Builds and downloads are done
@@ -224,9 +253,8 @@ in
 
   # A plain `ssh <vm>` starts in the workspace (`vm` cds on its own).
   programs.fish.loginShellInit = ''
-    if test "$PWD" = "$HOME"
-      set -l ws (string match -rg '\blfa\.workspace=(\S+)' < /proc/cmdline)
-      and cd $ws
+    if test "$PWD" = "$HOME"; and test -r ${meta}/workspace
+      cd (cat ${meta}/workspace)
     end
   '';
 

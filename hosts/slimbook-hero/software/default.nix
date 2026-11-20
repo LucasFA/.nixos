@@ -16,21 +16,11 @@
   lfa.hostRole = hostRole;
   lfa.backups.personalLaptop.enable = true;
 
-  # Coding-agent VMs: `vm tfg` (or just `vm` inside the workspace)
+  # Coding-agent VMs: `vm` in any directory under ~ runs claude in a VM
+  # with that directory shared.
   lfa.microvm = {
     enable = true;
-    vms.tfg = {
-      index = 1;
-      workspace = "${config.users.users.lucasfa.home}/dev/02_tfg";
-    };
-    vms.octave = {
-      index = 2;
-      workspace = "${config.users.users.lucasfa.home}/dev/vscode-octave";
-    };
-    vms.nixos = {
-      index = 3;
-      workspace = "${config.users.users.lucasfa.home}/.nixos";
-    };
+    instances = 4;
   };
 
   # Slimbook-specific Spanish government authentication

@@ -9,6 +9,11 @@
 # Host side of the coding-agent microVMs, after
 # https://michael.stapelberg.ch/posts/2026-02-01-coding-agent-microvm-nix/
 #
+# A pool of identical VMs (agent1, agent2, ...). Each one shares one host
+# directory, its workspace, which is picked at start: `vm` asks for the
+# current directory, and microvm-workspace-<name> checks it and points the
+# VM's share at it (see below).
+#
 # Each VM shares the host's /nix/store read-only and uses the host's
 # nix-daemon (over vsock, as the untrusted user microvm-nix), so whatever it
 # builds or fetches lands in the host store. It can talk to the internet but
@@ -28,20 +33,31 @@ let
   # /run/agenix so no other host secret is reachable through the share.
   secretsDir = "/run/microvm-secrets";
 
+  # Where `vm` asks for a VM's workspace (<name>.request, written by the
+  # user) and reads it back (<name>.current, written by root once checked).
+  # Not shared into any VM, so a VM can't pick its next workspace.
+  runDir = "/run/lfa-microvm";
+
+  # claude's state (history, settings, trust), shared by every VM. claude
+  # keys it by project path, so each workspace keeps its own history
+  # whichever VM runs it.
+  claudeDir = "${user.home}/vms/claude";
+
   # Guest connections to vsock CID 2 (the host) on this port reach the host
   # nix-daemon. cloud-hypervisor forwards them to <vsock socket>_<port>.
   nixDaemonVsockPort = 5000;
   nixDaemonUser = "microvm-nix";
 
-  # Seed for each VM's ~/.claude/.claude.json, so a fresh VM skips onboarding
-  # and trusts everything under ~/workspace (trust is inherited by subdirs).
-  claudeState = vm: {
+  # Seed for ~/.claude/.claude.json: skip onboarding and trust everything
+  # under the home directory (trust is inherited by subdirs), as any of it
+  # can be a workspace.
+  claudeState = {
     hasCompletedOnboarding = true;
-    projects.${vm.workspace}.hasTrustDialogAccepted = true;
+    projects.${user.home}.hasTrustDialogAccepted = true;
   };
 
-  # Seed for each VM's ~/.claude/settings.json (user settings, so /model and
-  # /effort can still change them; managed-settings would pin them instead).
+  # Seed for ~/.claude/settings.json (user settings, so /model and /effort
+  # can still change them; managed-settings would pin them instead).
   claudeSettings = {
     model = "opus";
     effortLevel = "high";
@@ -66,31 +82,36 @@ let
     "1.1.1.1"
   ];
 
-  mkVm = name: vmCfg: rec {
-    inherit name;
-    inherit (vmCfg) vcpu mem workspace;
-    ip = "${subnet}.${toString (10 + vmCfg.index)}";
-    mac = "02:00:00:00:53:${lib.fixedWidthString 2 "0" (lib.toHexString vmCfg.index)}";
+  mkVm = index: rec {
+    name = "agent${toString index}";
+    inherit (cfg) vcpu mem;
+    ip = "${subnet}.${toString (10 + index)}";
+    mac = "02:00:00:00:53:${lib.fixedWidthString 2 "0" (lib.toHexString index)}";
     tap = "vm-${name}";
     # vsock CIDs 0-2 are reserved.
-    cid = 2 + vmCfg.index;
-    # Per-VM claude state, owned by lucasfa on the host.
-    dataDir = "${user.home}/vms/${name}";
+    cid = 2 + index;
     # Infrastructure state, root-only on the host.
     sshHostKeyDir = "${stateDir}/${name}/ssh-host-keys";
     # microvm.nix's cloud-hypervisor runner uses notify.vsock in the state dir.
     nixDaemonSocket = "${stateDir}/${name}/notify.vsock_${toString nixDaemonVsockPort}";
-    # Read at boot by the shared guest, see ./guest.nix.
+    # Read at boot by the shared guest, see ./guest.nix. The workspace isn't
+    # here: it changes between starts, and this is fixed in the runner.
     vmKernelParams = [
       "systemd.hostname=${name}"
       "ifname=uplink:${mac}"
       "ip=${ip}::${hostAddress}:255.255.255.0::uplink:off"
-      "systemd.mount-extra=workspace:${workspace}:virtiofs"
-      "lfa.workspace=${workspace}"
     ]
     ++ map (ns: "nameserver=${ns}") nameservers;
   };
-  vms = lib.mapAttrs mkVm cfg.vms;
+  vms = lib.listToAttrs (
+    map (
+      i:
+      let
+        vm = mkVm i;
+      in
+      lib.nameValuePair vm.name vm
+    ) (lib.range 1 cfg.instances)
+  );
 
   # One guest system for every VM, so a VM adds no NixOS evaluation (about
   # 10s and 1GB each otherwise) and they share one toplevel and initrd.
@@ -145,170 +166,74 @@ let
   # Pinned by ssh for every VM, see the ssh host key service below.
   knownHostsFile = name: "${stateDir}/${name}/known_hosts";
 
-  # `vm [NAME]`: start the VM (no sudo, see the polkit rule) and run claude in
-  # it, in the same directory as on the host when inside its workspace.
+  # `vm`: start a free VM with the current directory as its workspace (or
+  # reuse the one that has it) and run claude in it. No sudo, see the polkit
+  # rule.
   vmCommand = pkgs.writeShellApplication {
     name = "vm";
     runtimeInputs = [
       config.systemd.package
       config.programs.ssh.package
+      pkgs.util-linux # flock
     ];
     text = ''
       names=(${lib.escapeShellArgs (lib.attrNames vms)})
-      declare -A workspaces=(
-      ${
-        lib.concatStrings (
-          lib.mapAttrsToList (
-            name: vm: "  [${lib.escapeShellArg name}]=${lib.escapeShellArg vm.workspace}\n"
-          ) vms
-        )
-      })
+      home=${lib.escapeShellArg user.home}
+      runDir=${lib.escapeShellArg runDir}
+    ''
+    + builtins.readFile ./vm.sh;
+  };
 
-      usage() {
-        cat >&2 <<EOF
-      usage: vm [NAME] [-- CLAUDE_ARGS...]  start NAME and run claude in it
-             vm shell [NAME]                start NAME and open a shell in it
-             vm stop [NAME]
-             vm status
-      NAME defaults to the VM whose workspace contains the current directory.
-      VMs: ''${names[*]}
-      EOF
-        exit 2
-      }
-
-      in_workspace() {
-        [[ $PWD == "$1" || $PWD == "$1"/* ]]
-      }
-
-      cmd=claude
-      case ''${1-} in
-        shell | stop | status)
-          cmd=$1
-          shift
-          ;;
-        -h | --help) usage ;;
-      esac
-
-      if [ "$cmd" = status ]; then
-        for n in "''${names[@]}"; do
-          printf '%s\t%s\t%s\n' "$n" "$(systemctl is-active "microvm@$n.service" || true)" "''${workspaces[$n]}"
-        done
-        exit 0
+  # `claude` on the host runs in a VM, like `vm -- ARGS`, wherever `vm`
+  # accepts the directory (anywhere under the home directory). Elsewhere, and
+  # as `claude-host`, it is the host's own claude, sandboxed and with
+  # permission prompts (see ../roles/desktop/claude.nix).
+  hostClaude = lib.getExe pkgs.claude-code;
+  claudeInVm = pkgs.writeShellApplication {
+    name = "claude";
+    runtimeInputs = [ vmCommand ];
+    text = ''
+      if [[ $(pwd -P) == ${lib.escapeShellArg user.home}/* ]]; then
+        exec vm -- "$@"
       fi
-
-      name=""
-      if [ $# -gt 0 ] && [ "$1" != -- ]; then
-        name=$1
-        shift
+      if [ -t 2 ]; then
+        echo "claude: not under ${user.home}, so not in a VM; running on the host" >&2
       fi
-      if [ "''${1-}" = -- ]; then
-        shift
-      fi
-      if [ "$cmd" != claude ] && [ $# -gt 0 ]; then
-        usage
-      fi
-
-      if [ -z "$name" ]; then
-        # The innermost workspace wins if they nest.
-        best=""
-        for n in "''${names[@]}"; do
-          ws=''${workspaces[$n]}
-          if in_workspace "$ws" && [ ''${#ws} -gt ''${#best} ]; then
-            name=$n
-            best=$ws
-          fi
-        done
-        if [ -z "$name" ]; then
-          echo "vm: $PWD is not in any VM's workspace, pass a NAME" >&2
-          usage
-        fi
-      elif [ -z "''${workspaces[$name]+x}" ]; then
-        echo "vm: unknown VM: $name" >&2
-        usage
-      fi
-
-      ws=''${workspaces[$name]}
-      # The workspace is mounted at the same path in the VM.
-      dir=$ws
-      if in_workspace "$ws"; then
-        dir=$PWD
-      fi
-
-      unit="microvm@$name.service"
-      if [ "$cmd" = stop ]; then
-        exec systemctl stop "$unit"
-      fi
-      # A no-op if it is running; otherwise blocks until the guest has booted.
-      if ! systemctl is-active -q "$unit"; then
-        echo "vm: starting $name..." >&2
-      fi
-      systemctl start "$unit"
-
-      # Runs under the guest's bash -c, so bash quoting is right.
-      if [ "$cmd" = shell ]; then
-        remote="cd ''${dir@Q} && exec bash -l"
-      else
-        remote="cd ''${dir@Q} && exec claude ''${*@Q}"
-      fi
-      exec ssh -t -o ConnectionAttempts=10 "$name" "$remote"
+      exec ${hostClaude} "$@"
     '';
   };
+  claudeHost = pkgs.writeShellScriptBin "claude-host" ''
+    exec ${hostClaude} "$@"
+  '';
 in
 {
   options.lfa.microvm = {
     enable = lib.mkEnableOption "coding-agent microVMs";
-    vms = lib.mkOption {
-      default = { };
-      description = "Agent microVMs. Start one and run claude in it with `vm <name>`.";
-      type = lib.types.attrsOf (
-        lib.types.submodule (
-          { name, ... }:
-          {
-            options = {
-              index = lib.mkOption {
-                type = lib.types.ints.between 1 200;
-                description = "Unique per VM; determines its IP (${subnet}.<10+index>) and MAC.";
-              };
-              workspace = lib.mkOption {
-                type = lib.types.str;
-                default = "${user.home}/vms/${name}/workspace";
-                description = "Host directory shared read-write into the VM, at the same path.";
-              };
-              vcpu = lib.mkOption {
-                type = lib.types.ints.positive;
-                default = 6;
-              };
-              mem = lib.mkOption {
-                type = lib.types.ints.positive;
-                # A ceiling, not a reservation: with ballooning (see ./guest.nix)
-                # the guest hands freed memory back to the host. Builds run on
-                # the host, but evaluation runs in the VM and can take a few GiB.
-                default = 6144;
-                description = "Maximum RAM in MiB.";
-              };
-            };
-          }
-        )
-      );
+    instances = lib.mkOption {
+      type = lib.types.ints.between 1 200;
+      default = 4;
+      description = ''
+        Number of agent VMs (agent1, agent2, ...), and so of workspaces that
+        can run at once. Run `vm` in a directory to start one with it.
+      '';
+    };
+    vcpu = lib.mkOption {
+      type = lib.types.ints.positive;
+      default = 6;
+    };
+    mem = lib.mkOption {
+      type = lib.types.ints.positive;
+      # A ceiling, not a reservation: with ballooning (see ./guest.nix) the
+      # guest hands freed memory back to the host. Builds run on the host,
+      # but evaluation runs in the VM and can take a few GiB.
+      default = 6144;
+      description = "Maximum RAM per VM, in MiB.";
     };
   };
 
   config = lib.mkMerge [
     { microvm.host.enable = cfg.enable; }
     (lib.mkIf cfg.enable {
-      assertions = [
-        {
-          assertion = lib.allUnique (lib.mapAttrsToList (_: v: v.index) cfg.vms);
-          message = "lfa.microvm.vms: every VM needs a unique index";
-        }
-        {
-          assertion = lib.all (v: builtins.match "/[^[:space:]:\"']*" v.workspace != null) (
-            lib.attrValues cfg.vms
-          );
-          message = "lfa.microvm.vms: a workspace must be an absolute path without whitespace, colons or quotes (it goes on the guest's kernel command line)";
-        }
-      ];
-
       # Long-lived token from `claude setup-token`, used by every VM instead of
       # a per-VM login. Revocable independently of the host's own session.
       age.secrets.claude-oauth-token = {
@@ -331,7 +256,7 @@ in
           microvm = {
             declaredRunner = mkRunner vm;
             # Only used for tmpfiles rules creating the share sources; ours
-            # below create them instead.
+            # below and microvm-workspace-<name> create them instead.
             shares = [ ];
           };
           system.build.toplevel = guest.config.system.build.toplevel;
@@ -441,7 +366,12 @@ in
         '') vms
       );
 
-      environment.systemPackages = [ vmCommand ];
+      environment.systemPackages = [
+        vmCommand
+        # Wins over pkgs.claude-code's bin/claude.
+        (lib.hiPrio claudeInVm)
+        claudeHost
+      ];
 
       # Lets `vm` start and stop the VMs without sudo.
       security.polkit.extraConfig = ''
@@ -467,55 +397,108 @@ in
               inherit (user) group;
               mode = "0755";
             };
+            "${claudeDir}".d = {
+              user = user.name;
+              inherit (user) group;
+              mode = "0700";
+            };
+            # Only written if missing; claude owns the files afterwards.
+            "${claudeDir}/.claude.json".f = {
+              user = user.name;
+              inherit (user) group;
+              mode = "0600";
+              argument = builtins.toJSON claudeState;
+            };
+            "${claudeDir}/settings.json".f = {
+              user = user.name;
+              inherit (user) group;
+              mode = "0600";
+              argument = builtins.toJSON claudeSettings;
+            };
             "${secretsDir}".d = {
               user = "root";
               group = "root";
               mode = "0755";
             };
+            # Root's, so the user can only write the files created for them.
+            "${runDir}".d = {
+              user = "root";
+              group = "root";
+              mode = "0755";
+            };
+            "${runDir}/lock".f = {
+              user = user.name;
+              inherit (user) group;
+              mode = "0600";
+            };
           }
         ]
         ++ lib.mapAttrsToList (_: vm: {
-          "${vm.dataDir}".d = {
-            user = user.name;
-            inherit (user) group;
-            mode = "0755";
-          };
-          # ":" = only when creating it; an existing project dir is left alone.
-          "${vm.workspace}".d = {
-            user = ":${user.name}";
-            group = ":${user.group}";
-            mode = ":0755";
-          };
-          "${vm.dataDir}/claude".d = {
-            user = user.name;
-            inherit (user) group;
-            mode = "0700";
-          };
-          # Only written if missing; claude owns the file afterwards.
-          "${vm.dataDir}/claude/.claude.json".f = {
+          "${runDir}/${vm.name}.request".f = {
             user = user.name;
             inherit (user) group;
             mode = "0600";
-            argument = builtins.toJSON (claudeState vm);
-          };
-          "${vm.dataDir}/claude/settings.json".f = {
-            user = user.name;
-            inherit (user) group;
-            mode = "0600";
-            argument = builtins.toJSON claudeSettings;
           };
           "${vm.sshHostKeyDir}".d = {
             user = "root";
             group = "root";
             mode = "0700";
           };
-          # Targets of the guest's relative share sources (see ./guest.nix).
-          "${stateDir}/${vm.name}/workspace"."L+".argument = vm.workspace;
-          "${stateDir}/${vm.name}/claude"."L+".argument = "${vm.dataDir}/claude";
+          # Target of the guest's relative "claude/" share source (see
+          # ./guest.nix). "workspace" is linked by microvm-workspace-<name>.
+          "${stateDir}/${vm.name}/claude"."L+".argument = claudeDir;
         }) vms
       );
 
       systemd.services = lib.mkMerge [
+        # Points the VM's workspace share at the directory `vm` asked for,
+        # once it has checked it, and tells the guest where to mount it.
+        # Runs as root on every start, before virtiofsd (also root) opens it.
+        (lib.mapAttrs' (
+          name: _:
+          lib.nameValuePair "microvm-workspace-${name}" {
+            description = "Set the workspace of MicroVM '${name}'";
+            requiredBy = [ "microvm@${name}.service" ];
+            before = [
+              "microvm-virtiofsd@${name}.service"
+              "microvm@${name}.service"
+            ];
+            serviceConfig.Type = "oneshot";
+            script = ''
+              request=$(cat ${runDir}/${name}.request)
+              if [ -z "$request" ]; then
+                echo "no workspace requested; start ${name} with \`vm\`" >&2
+                exit 1
+              fi
+              # Resolve symlinks, so the checks are on what virtiofsd will
+              # actually share.
+              if ! dir=$(realpath -e -- "$request") || [ ! -d "$dir" ]; then
+                echo "not a directory: $request" >&2
+                exit 1
+              fi
+              case $dir in
+                *$'\n'*)
+                  echo "path contains a newline: $request" >&2
+                  exit 1
+                  ;;
+                ${lib.escapeShellArg user.home}/*) ;;
+                *)
+                  echo "not under ${user.home}: $dir" >&2
+                  exit 1
+                  ;;
+              esac
+
+              # Relative share sources in ./guest.nix resolve here.
+              cd ${stateDir}/${name}
+              ln -sfnT -- "$dir" workspace
+              install -d -m 0755 meta
+              printf '%s\n' "$dir" > meta/workspace
+              printf '%s\n' "$dir" > ${runDir}/${name}.current
+              echo "workspace: $dir"
+            '';
+          }
+        ) vms)
+
         # Stable SSH host keys, generated once on the host and shared read-only.
         # Runs on every start to (re)write the known_hosts entry ssh pins.
         (lib.mapAttrs' (
