@@ -62,6 +62,9 @@ let
     effortLevel = "high";
   };
 
+  claudeStateFile = pkgs.writeText "claude.json" (builtins.toJSON claudeState);
+  claudeSettingsFile = pkgs.writeText "claude-settings.json" (builtins.toJSON claudeSettings);
+
   # Destinations a VM may not reach: everything that isn't the public internet.
   blockedNets = [
     "0.0.0.0/8"
@@ -179,7 +182,8 @@ let
   };
 
   # `claude` on the host runs in a VM, like `vm -- ARGS`, wherever `vm`
-  # accepts the directory (anywhere under the home directory). Elsewhere, and
+  # accepts the directory (the home directory itself, which gets a stateless
+  # VM without a workspace, or anywhere under it). Elsewhere, and
   # as `claude-host`, it is the host's own claude, sandboxed and with
   # permission prompts (see ../roles/desktop/claude.nix).
   hostClaude = lib.getExe pkgs.claude-code;
@@ -187,7 +191,8 @@ let
     name = "claude";
     runtimeInputs = [ vmCommand ];
     text = ''
-      if [[ $(pwd -P) == ${lib.escapeShellArg user.home}/* ]]; then
+      cwd=$(pwd -P)
+      if [[ $cwd == ${lib.escapeShellArg user.home} || $cwd == ${lib.escapeShellArg user.home}/* ]]; then
         exec vm -- "$@"
       fi
       if [ -t 2 ]; then
@@ -462,34 +467,49 @@ in
             serviceConfig.Type = "oneshot";
             script = ''
               request=$(cat ${runDir}/${name}.request)
+              # Relative share sources in ./guest.nix resolve here.
+              cd ${stateDir}/${name}
+              install -d -m 0755 meta
               if [ -z "$request" ]; then
                 echo "no workspace requested; start ${name} with \`vm\`" >&2
                 exit 1
-              fi
-              # Resolve symlinks, so the checks are on what virtiofsd will
-              # actually share.
-              if ! dir=$(realpath -e -- "$request") || [ ! -d "$dir" ]; then
-                echo "not a directory: $request" >&2
-                exit 1
-              fi
-              case $dir in
-                *$'\n'*)
-                  echo "path contains a newline: $request" >&2
+              elif [ "$request" = ephemeral ]; then
+                # No host directory at all: the workspace share is an empty
+                # directory (the guest skips mounting it, as meta/workspace
+                # is empty) and claude's state is a fresh copy of the seeds,
+                # thrown away on the next start.
+                install -d -m 0755 empty
+                ln -sfnT -- empty workspace
+                : > meta/workspace
+                rm -rf -- claude-ephemeral
+                install -d -o ${user.name} -g ${user.group} -m 0700 claude-ephemeral
+                install -o ${user.name} -g ${user.group} -m 0600 ${claudeStateFile} claude-ephemeral/.claude.json
+                install -o ${user.name} -g ${user.group} -m 0600 ${claudeSettingsFile} claude-ephemeral/settings.json
+                ln -sfnT -- claude-ephemeral claude
+                echo "workspace: none (ephemeral)"
+              else
+                # Resolve symlinks, so the checks are on what virtiofsd will
+                # actually share.
+                if ! dir=$(realpath -e -- "$request") || [ ! -d "$dir" ]; then
+                  echo "not a directory: $request" >&2
                   exit 1
-                  ;;
-                ${lib.escapeShellArg user.home}/*) ;;
-                *)
-                  echo "not under ${user.home}: $dir" >&2
-                  exit 1
-                  ;;
-              esac
-
-              # Relative share sources in ./guest.nix resolve here.
-              cd ${stateDir}/${name}
-              ln -sfnT -- "$dir" workspace
-              install -d -m 0755 meta
-              printf '%s\n' "$dir" > meta/workspace
-              echo "workspace: $dir"
+                fi
+                case $dir in
+                  *$'\n'*)
+                    echo "path contains a newline: $request" >&2
+                    exit 1
+                    ;;
+                  ${lib.escapeShellArg user.home}/*) ;;
+                  *)
+                    echo "not under ${user.home}: $dir" >&2
+                    exit 1
+                    ;;
+                esac
+                ln -sfnT -- "$dir" workspace
+                printf '%s\n' "$dir" > meta/workspace
+                ln -sfnT -- ${lib.escapeShellArg claudeDir} claude
+                echo "workspace: $dir"
+              fi
 
               key=${vm.sshHostKeyDir}/ssh_host_ed25519_key
               if [ ! -e "$key" ]; then

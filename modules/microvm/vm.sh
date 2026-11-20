@@ -14,7 +14,8 @@ usage: vm [-- CLAUDE_ARGS...]  run claude in a VM with the current directory
        vm status
 Any directory under $home can be a workspace. It is mounted at the same
 path, and a running VM is reused for its workspace and the directories
-below it.
+below it. In $home itself the VM is ephemeral: nothing from the host is
+mounted, claude starts with fresh state, and every run gets its own VM.
 VMs: ${names[*]}
 EOF
   exit 2
@@ -46,9 +47,13 @@ find_vm() {
 }
 
 status() {
-  local n
+  local n s ws
   for n in "${names[@]}"; do
-    printf '%s\t%s\t%s\n' "$n" "$(state "$n")" "$(workspace_of "$n")"
+    s=$(state "$n")
+    ws=$(workspace_of "$n")
+    # A running VM with an empty workspace file is an ephemeral one.
+    if [ -z "$ws" ] && [ "$s" = active ]; then ws="(ephemeral)"; fi
+    printf '%s\t%s\t%s\n' "$n" "$s" "$ws"
   done
 }
 
@@ -87,10 +92,13 @@ if [ "$cmd" = shell ] && [ $# -gt 0 ]; then
   usage
 fi
 # The host service checks this too, but not before a VM is taken.
-if [[ $dir != "$home"/* ]]; then
+if [[ $dir != "$home" && $dir != "$home"/* ]]; then
   echo "vm: $dir is not under $home" >&2
   exit 1
 fi
+# The home directory itself is never a workspace: it gets an ephemeral VM.
+ephemeral=
+[ "$dir" = "$home" ] && ephemeral=1
 
 # Picking a free VM and starting it must not interleave with another `vm`,
 # or both could pick the same one. Held until the VM is up: before that its
@@ -98,7 +106,8 @@ fi
 exec 9>"$runDir/lock"
 flock 9
 
-name=$(find_vm)
+name=
+[ -n "$ephemeral" ] || name=$(find_vm)
 if [ -z "$name" ]; then
   for n in "${names[@]}"; do
     case $(state "$n") in
@@ -114,8 +123,13 @@ if [ -z "$name" ]; then
     exit 1
   fi
   # Read by microvm-prepare-$name, which checks it and shares it.
-  printf '%s' "$dir" >"$runDir/$name.request"
-  echo "vm: starting $name for $dir..." >&2
+  if [ -n "$ephemeral" ]; then
+    printf '%s' ephemeral >"$runDir/$name.request"
+    echo "vm: starting $name (ephemeral, nothing mounted)..." >&2
+  else
+    printf '%s' "$dir" >"$runDir/$name.request"
+    echo "vm: starting $name for $dir..." >&2
+  fi
 fi
 
 # A no-op if it is running; otherwise blocks until the guest has booted.
@@ -135,4 +149,12 @@ if [ "$cmd" = shell ]; then
 else
   remote="cd ${dir@Q} && exec claude ${*@Q}"
 fi
-exec ssh "$tty" -o ConnectionAttempts=10 "$name" "$remote"
+if [ -z "$ephemeral" ]; then
+  exec ssh "$tty" -o ConnectionAttempts=10 "$name" "$remote"
+fi
+# Nothing of an ephemeral VM is kept, and nobody else can reuse it (it has no
+# workspace to match), so stop it when the session ends to free its slot.
+rc=0
+ssh "$tty" -o ConnectionAttempts=10 "$name" "$remote" || rc=$?
+systemctl stop "microvm@$name.service" || true
+exit "$rc"

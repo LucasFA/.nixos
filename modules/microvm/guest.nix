@@ -156,6 +156,8 @@ in
     path = [ pkgs.util-linux ];
     script = ''
       dir=$(cat ${meta}/workspace)
+      # Empty: an ephemeral VM, with nothing from the host mounted.
+      [ -n "$dir" ] || exit 0
       mkdir -p "$dir"
       mount -t virtiofs workspace "$dir"
     '';
@@ -253,7 +255,7 @@ in
 
   # A plain `ssh <vm>` starts in the workspace (`vm` cds on its own).
   programs.fish.loginShellInit = ''
-    if test "$PWD" = "$HOME"; and test -r ${meta}/workspace
+    if test "$PWD" = "$HOME"; and test -s ${meta}/workspace
       cd (cat ${meta}/workspace)
     end
   '';
