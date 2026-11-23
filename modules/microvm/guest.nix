@@ -15,6 +15,7 @@ let
   home = "/home/lucasfa";
   hostSecrets = "/run/host-secrets";
   meta = "/run/host-meta";
+  extraTags = map (i: "extra${toString i}") (lib.range 1 shared.extraDirs);
 
   # Log in with the shared token from the host instead of per-VM OAuth.
   # Passed as a file descriptor rather than CLAUDE_CODE_OAUTH_TOKEN, so the
@@ -34,7 +35,10 @@ let
 
     You run inside a disposable microVM on the user's laptop. Only the
     workspace (the directory you were started in) is shared with the host
-    (it is the user's real checkout, live). There are no git credentials; the user pushes from
+    (it is the user's real checkout, live), plus any extra directories the
+    user added with `vm --with`: those are listed in ${meta}/extras
+    ("rw PATH" or "ro PATH" per line) and mounted at the same paths. There
+    are no git credentials; the user pushes from
     the host. You have internet access, but no access to the LAN, the
     tailnet or the host. There is no sudo.
 
@@ -95,55 +99,67 @@ in
           }
           // share
         )
-        [
-          {
-            tag = "ro-store";
-            source = "/nix/store";
-            mountPoint = "/nix/.ro-store";
-            # Enforced by virtiofsd on the host, so even root in the VM can't
-            # remount it writable and tamper with the host's store.
-            readOnly = true;
-          }
-          {
-            tag = "workspace";
-            source = "workspace/";
-            # Not mounted here: the workspace goes at the same path as on the
-            # host, which is only known at boot (see workspace-mount below).
-            mountPoint = "/mnt/workspace";
-          }
-          {
-            # Written by the host's microvm-prepare-<name> before each
-            # start: `workspace` holds the workspace's path.
-            tag = "meta";
-            source = "meta";
-            mountPoint = meta;
-            readOnly = true;
-          }
-          {
-            tag = "claude";
-            source = "claude/";
-            mountPoint = "${home}/.claude";
-          }
-          {
-            tag = "ssh-host-keys";
-            source = "ssh-host-keys";
-            mountPoint = "/etc/ssh/host-keys";
-            readOnly = true;
-          }
-          {
-            tag = "host-secrets";
-            source = shared.secretsDir;
-            mountPoint = hostSecrets;
-            readOnly = true;
-          }
-        ];
+        (
+          [
+            {
+              tag = "ro-store";
+              source = "/nix/store";
+              mountPoint = "/nix/.ro-store";
+              # Enforced by virtiofsd on the host, so even root in the VM can't
+              # remount it writable and tamper with the host's store.
+              readOnly = true;
+            }
+            {
+              tag = "workspace";
+              source = "workspace/";
+              # Not mounted here: the workspace goes at the same path as on the
+              # host, which is only known at boot (see workspace-mount below).
+              mountPoint = "/mnt/workspace";
+            }
+            {
+              # Written by the host's microvm-prepare-<name> before each
+              # start: `workspace` holds the workspace's path.
+              tag = "meta";
+              source = "meta";
+              mountPoint = meta;
+              readOnly = true;
+            }
+            {
+              tag = "claude";
+              source = "claude/";
+              mountPoint = "${home}/.claude";
+            }
+            {
+              tag = "ssh-host-keys";
+              source = "ssh-host-keys";
+              mountPoint = "/etc/ssh/host-keys";
+              readOnly = true;
+            }
+            {
+              tag = "host-secrets";
+              source = shared.secretsDir;
+              mountPoint = hostSecrets;
+              readOnly = true;
+            }
+          ]
+          # Slots for `vm --with DIR`, linked like the workspace. Read-write on
+          # the host side; a --with-ro one is mounted read-only in here.
+          ++ map (tag: {
+            inherit tag;
+            source = "${tag}/";
+            mountPoint = "/mnt/${tag}";
+          }) extraTags
+        );
     # No volumes: the VM is stateless; everything that persists is a share.
   };
-  fileSystems."/mnt/workspace".options = [ "noauto" ];
+  fileSystems = lib.genAttrs (map (tag: "/mnt/${tag}") ([ "workspace" ] ++ extraTags)) (_: {
+    options = [ "noauto" ];
+  });
 
-  # The workspace at the same path as on the host, which changes from one
-  # start to the next, so it can't be on the kernel command line (fixed in the
-  # runner) or in fileSystems. Before sshd, so `vm` lands in it.
+  # The workspace (and `vm --with` directories) at the same path as on the
+  # host, which changes from one start to the next, so it can't be on the
+  # kernel command line (fixed in the runner) or in fileSystems. Before sshd,
+  # so `vm` lands in it.
   systemd.services.workspace-mount = {
     description = "Mount the workspace at its host path";
     wantedBy = [ "multi-user.target" ];
@@ -156,10 +172,22 @@ in
     path = [ pkgs.util-linux ];
     script = ''
       dir=$(cat ${meta}/workspace)
-      # Empty: an ephemeral VM, with nothing from the host mounted.
-      [ -n "$dir" ] || exit 0
-      mkdir -p "$dir"
-      mount -t virtiofs workspace "$dir"
+      # Empty: an ephemeral VM, without a workspace.
+      if [ -n "$dir" ]; then
+        mkdir -p "$dir"
+        mount -t virtiofs workspace "$dir"
+      fi
+      # Line i is "rw PATH" or "ro PATH", for share extra<i>. A read-only one
+      # is only read-only in here, but nobody in the VM can remount it.
+      [ -e ${meta}/extras ] || exit 0
+      i=0
+      while IFS= read -r line; do
+        i=$((i + 1))
+        mode=''${line%% *}
+        dir=''${line#* }
+        mkdir -p "$dir"
+        mount -t virtiofs -o "$mode" "extra$i" "$dir"
+      done < ${meta}/extras
     '';
   };
 

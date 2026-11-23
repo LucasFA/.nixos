@@ -121,7 +121,10 @@ let
     ];
     specialArgs = {
       inherit inputs self;
-      shared = { inherit secretsDir nixDaemonVsockPort; };
+      shared = {
+        inherit secretsDir nixDaemonVsockPort;
+        inherit (cfg) extraDirs;
+      };
     };
   };
 
@@ -170,10 +173,12 @@ let
     runtimeInputs = [
       config.systemd.package
       config.programs.ssh.package
+      pkgs.coreutils # realpath
       pkgs.util-linux # flock
     ];
     text = ''
       names=(${lib.escapeShellArgs (lib.attrNames vms)})
+      extraDirs=${toString cfg.extraDirs}
       home=${lib.escapeShellArg user.home}
       runDir=${lib.escapeShellArg runDir}
       stateDir=${lib.escapeShellArg stateDir}
@@ -214,6 +219,15 @@ in
       description = ''
         Number of agent VMs (agent1, agent2, ...), and so of workspaces that
         can run at once. Run `vm` in a directory to start one with it.
+      '';
+    };
+    extraDirs = lib.mkOption {
+      type = lib.types.ints.between 0 16;
+      default = 3;
+      description = ''
+        How many directories `vm --with DIR` can share into a VM besides its
+        workspace. Each is a virtiofs share (and a virtiofsd per running VM)
+        whether used or not.
       '';
     };
     vcpu = lib.mkOption {
@@ -451,8 +465,11 @@ in
 
       systemd.services = lib.mkMerge [
         # Runs as root on every start, before virtiofsd (also root) opens the
-        # shares. Points the VM's workspace share at the directory `vm` asked
-        # for, once it has checked it, and tells the guest where to mount it.
+        # shares. Points the VM's workspace share (and extra<i> ones) at the
+        # directories `vm` asked for, once it has checked them, and tells the
+        # guest where to mount them. The request's first line is the
+        # workspace (or "ephemeral"), each further one "rw PATH" or "ro PATH"
+        # for `vm --with` / `--with-ro`.
         # Also keeps the stable SSH host key, generated once on the host and
         # shared read-only, and rewrites the known_hosts entry ssh pins.
         (lib.mapAttrs' (
@@ -466,10 +483,37 @@ in
             ];
             serviceConfig.Type = "oneshot";
             script = ''
-              request=$(cat ${runDir}/${name}.request)
+              mapfile -t lines < ${runDir}/${name}.request
+              request=''${lines[0]-}
+              # Sets dir to the checked, resolved path $1. Resolves symlinks,
+              # so the checks are on what virtiofsd will actually share.
+              resolve() {
+                case $1 in
+                  /*) ;;
+                  *)
+                    echo "not an absolute path: $1" >&2
+                    exit 1
+                    ;;
+                esac
+                if ! dir=$(realpath -e -- "$1") || [ ! -d "$dir" ]; then
+                  echo "not a directory: $1" >&2
+                  exit 1
+                fi
+                case $dir in
+                  *$'\n'*)
+                    echo "path contains a newline: $1" >&2
+                    exit 1
+                    ;;
+                  ${lib.escapeShellArg user.home}/*) ;;
+                  *)
+                    echo "not under ${user.home}: $dir" >&2
+                    exit 1
+                    ;;
+                esac
+              }
               # Relative share sources in ./guest.nix resolve here.
               cd ${stateDir}/${name}
-              install -d -m 0755 meta
+              install -d -m 0755 meta empty
               if [ -z "$request" ]; then
                 echo "no workspace requested; start ${name} with \`vm\`" >&2
                 exit 1
@@ -478,7 +522,6 @@ in
                 # directory (the guest skips mounting it, as meta/workspace
                 # is empty) and claude's state is a fresh copy of the seeds,
                 # thrown away on the next start.
-                install -d -m 0755 empty
                 ln -sfnT -- empty workspace
                 : > meta/workspace
                 rm -rf -- claude-ephemeral
@@ -488,28 +531,40 @@ in
                 ln -sfnT -- claude-ephemeral claude
                 echo "workspace: none (ephemeral)"
               else
-                # Resolve symlinks, so the checks are on what virtiofsd will
-                # actually share.
-                if ! dir=$(realpath -e -- "$request") || [ ! -d "$dir" ]; then
-                  echo "not a directory: $request" >&2
-                  exit 1
-                fi
-                case $dir in
-                  *$'\n'*)
-                    echo "path contains a newline: $request" >&2
-                    exit 1
-                    ;;
-                  ${lib.escapeShellArg user.home}/*) ;;
-                  *)
-                    echo "not under ${user.home}: $dir" >&2
-                    exit 1
-                    ;;
-                esac
+                resolve "$request"
                 ln -sfnT -- "$dir" workspace
                 printf '%s\n' "$dir" > meta/workspace
                 ln -sfnT -- ${lib.escapeShellArg claudeDir} claude
                 echo "workspace: $dir"
               fi
+
+              # Line i of meta/extras is share extra<i>, which the guest
+              # mounts at that path; unused shares point at the empty dir.
+              : > meta/extras
+              i=0
+              for line in "''${lines[@]:1}"; do
+                [ -n "$line" ] || continue
+                i=$((i + 1))
+                if [ "$i" -gt ${toString cfg.extraDirs} ]; then
+                  echo "more than ${toString cfg.extraDirs} extra directories requested" >&2
+                  exit 1
+                fi
+                mode=''${line%% *}
+                case $mode in
+                  rw | ro) ;;
+                  *)
+                    echo "not \"rw PATH\" or \"ro PATH\": $line" >&2
+                    exit 1
+                    ;;
+                esac
+                resolve "''${line#* }"
+                ln -sfnT -- "$dir" "extra$i"
+                printf '%s %s\n' "$mode" "$dir" >> meta/extras
+                echo "extra ($mode): $dir"
+              done
+              for ((j = i + 1; j <= ${toString cfg.extraDirs}; j++)); do
+                ln -sfnT -- empty "extra$j"
+              done
 
               key=${vm.sshHostKeyDir}/ssh_host_ed25519_key
               if [ ! -e "$key" ]; then
