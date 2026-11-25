@@ -21,6 +21,16 @@ Technical debt:
       Remove once nixpkgs ships ghostty >= 1.4.0 (or a backport of ghostty PR #14399).
       Check: `nix eval nixpkgs#ghostty.version`.
 
+- [ ] remove the Steam NVIDIA wake-up (`extraPreBwrapCmds` in
+      `modules/roles/desktop/gaming.nix`, added 2026-11-25)
+      Workaround for https://github.com/ValveSoftware/steam-for-linux/issues/13893
+      (SteamRT3 client, `updater built Nov 13 2026`): launched from the desktop
+      entry (NVIDIA offload env) while the dGPU is runtime-suspended, Steam exits
+      with "Steam is already running" and never opens a window.
+      Remove once the issue is fixed. Check: let the dGPU suspend
+      (`cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_status` → `suspended`),
+      launch Steam from GNOME without the workaround.
+
 - [ ] clean up the old restic htpasswd symlinks once a server is up again
       (`modules/restic/server.nix`, changed 2026-10-24 in 366994b)
       The secret moved from `/mnt/pool/backups.htpasswd` to agenix's default
