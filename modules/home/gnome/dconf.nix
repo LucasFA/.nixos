@@ -145,6 +145,7 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/shell" = {
+      always-show-log-out = true; # GNOME hides it on single-user systems
       disable-user-extensions = false;
       disabled-extensions = [ ];
       enabled-extensions = [
